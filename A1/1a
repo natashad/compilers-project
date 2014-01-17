@@ -1,0 +1,43 @@
+{
+	var rect_width : integer
+	var rect_height : integer
+	var rect_area : integer
+	var tri_base : integer
+	var tri_height : integer
+	var tri_area : integer
+	var always_calculate_triangle_area : boolean
+
+	rect_width := 5
+	rect_height := 10
+
+	tri_height := 20
+	tri_base := 10
+
+	always_calculate_triangle_area := false
+
+	if rect_width > 0 and rect_height >= 0
+	then
+		rect_area := rect_width * rect_height
+	else
+		rect_area := -1
+	fi
+
+	if rect_area not = -1 or always_calculate_triangle_area = true
+	then
+		tri_area := (tri_base * tri_height) / 2
+	else
+		tri_area := -1
+	fi
+
+	(tri_area <= rect_area ? tri_base := tri_base + 1 : rect_width := rect_width + 1)
+
+	(rect_area >= tri_area ? tri_height := tri_height - 1 : rect_height := rect_height - 1)
+
+	if rect_height < tri_height
+	then
+		put "triange"
+	else
+		put "rectangle"
+	fi
+
+}
