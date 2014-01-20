@@ -35,7 +35,7 @@
 
 	if rect_height < tri_height
 	then
-		put "triange"
+		put "triangle"
 	else
 		put "rectangle"
 	fi
