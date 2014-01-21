@@ -1,26 +1,52 @@
 % a program using recursive functions and procedures with and without parameters
 % include at least one nested procedure and one nested function declaration
 
+% global variable for recursive procedure without parameter
 
-% procedure without parameter
+var globalOne : integer
+globalOne := 5
 
-proc helloWorld ( )
+% recursive procedure without parameter
+% prints from globalOne to 0, returns 1, globalOne becomes 0
+
+proc printGlobalOneToZero ( )
 {
-    put "Hello World"
+    if globalOne = 0
+    then
+        put globalOne
+        return
+    fi
+
+    put globalOne
+    globalOne := globalOne - 1
+    helloWorld ( )
     return
 }
 
-% procedure with parameter
+% recursive procedure with parameter
+% changes n to n^k
 
-proc addTen ( integer : n )
+proc power ( integer : n , integer : k)
+
 {
-    n :=  n + 10
-    return
+    if k = 0
+    then
+        n := 1
+        return
+    fi
+    
+    if k = 1
+    then
+        return
+    fi
 
+    n := n * n
+    power ( n , k - 1 )
+    return
 }
 
-% nested procedure
-
+% nested procedure declaration
+% adds twenty to an integer
 proc addTwenty ( integer : n )
 {
     proc addFive ( intger : n )
@@ -34,8 +60,30 @@ proc addTwenty ( integer : n )
 
 }
 
-% recursive function
+% global variable for recursive function without parameter
 
+var globalTwo : integer
+globalTwo := 10
+
+% recursive function without parameter
+% prints from global value to 0, returns 1
+
+func printGlobalTwoToZero ( ) : integer
+{
+    if globalTwo = 0
+    then
+        put globalTwo
+        result 1
+    fi
+
+    put globalTwo
+    globalTwo := globalTwo - 1
+    helloWorld ( )
+    result 1
+}
+
+% recursive function with parameter
+% calculates the nth fibonacci number
 func fibonacci ( integer : n ) : integer
 {
     if ( n = 0 ) or ( n = 1 )
@@ -43,32 +91,40 @@ func fibonacci ( integer : n ) : integer
         result 1
     fi
 
-    result fib( n - 1 ) + fib( n - 2 )
+    result fib ( n - 1 ) + fib ( n - 2 )
 
 }
 
 
 % nested function declaration
-func addToN ( integer : n ) : boolean
+% returns some arbitrary numbers added to given n
+
+func addToN ( integer : n ) : integer
 {
-    func F ( integer : m ) : integer
+    func addMtoN ( integer : m ) : integer
     {
         result n + m
     }
         
-    result F( 10 ) + F( 20 )
+    result addMtoN ( 10 ) + addMtoN ( 20 )
 
 }
 
+% main program
+
 {
+    printGlobalOneToZero ( )
+    printGlobalTwoToZero ( )
+
     var x : integer
     var y : integer
+    var z : integer
+
     x := 10
-    helloWorld( )
-    addTen( x )
     addTwenty ( x )
-    y := addToN( x )
-    fibonacci( y )
-    put y
+    y := addToN ( x )
+    z := fibonacci ( y )
+    z := power ( z , 2 )
+    put z
 }
 
