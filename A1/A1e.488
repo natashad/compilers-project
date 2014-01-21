@@ -1,0 +1,74 @@
+% a program using recursive functions and procedures with and without parameters
+% include at least one nested procedure and one nested function declaration
+
+
+% procedure without parameter
+
+proc helloWorld ( )
+{
+    put "Hello World"
+    return
+}
+
+% procedure with parameter
+
+proc addTen ( integer : n )
+{
+    n :=  n + 10
+    return
+
+}
+
+% nested procedure
+
+proc addTwenty ( integer : n )
+{
+    proc addFive ( intger : n )
+    {
+        n := n + 5
+    }
+    
+    addFive ( n )
+    n := n + 15
+    return
+
+}
+
+% recursive function
+
+func fibonacci ( integer : n ) : integer
+{
+    if ( n = 0 ) or ( n = 1 )
+    then
+        result 1
+    fi
+
+    result fib( n - 1 ) + fib( n - 2 )
+
+}
+
+
+% nested function declaration
+func addToN ( integer : n ) : boolean
+{
+    func F ( integer : m ) : integer
+    {
+        result n + m
+    }
+        
+    result F( 10 ) + F( 20 )
+
+}
+
+{
+    var x : integer
+    var y : integer
+    x := 10
+    helloWorld( )
+    addTen( x )
+    addTwenty ( x )
+    y := addToN( x )
+    fibonacci( y )
+    put y
+}
+
