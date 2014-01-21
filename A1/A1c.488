@@ -1,0 +1,42 @@
+{
+	var player1 : integer
+	var player2 : integer
+	var start : boolean
+	var end : boolean
+	
+	player1 := 0
+	player2 := 5
+	start := true
+	end := false
+	
+	% While-do-end construct
+	while start not = end
+	do
+		start := end
+	end
+	
+	% repeat-until construct
+	repeat
+		player1 := player1 + 1
+	until player1 = player2
+	
+	% repeat-until construct with exit construct
+	repeat
+		player1 := player1 + 1
+		
+		if player1 = 3
+		then
+			exit
+		fi
+		
+	until player1 = player2
+	
+	% repeat-until construct with exit-when construct
+	repeat
+		player1 := player1 + 1
+		
+		exit when player1 = 3
+		
+	until player1 = player2
+
+}
