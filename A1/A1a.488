@@ -1,4 +1,5 @@
 {
+	% a program that uses all arithmetic, logical and comparison operators. 
 	var rect_width : integer
 	var rect_height : integer
 	var rect_area : integer
