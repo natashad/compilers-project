@@ -7,7 +7,7 @@ var globalOne : integer
 globalOne := 5
 
 % recursive procedure without parameter
-% prints from globalOne to 0, returns 1, globalOne becomes 0
+% prints from globalOne to 0, changes globalOne to 0
 
 proc printGlobalOneToZero ( )
 {
@@ -48,6 +48,7 @@ proc power ( n : integer , k : integer )
 
 % nested procedure declaration
 % prints twenty added to an integer
+
 proc addTwenty ( n : integer )
 {
     proc addFive ( n : integer)
@@ -67,7 +68,7 @@ var globalTwo : integer
 globalTwo := 10
 
 % recursive function without parameter
-% prints from global value to 0, returns 1
+% prints from globalTwo to 0, changes globalTwo to 0, returns 1
 
 func printGlobalTwoToZero ( ) : integer
 {
