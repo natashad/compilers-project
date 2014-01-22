@@ -15,6 +15,18 @@ g0alimuh (Showzeb) wrote program c.
 g0getter (Tony) wrote program d.
 g3ksing (Karandeep) wrote program e.
 
+
+Program B
+---------
+A1b contains 2 array declarations and 2 Array assignments. 
+The first Array is a 1D array and the second a 2D.
+
+The 1D array declaration uses a positive bound and the following form:
+var arrayName [bound] : type
+The 2D array declaration uses negative and positive bounds and the following form:
+var arrayName [bound .. bound, bound .. bound] : type
+
+
 Program E
 ---------
 A1e contains 3 procedures and 3 functions and then calls them in an arbitrary order. 
