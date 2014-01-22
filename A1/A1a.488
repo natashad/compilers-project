@@ -1,5 +1,5 @@
 {
-	% a program that uses all arithmetic, logical and comparison operators. 
+	% a program that uses all arithmetic, logical and comparison operators.
 	var rect_width : integer
 	var rect_height : integer
 	var rect_area : integer
@@ -30,9 +30,9 @@
 		tri_area := -1
 	fi
 
-	(tri_area <= rect_area ? tri_base := tri_base + 1 : rect_width := rect_width + 1)
+	tri_base := tri_base + (tri_area <= rect_area ? 2 : 1)
 
-	(rect_area >= tri_area ? tri_height := tri_height - 1 : rect_height := rect_height - 1)
+	rect_height := rect_height + (rect_area >= tri_area ? 2 : 1)
 
 	if rect_height < tri_height
 	then
