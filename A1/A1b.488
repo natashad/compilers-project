@@ -3,6 +3,6 @@
 	var natasha [5] : integer  % Declare Array with bound 5 and integer as type
 	var faizan [-2 .. 1, -2 .. 2] : integer % Declare 2D array with negative bounds and integer as type
 
-	faizan[ 0 ][ 0 ] := 5
+	faizan[ 0 , 0 ] := 5
 	natasha[ 3 ] := 4
 }
