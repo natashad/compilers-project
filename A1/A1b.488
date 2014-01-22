@@ -1,4 +1,5 @@
 {
+	% a program using arrays including both forms of array declarations, positive and negative bounds.
 	var natasha [5] : integer  % Declare Array with bound 5 and integer as type
 	var faizan [-2 .. 1] [-2 .. 2] : integer % Declare 2D array with negative bounds and integer as type
 
