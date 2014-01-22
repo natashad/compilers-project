@@ -36,6 +36,15 @@ var arrayName [bound] : type
 The 2D array declaration uses negative and positive bounds and the following form:
 var arrayName [bound .. bound, bound .. bound] : type
 
+Program D
+---------
+A1d contains two functions and two procedures:
+
+printfunction() prints "Hello World" to standard out and then returns the boolean true.
+return_is_equal(a:integer,b:integer) returns boolean true if parameters a = b, else returns boolean false.
+
+printproc() prints "Hello World" to standard out then returns.
+return_is_equal(a:integer,b:integer) returns prints "equal" if parameters a = b, else prints "not equal", then returns.
 
 Program E
 ---------
