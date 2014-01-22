@@ -1,30 +1,27 @@
 % a program using non-recursive functions and procedures with and without parameters.
+{
+    func printfunction():boolean{
+        put "hello world"
+        result true
+    }
 
-%TODO: THE WHOLE THING SHOULD BE SURROUNDED IN { } (see the first line of the language)
+    func return_is_equal(a:integer,b:integer):boolean{
+        var res:boolean
+        res:= a = b
+        result res
+    }
 
+    proc printproc(){
+        put "hello world"
+        return
+    }
 
-func printfunction():boolean{
-    put "hello world"
-    result true
-}
-
-%TODO: get rid of var.
-func return_is_equal(var a:integer,var b:integer):boolean{
-    var res:boolean
-    res:= a = b
-    result res
-}
-
-proc printproc(){
-    put "hello world"
-    return
-}
-
-%TODO: get rid of var. and add a return to the end? (Not sure if explicit return at end of proc is necessary though)
-proc print_is_equal(var a:integer,var b:integer){
-    %TODO: bad format of if else. if <expression> then <statement> else <statement> fi
-    if a = b then 
-        put "equal" 
-    else 
-        put "not equal"
+    proc print_is_equal(a:integer,b:integer){
+        if a = b then 
+            put "equal" 
+        else 
+            put "not equal"
+        fi
+        return    
+    }
 }
