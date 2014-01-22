@@ -1,5 +1,8 @@
 % a program using non-recursive functions and procedures with and without parameters.
 
+%TODO: THE WHOLE THING SHOULD BE SURROUNDED IN { } (see the first line of the language)
+
+
 func printfunction():boolean{
     put "hello world"
     result true
