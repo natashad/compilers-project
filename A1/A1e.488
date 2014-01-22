@@ -19,24 +19,25 @@ proc printGlobalOneToZero ( )
 
     put globalOne
     globalOne := globalOne - 1
-    helloWorld ( )
+    printGlobalOneToZero ( )
     return
 }
 
 % recursive procedure with parameter
-% changes n to n^k
+% prints n^k
 
-proc power ( integer : n , integer : k)
+proc power ( n : integer , k : integer )
 
 {
     if k = 0
     then
-        n := 1
+        put 1
         return
     fi
     
     if k = 1
     then
+        put n
         return
     fi
 
@@ -46,16 +47,16 @@ proc power ( integer : n , integer : k)
 }
 
 % nested procedure declaration
-% adds twenty to an integer
-proc addTwenty ( integer : n )
+% prints twenty added to an integer
+proc addTwenty ( n : integer )
 {
-    proc addFive ( intger : n )
+    proc addFive ( n : integer)
     {
         n := n + 5
     }
     
     addFive ( n )
-    n := n + 15
+    put n + 15
     return
 
 }
@@ -78,13 +79,13 @@ func printGlobalTwoToZero ( ) : integer
 
     put globalTwo
     globalTwo := globalTwo - 1
-    helloWorld ( )
+    printGlobalTwoToZero ( )
     result 1
 }
 
 % recursive function with parameter
 % calculates the nth fibonacci number
-func fibonacci ( integer : n ) : integer
+func fibonacci ( n : integer ) : integer
 {
     if ( n = 0 ) or ( n = 1 )
     then
@@ -99,9 +100,9 @@ func fibonacci ( integer : n ) : integer
 % nested function declaration
 % returns some arbitrary numbers added to given n
 
-func addToN ( integer : n ) : integer
+func addToN ( n : integer ) : integer
 {
-    func addMtoN ( integer : m ) : integer
+    func addMtoN ( m : integer ) : integer
     {
         result n + m
     }
@@ -124,7 +125,6 @@ func addToN ( integer : n ) : integer
     addTwenty ( x )
     y := addToN ( x )
     z := fibonacci ( y )
-    z := power ( z , 2 )
-    put z
+    power ( z , 2 )
 }
 
