@@ -1,4 +1,5 @@
 {
+% a program using all forms of loop building and loop exit constructs.
 	var player1 : integer
 	var player2 : integer
 	var start : boolean
