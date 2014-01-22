@@ -14,3 +14,15 @@ g0faizan (Faizan) wrote program b.
 g0alimuh (Showzeb) wrote program c.
 g0getter (Tony) wrote program d.
 g3ksing (Karandeep) wrote program e.
+
+Program E
+---------
+A1e contains 3 procedures and 3 functions and then calls them in an arbitrary order. 
+For both procedures and functions there is one recursive with parameters, one recursive without parameters, 
+and one which has a nested procedure/function declaration. 
+
+The 3 procedures are as follows: prints from a global int down to 0, prints n^k (input n, k), 
+and one which prints twenty added to an input n. 
+
+The functions are as follows: prints from a global int down to 0, prints the nth fibonacci number (input n), 
+and one which adds arbitrary numbers to input n.
