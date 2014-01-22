@@ -5,6 +5,7 @@ func printfunction():boolean{
     result true
 }
 
+%TODO: get rid of var.
 func return_is_equal(var a:integer,var b:integer):boolean{
     var res:boolean
     res:= a = b
@@ -16,7 +17,9 @@ proc printproc(){
     return
 }
 
+%TODO: get rid of var. and add a return to the end? (Not sure if explicit return at end of proc is necessary though)
 proc print_is_equal(var a:integer,var b:integer){
+    %TODO: bad format of if else. if <expression> then <statement> else <statement> fi
     if a = b then 
         put "equal" 
     else 
