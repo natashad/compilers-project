@@ -1,43 +1,49 @@
 {
-% a program using all forms of loop building and loop exit constructs.
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+	% a program using all forms of loop building and loop exit constructs.
+	% AUTHOR: g0alimuh.
+
 	var player1 : integer
 	var player2 : integer
 	var start : boolean
 	var end : boolean
-	
+
 	player1 := 0
 	player2 := 5
 	start := true
 	end := false
-	
+
 	% While-do-end construct
 	while start not = end
 	do
 		start := end
 	end
-	
+
 	% repeat-until construct
 	repeat
 		player1 := player1 + 1
 	until player1 = player2
-	
+
 	% repeat-until construct with exit construct
 	repeat
 		player1 := player1 + 1
-		
+
 		if player1 = 3
 		then
 			exit
 		fi
-		
+
 	until player1 = player2
-	
+
 	% repeat-until construct with exit-when construct
 	repeat
 		player1 := player1 + 1
-		
+
 		exit when player1 = 3
-		
+
 	until player1 = player2
 
 }

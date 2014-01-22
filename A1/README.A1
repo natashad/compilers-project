@@ -13,12 +13,22 @@ g0dalaln (Natasha) wrote program a.
 g0faizan (Faizan) wrote program b.
 g0alimuh (Showzeb) wrote program c.
 g0getter (Tony) wrote program d.
-g3ksing (Karandeep) wrote program e.
+g3ksingh (Karandeep) wrote program e.
+
+Program A
+---------
+A1a makes use of all arithmetic, logical and comparison operators.
+
+Some variables are defined to represent the height, width, and area of a rectangle,
+as well as the base, height, and area of a triangle.
+Based on the results of certain conditional checks, the values of the height and width
+for the rectangle, and those for the triangle are then manipulated.
+This program does nothing that is significantly meaningful beyond making use of all operators.
 
 
 Program B
 ---------
-A1b contains 2 array declarations and 2 Array assignments. 
+A1b contains 2 array declarations and 2 Array assignments.
 The first Array is a 1D array and the second a 2D.
 
 The 1D array declaration uses a positive bound and the following form:
@@ -29,12 +39,12 @@ var arrayName [bound .. bound, bound .. bound] : type
 
 Program E
 ---------
-A1e contains 3 procedures and 3 functions and then calls them in an arbitrary order. 
-For both procedures and functions there is one recursive with parameters, one recursive without parameters, 
-and one which has a nested procedure/function declaration. 
+A1e contains 3 procedures and 3 functions and then calls them in an arbitrary order.
+For both procedures and functions there is one recursive with parameters, one recursive without parameters,
+and one which has a nested procedure/function declaration.
 
-The 3 procedures are as follows: prints from a global int down to 0, prints n^k (input n, k), 
-and one which prints twenty added to an input n. 
+The 3 procedures are as follows: prints from a global int down to 0, prints n^k (input n, k),
+and one which prints twenty added to an input n.
 
-The functions are as follows: prints from a global int down to 0, prints the nth fibonacci number (input n), 
+The functions are as follows: prints from a global int down to 0, prints the nth fibonacci number (input n),
 and one which adds arbitrary numbers to input n.

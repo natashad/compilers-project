@@ -1,5 +1,11 @@
 {
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
 	% a program that uses all arithmetic, logical and comparison operators.
+	% AUTHOR: g0dalaln.
+
 	var rect_width : integer
 	var rect_height : integer
 	var rect_area : integer

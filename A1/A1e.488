@@ -1,7 +1,11 @@
 {
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
 
     % a program using recursive functions and procedures with and without parameters
     % include at least one nested procedure and one nested function declaration
+    % AUTHOR: g3ksingh.
 
     % global variable for recursive procedure without parameter
 
@@ -36,7 +40,7 @@
             put 1
             return
         fi
-        
+
         if k = 1
         then
             put n
@@ -57,7 +61,7 @@
         {
             n := n + 5
         }
-        
+
         addFive ( n )
         put n + 15
         return
@@ -109,7 +113,7 @@
         {
             result n + m
         }
-            
+
         result addMtoN ( 10 ) + addMtoN ( 20 )
 
     }
