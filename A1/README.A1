@@ -36,6 +36,18 @@ var arrayName [bound] : type
 The 2D array declaration uses negative and positive bounds and the following form:
 var arrayName [bound .. bound, bound .. bound] : type
 
+Program C
+---------
+A1C makes use of all forms of loop building and loop exit constructs.
+
+Variables player1 and player2 are declared and assigned values 0 and 5 respectively.
+First loop is a while-do-end loop that increments value of player1 in each iteration and terminates when player1 = player2.
+Second loop is similar to first loop with an exit construct. It will exit the loop if player1 = 3.
+Third loop is similar to first loop with an exit-when construct. It will exit the loop when player1 = 3.
+Fourth loop is a repeat-until loop that increments value of player1 in each iteration until player1 = player2, then it terminates.
+Fifth loop is similar to fourth loop with an exit construct. It will exit the loop if player1 = 3.
+Sixth loop is similar to fourth loop with an exit-when construct. It will exit the loop when player1 = 3.
+
 Program D
 ---------
 A1d contains two functions and two procedures:
