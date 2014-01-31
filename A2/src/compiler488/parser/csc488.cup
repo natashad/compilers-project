@@ -211,7 +211,7 @@ variableNames ::= 	variablename
 					
 bound ::=	INTCONST
 			|
-			generalBound DOT generalBound;
+			generalBound DOT DOT generalBound;
 			
 generalBound ::=	INTCONST
 					|
@@ -289,7 +289,7 @@ logicalExpression ::=	binaryExpression
 						|
 						binaryExpression GREATER binaryExpression
 						|
-						binaryExpression GREATE EQUAL binaryExpression;
+						binaryExpression GREATER EQUAL binaryExpression;
 
 binaryExpression ::= 	multipleExpression
 						|
