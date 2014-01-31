@@ -49,7 +49,7 @@ parser code {:
 		}
             else
                st += " at end of input " ;
-           }
+        }
 	    st += ": " + message;
         System.err.println (st);
         lastError = st;
@@ -135,7 +135,7 @@ start with program;
  * reads one more token before it will act on the production.
  */
 
-program		::=	;				// the main program
+program		::=	scope;				// the main program
 
 /*****************************************************************************
 
@@ -144,3 +144,194 @@ program		::=	;				// the main program
     GOES HERE
 
 ****************************************************************************/
+
+scope ::= 		L_CURLEY declarationList statementList R_CURLEY 
+		  		| 
+		  		L_CURLEY statementList R_CURLEY
+		  		|
+		  		L_CURLEY R_CURLEY;
+
+statementList ::= 	statement
+					|
+					statement statementList;
+
+statement ::= 	variable COLON EQUAL expressionTerminal
+			  	|
+			  	IF expressionTerminal THEN statementList FI
+				|
+			  	IF expressionTerminal THEN statementList ELSE statementList FI
+				|
+				WHILE expressionTerminal DO statementList END
+   				|
+			    REPEAT statementList UNTIL expressionTerminal
+			    |
+			    EXIT
+			    |
+			    EXIT WHEN expressionTerminal
+			    |
+			    RESULT expressionTerminal
+			    |
+			    RETURN
+			    |
+			    PUT outputList
+			    |
+			    GET inputList
+			    |
+			    procedurename L_PAREN argumentList R_PAREN
+			    |
+			    scope;
+			    
+declarationList ::=		declaration
+						|
+						declaration declarationList;
+						
+declaration ::= VAR variableNamesList COLON type
+				|
+				functionHead scope
+				|
+				procedureHead scope
+				|
+				FORWARD functionHead
+				|
+				FORWARD procedureHead;
+				
+functionHead ::=	FUNC functionname L_PAREN parameterList R_PAREN COLON type;
+
+procedureHead ::=	PROCEDURE procedurename L_PAREN parameterList R_PAREN;
+
+variableNamesList ::=	variableNames
+						| 
+						variableNames COMMA variableNamesList;
+
+variableNames ::= 	variablename
+					|
+					variablename L_SQUARE bound R_SQUARE
+					|
+					variablename L_SQUARE bound COMMA bound R_SQUARE;
+					
+bound ::=	INTCONST
+			|
+			generalBound DOT generalBound;
+			
+generalBound ::=	INTCONST
+					|
+					MINUS INTCONST;
+					
+type ::=	INTEGER
+			|
+			BOOLEAN;
+			
+outputList ::=	output
+				|
+				output COMMA outputList;
+			
+output ::=	expressionList
+			|
+			TEXTCONST
+			|
+			NEWLINE;
+				
+inputList ::=	input COMMA input;
+
+input ::=	variable;
+
+argumentList ::= 	argumentsList
+					|
+					//EMPTY
+					;
+					
+argumentsList ::=	arguments
+					|
+					arguments COMMA argumentsList;
+				
+arguments ::=		expressionList;
+
+parameterList ::=	parametersList
+					|
+					//EMPTY
+					;
+					
+parametersList ::=	parameters
+					|
+					parameters COMMA parametersList;
+					
+parameters ::=	parametername COLON type;
+
+variable ::=	variablename
+				|
+				parametername
+				|
+				arrayname L_SQUARE expressionTerminal R_SQUARE
+				|
+				arrayname L_SQUARE expressionTerminal COMMA expressionList R_SQUARE;
+
+orExpression ::=	andExpression
+					| 
+					orExpression OR andExpression;
+					
+andExpression ::=	notExpression
+					|
+					andExpression AND notExpression;
+
+notExpression ::=	logicalExpression
+					|
+					NOT notExpression;
+					
+logicalExpression ::=	binaryExpression	
+						|
+						binaryExpression EQUAL binaryExpression
+						|
+						binaryExpression NOT EQUAL binaryExpression
+						|
+						binaryExpression LESS binaryExpression
+						|
+						binaryExpression LESS EQUAL binaryExpression
+						|
+						binaryExpression GREATER binaryExpression
+						|
+						binaryExpression GREATE EQUAL binaryExpression;
+
+binaryExpression ::= 	multipleExpression
+						|
+						binaryExpression PLUS multipleExpression
+						|
+						binaryExpression MINUS multipleExpression;
+						
+multipleExpression ::= 	unaryExpression
+						|
+						multipleExpression TIMES unaryExpression
+						|
+						multipleExpression DIVIDE unaryExpression;
+
+unaryExpression ::=	expressionTerminal
+					|
+					MINUS unaryExpression;
+					
+expressionTerminal ::= 	orExpression
+						|
+						INTCONST
+						|
+						TRUE
+						|
+						FALSE
+						|
+						L_PAREN expressionTerminal R_PAREN
+						|
+						L_PAREN expressionTerminal QUESTION expressionTerminal COLON expressionTerminal
+						|
+						variable
+						|
+						functionname L_PAREN argumentList R_PAREN; 
+
+variablename ::=	IDENT;
+
+arrayname ::=	IDENT;
+
+functionname ::=	IDENT;
+
+parametername ::=	IDENT;
+
+procedurename ::=	IDENT;
+			
+
+					
