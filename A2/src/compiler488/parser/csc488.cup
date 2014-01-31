@@ -241,7 +241,7 @@ output ::=	expressionTerminal
 				
 inputList ::=	input
 				|
-				input COMMA input;
+				input COMMA inputList;
 
 input ::=	variable;
 
