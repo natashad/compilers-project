@@ -320,9 +320,9 @@ baseExpression ::= 		INTCONST
 						|
 						FALSE
 						|
-						L_PAREN baseExpression R_PAREN
+						L_PAREN expressionTerminal R_PAREN
 						|
-						L_PAREN baseExpression QUESTION baseExpression COLON baseExpression R_PAREN
+						L_PAREN expressionTerminal QUESTION expressionTerminal COLON expressionTerminal R_PAREN
 						|
 						variable
 						|

@@ -1,0 +1,33 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % a program using non-recursive functions and procedures with and without parameters.
+    % AUTHOR: g0getter.
+
+    func printfunction():boolean{
+        put "hello world"
+        result true
+    }
+
+    func return_is_equal(a:integer,b:integer):boolean{
+        var res:boolean
+        res:= a = b
+        result res
+    }
+
+    proc printproc(){
+        put "hello world"
+        return
+    }
+
+    proc print_is_equal(a:integer,b:integer){
+        if a = b then
+            put "equal"
+        else
+            put "not equal"
+        fi
+        return
+    }
+}
