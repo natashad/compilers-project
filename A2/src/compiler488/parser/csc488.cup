@@ -317,7 +317,7 @@ expressionTerminal ::= 	orExpression
 						|
 						L_PAREN expressionTerminal R_PAREN
 						|
-						L_PAREN expressionTerminal QUESTION expressionTerminal COLON expressionTerminal
+						L_PAREN expressionTerminal QUESTION expressionTerminal COLON expressionTerminal R_PAREN
 						|
 						variable
 						|
