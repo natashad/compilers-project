@@ -119,8 +119,7 @@ nonterminal bound, generalBound, type, outputList, output, inputList, input;
 nonterminal argumentList, argumentsList, arguments, parameterList, parametersList;
 nonterminal parameters, variable, orExpression, andExpression, notExpression;
 nonterminal logicalExpression, binaryExpression, multipleExpression, unaryExpression;
-nonterminal baseExpression, expressionTerminal, variablename, arrayname, functionname;
-nonterminal parametername, procedurename;
+nonterminal baseExpression, expressionTerminal;
 
 // Non-terminals that have a value.
 // nonterminal type  nameList ;
@@ -179,7 +178,7 @@ statement ::= 	variable COLON EQUAL expressionTerminal
 			    |
 			    GET inputList
 			    |
-			    procedurename L_PAREN argumentList R_PAREN
+			    IDENT L_PAREN argumentList R_PAREN
 			    |
 			    scope;
 			    
@@ -203,19 +202,19 @@ declaration ::= VAR variableNamesList COLON type
 				|
 				FORWARD procedureHead;
 				
-functionHead ::=	FUNC functionname L_PAREN parameterList R_PAREN COLON type;
+functionHead ::=	FUNC IDENT L_PAREN parameterList R_PAREN COLON type;
 
-procedureHead ::=	PROCEDURE procedurename L_PAREN parameterList R_PAREN;
+procedureHead ::=	PROCEDURE IDENT L_PAREN parameterList R_PAREN;
 
 variableNamesList ::=	variableNames
 						| 
 						variableNames COMMA variableNamesList;
 
-variableNames ::= 	variablename
+variableNames ::= 	IDENT
 					|
-					variablename L_SQUARE bound R_SQUARE
+					IDENT L_SQUARE bound R_SQUARE
 					|
-					variablename L_SQUARE bound COMMA bound R_SQUARE;
+					IDENT L_SQUARE bound COMMA bound R_SQUARE;
 					
 bound ::=	INTCONST
 			|
@@ -265,15 +264,13 @@ parametersList ::=	parameters
 					|
 					parameters COMMA parametersList;
 					
-parameters ::=	parametername COLON type;
+parameters ::=	IDENT COLON type;
 
-variable ::=	variablename
+variable ::=	IDENT
 				|
-				parametername
+				IDENT L_SQUARE expressionTerminal R_SQUARE
 				|
-				arrayname L_SQUARE expressionTerminal R_SQUARE
-				|
-				arrayname L_SQUARE expressionTerminal COMMA expressionTerminal R_SQUARE;
+				IDENT L_SQUARE expressionTerminal COMMA expressionTerminal R_SQUARE;
 
 orExpression ::=	andExpression
 					| 
@@ -329,17 +326,6 @@ baseExpression ::= 		INTCONST
 						|
 						variable
 						|
-						functionname L_PAREN argumentList R_PAREN;
+						IDENT L_PAREN argumentList R_PAREN;
 					
 expressionTerminal ::= 	orExpression;
-						 
-
-variablename ::=	IDENT;
-
-arrayname ::=	IDENT;
-
-functionname ::=	IDENT;
-
-parametername ::=	IDENT;
-
-procedurename ::=	IDENT;				
