@@ -113,6 +113,14 @@ terminal String  TEXTCONST	;
 // nonterminal xxx
 
 nonterminal	program ;
+nonterminal statementList, statement, scope, declarationList, declaration; 
+nonterminal functionHead, procedureHead, variableNamesList, variableNames; 
+nonterminal bound, generalBound, type, outputList, output, inputList, input;
+nonterminal argumentList, argumentsList, arguments, parameterList, parametersList;
+nonterminal parameters, variable, orExpression, andExpression, notExpression;
+nonterminal logicalExpression, binaryExpression, multipleExpression, unaryExpression;
+nonterminal baseExpression, expressionTerminal, variablename, arrayname, functionname;
+nonterminal parametername, procedurename;
 
 // Non-terminals that have a value.
 // nonterminal type  nameList ;
@@ -145,12 +153,6 @@ program		::=	scope;				// the main program
 
 ****************************************************************************/
 
-scope ::= 		L_CURLEY declarationList statementList R_CURLEY 
-		  		| 
-		  		L_CURLEY statementList R_CURLEY
-		  		|
-		  		L_CURLEY R_CURLEY;
-
 statementList ::= 	statement
 					|
 					statement statementList;
@@ -180,6 +182,12 @@ statement ::= 	variable COLON EQUAL expressionTerminal
 			    procedurename L_PAREN argumentList R_PAREN
 			    |
 			    scope;
+			    
+scope ::= 		L_CURLEY declarationList statementList R_CURLEY 
+		  		| 
+		  		L_CURLEY statementList R_CURLEY
+		  		|
+		  		L_CURLEY R_CURLEY;
 			    
 declarationList ::=		declaration
 						|
@@ -225,13 +233,15 @@ outputList ::=	output
 				|
 				output COMMA outputList;
 			
-output ::=	expressionList
+output ::=	expressionTerminal
 			|
 			TEXTCONST
 			|
 			NEWLINE;
 				
-inputList ::=	input COMMA input;
+inputList ::=	input
+				|
+				input COMMA input;
 
 input ::=	variable;
 
@@ -244,7 +254,7 @@ argumentsList ::=	arguments
 					|
 					arguments COMMA argumentsList;
 				
-arguments ::=		expressionList;
+arguments ::=		expressionTerminal;
 
 parameterList ::=	parametersList
 					|
@@ -263,7 +273,7 @@ variable ::=	variablename
 				|
 				arrayname L_SQUARE expressionTerminal R_SQUARE
 				|
-				arrayname L_SQUARE expressionTerminal COMMA expressionList R_SQUARE;
+				arrayname L_SQUARE expressionTerminal COMMA expressionTerminal R_SQUARE;
 
 orExpression ::=	andExpression
 					| 
@@ -303,25 +313,26 @@ multipleExpression ::= 	unaryExpression
 						|
 						multipleExpression DIVIDE unaryExpression;
 
-unaryExpression ::=	expressionTerminal
+unaryExpression ::=	baseExpression
 					|
 					MINUS unaryExpression;
-					
-expressionTerminal ::= 	orExpression
-						|
-						INTCONST
+				
+baseExpression ::= 		INTCONST
 						|
 						TRUE
 						|
 						FALSE
 						|
-						L_PAREN expressionTerminal R_PAREN
+						L_PAREN baseExpression R_PAREN
 						|
-						L_PAREN expressionTerminal QUESTION expressionTerminal COLON expressionTerminal R_PAREN
+						L_PAREN baseExpression QUESTION baseExpression COLON baseExpression R_PAREN
 						|
 						variable
 						|
-						functionname L_PAREN argumentList R_PAREN; 
+						functionname L_PAREN argumentList R_PAREN;
+					
+expressionTerminal ::= 	orExpression;
+						 
 
 variablename ::=	IDENT;
 
@@ -331,7 +342,4 @@ functionname ::=	IDENT;
 
 parametername ::=	IDENT;
 
-procedurename ::=	IDENT;
-			
-
-					
+procedurename ::=	IDENT;				
