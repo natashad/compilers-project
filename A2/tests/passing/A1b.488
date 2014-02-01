@@ -8,7 +8,10 @@
 
 	var natasha [5] : integer  % Declare Array with bound 5 and integer as type
 	var faizan [-2 .. 1, -2 .. 2] : integer % Declare 2D array with negative bounds and integer as type
-
+    var showzeb : integer
+    
 	faizan[ 0 , 0 ] := 5
 	natasha[ 3 ] := 4
+	showzeb := faizan[ 0, 0 ]
+	faizan[0, 0] := natasha[ 3 ] - showzeb
 }

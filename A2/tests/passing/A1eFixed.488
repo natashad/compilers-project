@@ -1,0 +1,138 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % a program using recursive functions and procedures with and without parameters
+    % include at least one nested procedure and one nested function declaration
+    % AUTHOR: g3ksingh.
+
+    % global variable for recursive procedure without parameter
+
+    var globalOne : integer
+    
+    var x : integer
+    var y : integer
+    var z : integer
+
+	var globalTwo : integer
+    % recursive procedure without parameter
+    % prints from globalOne to 0, changes globalOne to 0
+
+    proc printGlobalOneToZero ( )
+    {
+        if globalOne = 0
+        then
+            put globalOne
+            return
+        fi
+
+        put globalOne
+        globalOne := globalOne - 1
+        printGlobalOneToZero ( )
+        return
+    }
+
+    % recursive procedure with parameter
+    % prints n^k
+
+    proc power ( n : integer , k : integer )
+
+    {
+        if k = 0
+        then
+            put 1
+            return
+        fi
+
+        if k = 1
+        then
+            put n
+            return
+        fi
+
+        n := n * n
+        power ( n , k - 1 )
+        return
+    }
+
+    % nested procedure declaration
+    % prints twenty added to an integer
+
+    proc addTwenty ( n : integer )
+    {
+        proc addFive ( n : integer)
+        {
+            n := n + 5
+        }
+
+        addFive ( n )
+        put n + 15
+        return
+
+    }
+
+    % global variable for recursive function without parameter
+
+   
+    
+
+    % recursive function without parameter
+    % prints from globalTwo to 0, changes globalTwo to 0, returns 1
+
+    func printGlobalTwoToZero ( ) : integer
+    {
+        if globalTwo = 0
+        then
+            put globalTwo
+            result 1
+        fi
+
+        put globalTwo
+        globalTwo := globalTwo - 1
+        printGlobalTwoToZero ( )
+        result 1
+    }
+
+    % recursive function with parameter
+    % calculates the nth fibonacci number
+    func fibonacci ( n : integer ) : integer
+    {
+        if ( n = 0 ) or ( n = 1 )
+        then
+            result 1
+        fi
+
+        result fib ( n - 1 ) + fib ( n - 2 )
+
+    }
+
+
+    % nested function declaration
+    % returns some arbitrary numbers added to given n
+
+    func addToN ( n : integer ) : integer
+    {
+        func addMtoN ( m : integer ) : integer
+        {
+            result n + m
+        }
+
+        result addMtoN ( 10 ) + addMtoN ( 20 )
+
+    }
+
+    % calling the functions and procedures
+	globalTwo := 10
+	globalOne := 5
+    printGlobalOneToZero ( )
+    printGlobalTwoToZero ( )
+
+	
+    x := 10
+    addTwenty ( x )
+    y := addToN ( x )
+    z := fibonacci ( y )
+    power ( z , 2 )
+}
+
