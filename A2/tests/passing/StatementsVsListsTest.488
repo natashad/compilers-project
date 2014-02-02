@@ -31,6 +31,10 @@
 	if b1 = b2  then
             put -5
             put b1, 5, 8, true, false
+            put b1 + b2 , newline %Testing newline
+            put "TEST"  %Testing put text
+             
+            
     fi
     
     if b1 not = b3 then
