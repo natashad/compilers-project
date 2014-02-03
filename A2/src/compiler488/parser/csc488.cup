@@ -314,10 +314,6 @@ unaryExpression ::=	baseExpression
 					|
 					MINUS unaryExpression;
 				
-//Hmm... When reading this I'm starting to wonder whether I should have added expression terminal to this list also.
-//that would allow 5+2 to go into unarty expression and become -5+2. THOUGHTS? 
-//I think that breaks the idea of operator precedence. But now Im confused.
-//Additionally, I also want to rename expressionTerminal to something else, that name is kind of confusing!
 baseExpression ::= 		INTCONST
 						|
 						TRUE
