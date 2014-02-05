@@ -119,7 +119,7 @@ nonterminal bound, generalBound, type, outputList, output, inputList, input;
 nonterminal argumentList, argumentsList, arguments, parameterList, parametersList;
 nonterminal parameters, variable, orExpression, andExpression, notExpression;
 nonterminal logicalExpression, binaryExpression, multipleExpression, unaryExpression;
-nonterminal baseExpression, expressionTerminal;
+nonterminal baseExpression, finalExpression;
 
 // Non-terminals that have a value.
 // nonterminal type  nameList ;
@@ -156,21 +156,21 @@ statementList ::= 	statement
 					|
 					statement statementList;
 
-statement ::= 	variable COLON EQUAL expressionTerminal
+statement ::= 	variable COLON EQUAL finalExpression
 			  	|
-			  	IF expressionTerminal THEN statementList FI
+			  	IF finalExpression THEN statementList FI
 				|
-			  	IF expressionTerminal THEN statementList ELSE statementList FI
+			  	IF finalExpression THEN statementList ELSE statementList FI
 				|
-				WHILE expressionTerminal DO statementList END
+				WHILE finalExpression DO statementList END
    				|
-			    REPEAT statementList UNTIL expressionTerminal
+			    REPEAT statementList UNTIL finalExpression
 			    |
 			    EXIT
 			    |
-			    EXIT WHEN expressionTerminal
+			    EXIT WHEN finalExpression
 			    |
-			    RESULT expressionTerminal
+			    RESULT finalExpression
 			    |
 			    RETURN
 			    |
@@ -232,7 +232,7 @@ outputList ::=	output
 				|
 				output COMMA outputList;
 			
-output ::=	expressionTerminal
+output ::=	finalExpression
 			|
 			TEXTCONST
 			|
@@ -253,7 +253,7 @@ argumentsList ::=	arguments
 					|
 					arguments COMMA argumentsList;
 				
-arguments ::=		expressionTerminal;
+arguments ::=		finalExpression;
 
 parameterList ::=	parametersList
 					|
@@ -268,9 +268,9 @@ parameters ::=	IDENT COLON type;
 
 variable ::=	IDENT
 				|
-				IDENT L_SQUARE expressionTerminal R_SQUARE
+				IDENT L_SQUARE finalExpression R_SQUARE
 				|
-				IDENT L_SQUARE expressionTerminal COMMA expressionTerminal R_SQUARE;
+				IDENT L_SQUARE finalExpression COMMA finalExpression R_SQUARE;
 
 orExpression ::=	andExpression
 					| 
@@ -320,13 +320,13 @@ baseExpression ::= 		INTCONST
 						|
 						FALSE
 						|
-						L_PAREN expressionTerminal R_PAREN
+						L_PAREN finalExpression R_PAREN
 						|
-						L_PAREN expressionTerminal QUESTION expressionTerminal COLON expressionTerminal R_PAREN
+						L_PAREN finalExpression QUESTION finalExpression COLON finalExpression R_PAREN
 						|
 						variable
 						|
 						IDENT L_PAREN argumentList R_PAREN;
 						
 					
-expressionTerminal ::= 	orExpression;
+finalExpression ::= 	orExpression;
