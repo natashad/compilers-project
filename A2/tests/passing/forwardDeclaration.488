@@ -1,0 +1,21 @@
+{
+
+    % A test for forward declarations of procedures and integers
+
+    forward func add ( x : integer , y : integer ) : integer
+
+    forward proc printInt ( x : integer )
+
+    func add ( x : integer , y : integer ) : integer
+    {
+        result x + y
+    }
+    
+    proc printInt ( x : integer )
+    {
+        put x
+    }
+
+    put add(2, 2)
+    printInt(3)
+}

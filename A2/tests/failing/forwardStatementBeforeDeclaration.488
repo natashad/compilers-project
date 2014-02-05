@@ -1,0 +1,12 @@
+{
+    % Calling a function before function declaration but after a forward declaration.
+
+    forward func add ( x : integer , y : integer ) : integer
+
+    put add(2, 2)
+
+    func add ( x : integer , y : integer ) : integer
+    {
+        result x + y
+    }
+}
