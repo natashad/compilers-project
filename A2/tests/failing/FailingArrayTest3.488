@@ -1,0 +1,6 @@
+{
+    % Test for failed multiple variable declarations
+
+    % need to be comma separated
+    var x y:boolean
+}

@@ -1,0 +1,6 @@
+{
+    % Test for failing array declaration.
+
+    % Too many .s in the generalBound
+    var array[3...2]: int
+}

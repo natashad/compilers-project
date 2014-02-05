@@ -1,0 +1,6 @@
+{
+    % Test for failing array declaration.
+
+    %3D array is not a thing.
+    var array[-3,2,0]: int
+}

@@ -1,0 +1,6 @@
+{
+    % Test for failing array declaration.
+
+    % Incorrect 2D Declaration
+    var array[3][2]: int
+}

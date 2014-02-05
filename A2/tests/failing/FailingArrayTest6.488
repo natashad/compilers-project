@@ -1,0 +1,6 @@
+{
+    % Test for failing array declaration.
+
+    % No type.
+    var array[3..8]
+}

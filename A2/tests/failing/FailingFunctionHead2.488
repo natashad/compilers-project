@@ -1,0 +1,12 @@
+{
+
+% Another test for failing Function Heads
+
+% Incorrect parameterList
+func aFailedFunction (int something) : integer {
+    result something
+}
+
+put "End of Program"
+
+}
