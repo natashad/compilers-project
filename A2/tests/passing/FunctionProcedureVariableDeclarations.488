@@ -1,0 +1,31 @@
+{
+% test for correct use of functionHead %
+forward func addThree ( oneParameter:integer , addFourInstead: boolean) : integer
+
+% test for correct use of procedureHead %
+forward proc printFive ()
+
+% Declared forward but didn't define function. Shouldn't matter.
+
+% Procedure Declaration.
+
+% This is taking a parameter though the forward declaration of it doesn't. Shouldn't matter for parse.
+proc printFive(numberOfTimes:integer) {
+    var i : integer
+    i := 0
+    while (i < numberOfTimes)
+    do
+        put 5
+    end
+}
+
+% test for correct use of variablemames %
+var myInteger : integer
+var myArray [6] : integer
+var myBooleanArray[-5..7] : boolean
+var myOtherBooleanArray[4, 2..9] : boolean
+var something, somethingelse : integer
+
+
+put "End of Program"
+}

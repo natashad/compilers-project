@@ -6,23 +6,26 @@
     % a program using non-recursive functions and procedures with and without parameters.
     % AUTHOR: g0getter.
 
+
+    % DECLARATIONS $
+
     func printfunction():boolean{
         put "hello world"
         result true
     }
 
-    func return_is_equal(a:integer,b:integer):boolean{
+    func return_is_equal(a:integer,b:integer):boolean {
         var res:boolean
         res:= a = b
         result res
     }
 
-    proc printproc(){
+    proc printproc() {
         put "hello world"
         return
     }
 
-    proc print_is_equal(a:integer,b:integer){
+    proc print_is_equal(a:integer,b:integer) {
         if a = b then
             put "equal"
         else
@@ -30,15 +33,20 @@
         fi
         return
     }
-    
-    if printfunction() then
-        put "output works"
-    return_is_equal(1,1)
-    printproc()
+
     var a:integer
     var b:integer
+
+    % STATEMENTS %
+
+    if printfunction() then
+        put "output works"
+    fi
+
     a:= 1
     b:= 2
-    print_is_equal(a,b)
-    print_is_equal(a:=3,b:=3)
+
+    print_is_equal(a, b)
+    print_is_equal(a+3, b-2)
+
 }
