@@ -30,5 +30,15 @@
         fi
         return
     }
-    printfunction()
+    
+    if printfunction() then
+        put "output works"
+    return_is_equal(1,1)
+    printproc()
+    var a:integer
+    var b:integer
+    a:= 1
+    b:= 2
+    print_is_equal(a,b)
+    print_is_equal(a:=3,b:=3)
 }

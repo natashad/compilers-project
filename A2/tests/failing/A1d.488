@@ -30,4 +30,8 @@
         fi
         return
     }
+    
+    print_is_equal(var a:integer,var b:integer)
+    print_is_equal(true, true)
+    
 }
