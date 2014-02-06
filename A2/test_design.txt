@@ -18,6 +18,7 @@ A1eFixed.488 - a program using recursive functions and procedures with and witho
 forwardDeclaration.488 - A test for forward declarations of procedures and integers
 FunctionProcedureVariableDeclaration.488 - Test of correct syntax for: functionHead, procedureHead, variable declarations.
 StatementsVsListsTest.488 - Test of using multiple statements vs a single statement in if conditions, while loops and repeat loops.
+nestedFunctions.488 - Test of nesting functions inside other functions.
 Variables.488 - Test of correct syntax in the declaration and use of variables.
 passingAssociativity0.488 - Test to see if level 0 operators associate
 passingAssociativity1.488 - Test to see if level 1 operators associate
@@ -51,6 +52,12 @@ failingProcedureHead.488 - Test for failing procedureHeads when there is no para
 failingProcedureHead2.488 - Test for failing procedureHeads when there is no scope
 incorrectTypeUsage.488 - Test for incorrect types
 mismatchedBrace.488 - Tests to make sure that it fails if there is a brace mismatch
+
 ====================================================
                     How We Tested
 ====================================================
+First, We took our programs from A1 and fixed the errors and used them as tests.
+Secondly, We split up the grammar into multiple parts and each member created exhaustive test cases for their parts. This allowed us 
+to cover each aspect of the grammar more thoroughly and pay attention to detail.
+Each member was responsible to create passing and failing tests to ensure we tested both correct and incorrect syntax.
+ 
