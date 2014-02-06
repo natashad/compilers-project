@@ -1,3 +1,10 @@
+%TODO:
+Test for procedureHead as done in FailingFunctionHead tests.
+Test for incorrect type: i.e. try using int instead of integer, or double or something that isn't defined.
+More tests for associativity, success + failure: e.g. (not not a) should parsee, but (not not) a should not. Also things a>b>c should not, but a +b +c should.
+
+
+
 % CSC488 -- WINTER 2014:
 % Group 2.
 % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
@@ -25,19 +32,19 @@ A1d.488 - a program using non-recursive functions and procedures with and withou
         - Fails because there are declarations but no statements in the scope.
 A1e.488 - a program using recursive functions and procedures with and without parameters
         - including one nested procedure and one nested function declaration. Fails because of
-        - mixing of declaration and statments in scope
+        - Declarations defined after statements in scope.
 FailingArgumentList.488 - Test using an incorect argument list. Arguments are given types.
 FailingArrayTest.488 - Bad array declaration. Attempted 3D Declaration.
-FailingArrayTest2.488 - Bad 2D array declaration. Written in java format. i.e. array[a][b]
-FailingArrayTest3.488
-FailingArrayTest4.488
-FailingArrayTest5.488
-FailingArrayElementAsVariable.488
-FailingFunctionHead1.488
-FailingFunctionHead2.488
-FailingMultipleVariableDeclaration.488
-forwardStatementBeforeDeclaration.488
-Associativity.488
+FailingArrayTest2.488 - Bad 2D array DECLARATION. Written in java format. i.e. array[a][b]
+FailingArrayTest3.488 - Array Declared without a type.
+FailingArrayTest4.488 - Attempt to declare an array using an expression to calculate bounds within declaration.
+FailingArrayTest5.488 - Bad syntax for array with Left and Right bounds. Extra '.'
+FailingArrayElementAsVariable.488 - Attempting to ACCESS a 2D array in a Java-esque way i.e. array[a][b]
+FailingFunctionHead1.488 - Function declared without a return type.
+FailingFunctionHead2.488 - Function parameters declared in java/c-esque way: e.g. functioname(int a)
+FailingMultipleVariableDeclaration.488 - Multiple variables declared inline without being comma separated.
+forwardStatementBeforeDeclaration.488 - Declarations after statements in scope.
+Associativity.488 - Test for associativity a = b = c.
 
 
 ====================================================
