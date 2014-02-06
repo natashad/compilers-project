@@ -1,0 +1,19 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g3ksingh
+
+    % Test to see if level 1 operators associate
+
+    var x : integer
+    x := 3 * 3 * 3
+
+    if x = 27
+    then
+        put "Level 1 operators associate"
+    fi
+    put "Level 1 operators are not associating?"
+}

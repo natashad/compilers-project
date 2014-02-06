@@ -1,0 +1,19 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g3ksingh
+
+    % Test to see if level 6 operators associate
+
+    var x : boolean
+    x := false
+
+    if x or true  
+    then
+        put "Level 6 operators associate"
+    fi
+    put "Level 6 operators are not associating?"
+}

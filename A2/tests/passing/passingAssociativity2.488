@@ -1,0 +1,19 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g3ksingh
+
+    % Test to see if level 2 operators associate correctly
+
+    var x : integer
+    x := 3 + 3 - 3
+
+    if x = 3
+    then
+        put "Level 2 operators associate correctly "
+    fi
+    put "Level 2 operators are not associating correctly?"
+}
