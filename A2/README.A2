@@ -9,4 +9,42 @@ g0alimuh - Showzeb Ali
 g3ksingh - Karandeep Basi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-g0dalaln - Wrote the grammar in csc488.cups. Wrote the doc for the grammar.
+g0dalaln - Wrote the grammar in csc488.cups. Wrote the document for the grammar.
+           (Note: Everybody else reviewed the grammar and the doc).
+         - Wrote test cases for correct and failing syntax for :
+                - functionHead
+                - procedureHead
+                - variableNames
+                - bound
+                - generalBound.
+
+g0getter - Reviewed Grammar and document.
+         - Wrote test cases for correct and failing syntax for :
+                - type
+                - output
+                - input
+                - argumentList
+                - arguments
+                - parameterList
+                - parameters
+                - variables.
+
+g0faizan - Reviewed Grammar and document.
+         - Wrote test cases for correct and failing syntax for :
+            - statement
+            - scope
+            - declaration
+            - fixed broken tests from A1
+
+g0alimuh - Reviewed Grammar and document.
+         - Wrote test cases for correct and failing syntax for :
+            - All of the expressions
+
+g3ksingh - Reviewed Grammar and document.
+         - Wrote test cases for correct and failing syntax for various cases across
+           the grammar that hadn't been tested by others.
+
+DOCUMENTS:
+
+There is a Design.pdf document that describes the design of the grammar.
+There is a test_design.txt file that describes the design of tests and an index of the tests.
