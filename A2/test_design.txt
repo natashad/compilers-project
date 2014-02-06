@@ -1,6 +1,4 @@
 %TODO:
-Test for procedureHead as done in FailingFunctionHead tests.
-Test for incorrect type: i.e. try using int instead of integer, or double or something that isn't defined.
 More tests for associativity, success + failure: e.g. (not not a) should parsee, but (not not) a should not. Also things a>b>c should not, but a +b +c should.
 Mismatched parens.
 
@@ -47,7 +45,9 @@ FailingFunctionHead2.488 - Function parameters declared in java/c-esque way: e.g
 FailingMultipleVariableDeclaration.488 - Multiple variables declared inline without being comma separated.
 forwardStatementBeforeDeclaration.488 - Declarations after statements in scope.
 Associativity.488 - Test for associativity a = b = c.
-
+failingProcedureHead.488 - Test for failing procedureHeads when there is no paramater list given
+failingProcedureHead2.488 - Test for failing procedureHeads when there is no scope
+incorrectTypeUsage.488 - Test for incorrect types
 
 ====================================================
                     How We Tested
