@@ -1,8 +1,3 @@
-%TODO:
-More tests for associativity, failure: e.g. but (not not) a should not. Also things a>b>c should not
-
-
-
 % CSC488 -- WINTER 2014:
 % Group 2.
 % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
@@ -50,6 +45,8 @@ FailingFunctionHead2.488 - Function parameters declared in java/c-esque way: e.g
 FailingMultipleVariableDeclaration.488 - Multiple variables declared inline without being comma separated.
 forwardStatementBeforeDeclaration.488 - Declarations after statements in scope.
 Associativity.488 - Test for associativity a = b = c.
+Associativity1.488 - Test to make sure level 3 operators don't associate
+Associativity2.488 - Test to make sure incorrect usage of associative operators fail
 failingProcedureHead.488 - Test for failing procedureHeads when there is no paramater list given
 failingProcedureHead2.488 - Test for failing procedureHeads when there is no scope
 incorrectTypeUsage.488 - Test for incorrect types
