@@ -54,6 +54,7 @@ Associativity.488 - Test for associativity a = b = c.
 failingProcedureHead.488 - Test for failing procedureHeads when there is no paramater list given
 failingProcedureHead2.488 - Test for failing procedureHeads when there is no scope
 incorrectTypeUsage.488 - Test for incorrect types
+mismatchedBrace.488 - Tests to make sure that it fails if there is a brace mismatch
 ====================================================
                     How We Tested
 ====================================================
