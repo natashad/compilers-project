@@ -1,0 +1,17 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g3ksingh
+
+    % Test for failing procedureHeads when there is no scope
+
+
+    % Missing scope
+    proc aFailingProcedure ()
+
+    put "End of Program"
+
+}
