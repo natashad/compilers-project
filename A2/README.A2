@@ -39,6 +39,7 @@ g0faizan - Reviewed Grammar and document.
 g0alimuh - Reviewed Grammar and document.
          - Wrote test cases for correct and failing syntax for :
             - All of the expressions
+         - Wrote the RUNALLTESTS script.
 
 g3ksingh - Reviewed Grammar and document.
          - Wrote test cases for correct and failing syntax for various cases across

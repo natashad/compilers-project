@@ -3,6 +3,8 @@
     % Group 2.
     % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
 
+    % Author: g0getter
+
     proc print_is_equal(a:integer,b:integer){
         if a = b then
             put "equal"

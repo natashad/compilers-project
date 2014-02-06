@@ -1,0 +1,42 @@
+% CSC488 -- WINTER 2014:
+% Group 2.
+% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+=================================================
+                INDEX OF TESTS
+=================================================
+
+Passing Tests:
+--------------
+
+A1a.488
+A1b.488
+A1c.488
+A1dFixed.488
+A1eFixed.488
+forwardDeclaration.488
+FunctionProcedureVariableDeclaration.488
+StatementsVsListsTest.488
+Variables.488
+
+Failing Tests:
+--------------
+A1d.488
+A1e.488
+FailingArgumentList.488
+FailingArrayTest2.488
+FailingArrayTest5.488
+FailingFunctionHead2.488
+FailingArrayElementAsVariable.488
+FailingArrayTest3.488
+FailingArrayTest6.488
+forwardStatementBeforeDeclaration.488
+Associativity.488
+FailingArrayTest.488
+FailingArrayTest4.488
+FailingFunctionHead1.488
+
+
+====================================================
+                    How We Tested
+====================================================
