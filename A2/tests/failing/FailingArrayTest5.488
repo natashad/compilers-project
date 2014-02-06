@@ -1,4 +1,10 @@
 {
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0dalaln
+
     % Test for failing array declaration.
 
     % Too many .s in the generalBound

@@ -5,12 +5,12 @@
 
     % a program using recursive functions and procedures with and without parameters
     % include at least one nested procedure and one nested function declaration
-    % AUTHOR: g3ksingh.
+    % AUTHOR: g3ksingh / fixed by g0faizan.
 
     % global variable for recursive procedure without parameter
 
     var globalOne : integer
-    
+
     var x : integer
     var y : integer
     var z : integer
@@ -74,8 +74,8 @@
 
     % global variable for recursive function without parameter
 
-   
-    
+
+
 
     % recursive function without parameter
     % prints from globalTwo to 0, changes globalTwo to 0, returns 1
@@ -128,7 +128,7 @@
     printGlobalOneToZero ( )
     printGlobalTwoToZero ( )
 
-	
+
     x := 10
     addTwenty ( x )
     y := addToN ( x )

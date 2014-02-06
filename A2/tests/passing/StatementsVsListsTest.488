@@ -1,46 +1,50 @@
 {
-	
-	
+	% CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0faizan
+
 	var b1 : integer
 	var b2 : integer
 	var b3 : integer
-	
+
 	forward func test () : boolean  %Test forward functions and procedure declaration
 	forward proc test ()
-	
-	
+
+
 	%Testing nested functions
-	func test_nested_functions () : integer 
+	func test_nested_functions () : integer
 	{
-		
+
 		func nested_functions () : boolean
 		{
 			result true
 		}
 		result 5
-		
+
 	}
-	
-	
-	
+
+
+
 	b1 := 1
 	b2 := 1
 	b3 := 1
-	
+
 	%Testing multiple statements (Statement Lists)
 	if b1 = b2  then
             put -5
             put b1, 5, 8, true, false
             put b1 + b2 , newline %Testing newline
             put "TEST"  %Testing put text
-             
-            
+
+
     fi
-    
+
     if b1 not = b3 then
     	put not 5 + 3              %Don't know what this would output but should be valid according to the language
     fi
-    
-    
+
+
 
 }
