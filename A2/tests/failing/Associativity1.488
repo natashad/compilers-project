@@ -1,0 +1,17 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g3ksingh
+
+    % Test to make sure level 3 operators don't associate
+
+    if 3 > 2 > 1
+    then
+	put "Level 3 operators don't associate?!?"
+    fi
+
+    put "End of Program"
+}
