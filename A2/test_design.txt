@@ -25,6 +25,12 @@ forwardDeclaration.488 - A test for forward declarations of procedures and integ
 FunctionProcedureVariableDeclaration.488 - Test of correct syntax for: functionHead, procedureHead, variable declarations.
 StatementsVsListsTest.488 - Test of using multiple statements vs a single statement in if conditions, while loops and repeat loops.
 Variables.488 - Test of correct syntax in the declaration and use of variables.
+passingAssociativity0.488 - Test to see if level 0 operators associate
+passingAssociativity1.488 - Test to see if level 1 operators associate
+passingAssociativity2.488 - Test to see if level 2 operators associate
+passingAssociativity4.488 - Test to see if level 4 operators associate
+passingAssociativity5.488 - Test to see if level 5 operators associate
+passingAssociativity6.488 - Test to see if level 6 operators associate
 
 Failing Tests:
 --------------
@@ -48,7 +54,6 @@ Associativity.488 - Test for associativity a = b = c.
 failingProcedureHead.488 - Test for failing procedureHeads when there is no paramater list given
 failingProcedureHead2.488 - Test for failing procedureHeads when there is no scope
 incorrectTypeUsage.488 - Test for incorrect types
-
 ====================================================
                     How We Tested
 ====================================================
