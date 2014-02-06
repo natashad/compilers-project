@@ -21,20 +21,23 @@ Variables.488
 
 Failing Tests:
 --------------
-A1d.488
-A1e.488
-FailingArgumentList.488
-FailingArrayTest2.488
-FailingArrayTest5.488
-FailingFunctionHead2.488
-FailingArrayElementAsVariable.488
+A1d.488 - a program using non-recursive functions and procedures with and without parameters.
+        - Fails because there are declarations but no statements in the scope.
+A1e.488 - a program using recursive functions and procedures with and without parameters
+        - including one nested procedure and one nested function declaration. Fails because of
+        - mixing of declaration and statments in scope
+FailingArgumentList.488 - Test using an incorect argument list. Arguments are given types.
+FailingArrayTest.488 - Bad array declaration. Attempted 3D Declaration.
+FailingArrayTest2.488 - Bad 2D array declaration. Written in java format. i.e. array[a][b]
 FailingArrayTest3.488
-FailingArrayTest6.488
+FailingArrayTest4.488
+FailingArrayTest5.488
+FailingArrayElementAsVariable.488
+FailingFunctionHead1.488
+FailingFunctionHead2.488
+FailingMultipleVariableDeclaration.488
 forwardStatementBeforeDeclaration.488
 Associativity.488
-FailingArrayTest.488
-FailingArrayTest4.488
-FailingFunctionHead1.488
 
 
 ====================================================

@@ -5,6 +5,8 @@
 
     % Author: g0getter
 
+    % test to pass in bad argument list to a procedure
+
     proc print_is_equal(a:integer,b:integer){
         if a = b then
             put "equal"

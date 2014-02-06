@@ -6,8 +6,8 @@
 
     % AUTHOR: g0dalaln
 
-    % Test for failed multiple variable declarations
+    % Test for failing array declaration.
 
-    % need to be comma separated
-    var x y:boolean
+    % No type.
+    var array[3..8]
 }
