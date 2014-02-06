@@ -9,7 +9,7 @@
     % Test for incorrect types
 
 
-    % Missing return type
+    % Incorrect return type
     func aFailingFunction () : int
     {
         result 3
