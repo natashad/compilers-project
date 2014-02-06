@@ -1,5 +1,5 @@
 %TODO:
-More tests for associativity, success + failure: e.g. (not not a) should parsee, but (not not) a should not. Also things a>b>c should not, but a +b +c should.
+More tests for associativity, failure: e.g. but (not not) a should not. Also things a>b>c should not
 Mismatched parens.
 
 
