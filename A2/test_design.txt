@@ -2,6 +2,7 @@
 Test for procedureHead as done in FailingFunctionHead tests.
 Test for incorrect type: i.e. try using int instead of integer, or double or something that isn't defined.
 More tests for associativity, success + failure: e.g. (not not a) should parsee, but (not not) a should not. Also things a>b>c should not, but a +b +c should.
+Mismatched parens.
 
 
 
@@ -16,15 +17,16 @@ More tests for associativity, success + failure: e.g. (not not a) should parsee,
 Passing Tests:
 --------------
 
-A1a.488
-A1b.488
-A1c.488
-A1dFixed.488
-A1eFixed.488
-forwardDeclaration.488
-FunctionProcedureVariableDeclaration.488
+A1a.488 - a program that uses all arithmetic, logical and comparison operators.
+A1b.488 - a program using arrays including both forms of array declarations, positive and negative bounds.
+A1c.488 - a program using all forms of loop building and loop exit constructs.
+A1dFixed.488 - a program using non-recursive functions and procedures with and without parameters.
+A1eFixed.488 - a program using recursive functions and procedures with and without parameters
+             - including one nested procedure and one nested function declaration.
+forwardDeclaration.488 - A test for forward declarations of procedures and integers
+FunctionProcedureVariableDeclaration.488 - Test of correct syntax for: functionHead, procedureHead, variable declarations.
 StatementsVsListsTest.488
-Variables.488
+Variables.488 - Test of correct syntax in the declaration and use of variables.
 
 Failing Tests:
 --------------
