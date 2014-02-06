@@ -1,0 +1,29 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % A program that test all kinds of expressions
+    % AUTHOR: g0alimuh
+
+   put -(-(1))
+
+   put functionName()
+
+   put -(-(functionName()))
+
+   put variable
+
+   put (-1 - 5) * (6 + variable) / woahAFunction(isThis > That, apparentlyNot, not true)
+   
+   put ((true and false) or (variable = 5) not = (6 >= 7)) <= 8
+
+   put functionName( (5 > 8 ? true : false), variableName, anotherFunction(), 7 )
+  
+   % Semantically these expression are not right but the syntax is correct :)
+   put 1 + true
+   put not true = 5
+   put not -(true and not (false > thisFunctionExist()))
+   
+
+}
