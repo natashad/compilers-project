@@ -25,7 +25,7 @@ A1eFixed.488 - a program using recursive functions and procedures with and witho
              - including one nested procedure and one nested function declaration.
 forwardDeclaration.488 - A test for forward declarations of procedures and integers
 FunctionProcedureVariableDeclaration.488 - Test of correct syntax for: functionHead, procedureHead, variable declarations.
-StatementsVsListsTest.488
+StatementsVsListsTest.488 - Test of using multiple statements vs a single statement in if conditions, while loops and repeat loops.
 Variables.488 - Test of correct syntax in the declaration and use of variables.
 
 Failing Tests:
