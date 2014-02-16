@@ -14,7 +14,7 @@ public class Scope extends Stmt {
 
 	private ASTList<Stmt> statements; // The statements to execute.
 
-	public Scope() {
+	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts) {
 		declarations = new ASTList<Declaration>();
 		statements = new ASTList<Stmt>();
 	}
