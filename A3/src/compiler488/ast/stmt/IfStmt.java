@@ -17,12 +17,18 @@ public class IfStmt extends Stmt {
 	private ASTList<Stmt> whenTrue;
 
 	// Represents the statement to execute when the condition is false.
-	private ASTList<Stmt> whenFalse = null;
+	private ASTList<Stmt> whenFalse = new ASTList<Stmt>();
 	
 	public IfStmt(Expn cond, ASTList<Stmt> whenTrue, ASTList<Stmt> whenFalse) {
 		super();
 		this.condition = cond;
 		this.whenFalse = whenFalse;
+		this.whenTrue = whenTrue;
+	}
+	
+	public IfStmt(Expn cond, ASTList<Stmt> whenTrue) {
+		super();
+		this.condition = cond;
 		this.whenTrue = whenTrue;
 	}
 

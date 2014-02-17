@@ -12,10 +12,11 @@ import compiler488.ast.type.Type;
 public class MultiDeclarations extends Declaration {
 	/* The elements being declared */
 	private ASTList<DeclarationPart> elements;
-	private Type type;
+//	private Type type;
 
 	public MultiDeclarations (ASTList<DeclarationPart> declParts, Type type) {
 		super(null, type);
+//		this.type = type;
 		elements = declParts;
 	}
 	
@@ -24,6 +25,7 @@ public class MultiDeclarations extends Declaration {
 	 */
 	@Override
 	public String toString() {
+		
 		return  " : " + type ;
 	}
 
