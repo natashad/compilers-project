@@ -1,0 +1,40 @@
+  {
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0getter
+
+    % Successful Test of Variables.
+
+    var someInt : integer
+
+    proc print_is_equal(a:integer,b:integer){
+
+        % testing parametername as variable.
+        if a = b then
+            put "equal"
+        else
+            put "not equal"
+        fi
+        return
+    }
+
+    var my1DBoolArray[3] : boolean
+
+    var my2DIntArray[5,5] : integer
+
+    % test for basic variable
+    someInt := 5
+    put someInt
+
+    % test for 1d array access
+    my1DBoolArray[2] := false
+    put (my1DBoolArray[2])
+
+    % test for 2d array access
+    my2DIntArray[3,4] := 12
+    put my2DIntArray
+
+}

@@ -1,0 +1,18 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0dalaln
+
+    % Another test for failing Function Heads
+
+    % Incorrect parameterList
+    func aFailedFunction (int something) : integer {
+        result something
+    }
+
+    put "End of Program"
+
+}

@@ -8,6 +8,13 @@ public class ConditionalExpn extends Expn {
 	private Expn trueValue; // The value is this when the condition is true.
 
 	private Expn falseValue; // Otherwise, the value is this.
+	
+	public ConditionalExpn(Expn cond, Expn trueVal, Expn falseVal) {
+		super();
+		this.condition = cond;
+		this.trueValue = trueVal;
+		this.falseValue = falseVal;
+	}
 
 	/** Returns a string that describes the conditional expression. */
 	@Override

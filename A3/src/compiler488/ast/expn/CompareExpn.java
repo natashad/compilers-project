@@ -5,5 +5,9 @@ package compiler488.ast.expn;
  * be integer expressions. e.g. < , > etc. comparisons
  */
 public class CompareExpn extends BinaryExpn {
+	
+	public CompareExpn(String opSymbol, Expn left, Expn right) {
+		super(opSymbol, left, right);
+	}
 
 }

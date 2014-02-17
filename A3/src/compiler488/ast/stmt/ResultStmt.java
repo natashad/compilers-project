@@ -11,6 +11,10 @@ import compiler488.ast.expn.Expn;
 public class ResultStmt extends Stmt {
 	// The value to be returned by a function.
 	private Expn value = null;
+	
+	public ResultStmt(Expn value) {
+		this.value = value;
+	}
 
 	/**
 	 * Print <b>result</b>  expression on a line, by itself.

@@ -5,5 +5,9 @@ package compiler488.ast.expn;
  * integer or boolean expressions. e.g. = and not = comparisons
  */
 public class EqualsExpn extends BinaryExpn {
+	
+	public EqualsExpn(String opSymbols, Expn left, Expn right) {
+		super(opSymbols, left, right);
+	}
 
 }

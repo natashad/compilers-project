@@ -2,6 +2,7 @@ package compiler488.ast.stmt;
 
 import java.io.PrintStream;
 
+import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
 
@@ -13,10 +14,17 @@ public class IfStmt extends Stmt {
 	private Expn condition;
 
 	// Represents the statement to execute when the condition is true.
-	private Stmt whenTrue;
+	private ASTList<Stmt> whenTrue;
 
 	// Represents the statement to execute when the condition is false.
-	private Stmt whenFalse = null;
+	private ASTList<Stmt> whenFalse = null;
+	
+	public IfStmt(Expn cond, ASTList<Stmt> whenTrue, ASTList<Stmt> whenFalse) {
+		super();
+		this.condition = cond;
+		this.whenFalse = whenFalse;
+		this.whenTrue = whenTrue;
+	}
 
 	/**
 	 * Print a description of the <b>if-then-else</b> construct. If the
@@ -30,10 +38,11 @@ public class IfStmt extends Stmt {
 	@Override
 	public void printOn(PrintStream out, int depth) {
 		Indentable.printIndentOnLn(out, depth, "if " + condition + " then ");
-		whenTrue.printOn(out, 	depth + 1);
+		
+		whenTrue.printOnSeperateLines(out, 	depth + 1);
 		if (whenFalse != null) {
 			Indentable.printIndentOnLn(out, depth, "else");
-			whenFalse.printOn(out, depth + 1);
+			whenFalse.printOnSeperateLines(out, depth + 1);
 		}
 		Indentable.printIndentOnLn(out, depth, "fi");
 	}
@@ -46,19 +55,19 @@ public class IfStmt extends Stmt {
 		this.condition = condition;
 	}
 
-	public Stmt getWhenFalse() {
+	public ASTList<Stmt> getWhenFalse() {
 		return whenFalse;
 	}
 
-	public void setWhenFalse(Stmt whenFalse) {
+	public void setWhenFalse(ASTList<Stmt> whenFalse) {
 		this.whenFalse = whenFalse;
 	}
 
-	public Stmt getWhenTrue() {
+	public ASTList<Stmt> getWhenTrue() {
 		return whenTrue;
 	}
 
-	public void setWhenTrue(Stmt whenTrue) {
+	public void setWhenTrue(ASTList<Stmt> whenTrue) {
 		this.whenTrue = whenTrue;
 	}
 }

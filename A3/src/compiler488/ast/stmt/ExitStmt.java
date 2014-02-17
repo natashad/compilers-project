@@ -9,7 +9,11 @@ import compiler488.ast.expn.*;
 public class ExitStmt extends Stmt {
 
 	// condition for 'exit when'
-        private Expn expn = null;
+    private Expn expn = null;
+    
+    public ExitStmt(Expn expn) {
+    	this.expn = expn;
+    }
 
 	/** Returns the string <b>"exit"</b> or <b>"exit when e"</b>" 
 	*/

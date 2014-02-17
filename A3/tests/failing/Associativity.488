@@ -1,0 +1,22 @@
+{
+	% CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0faizan
+
+	% Check that operators of level 3 do not associate, so a=b=c is illegal.
+
+	var b1 : integer
+	var b2 : integer
+	var b3 : integer
+
+	b1 := 1
+	b2 := 1
+	b3 := 1
+
+	% Fails when we test b1 = b2 = b3  but not when we change it to b1 = b2. (Should fail)
+	if b1 = b2 = b3 then
+            put -5
+    fi
+}

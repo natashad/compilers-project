@@ -6,6 +6,11 @@ package compiler488.ast.expn;
 public class IntConstExpn extends ConstExpn
     {
     private Integer value;	// The value of this literal.
+    
+    public IntConstExpn(Integer value) {
+    	super();
+    	this.value = value;
+    }
 
     /** Returns a string representing the value of the literal. */
     @Override

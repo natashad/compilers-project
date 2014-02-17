@@ -6,4 +6,8 @@ package compiler488.ast.expn;
  */
 public class ArithExpn extends BinaryExpn {
 
+	public ArithExpn(String opSymbol, Expn left, Expn right) {
+		super(opSymbol, left, right);
+	}
+	
 }

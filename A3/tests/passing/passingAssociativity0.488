@@ -1,0 +1,19 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g3ksingh
+
+    % Test to see if level 0 operators associate
+
+    var x : integer
+    x := - - 3
+
+    if x = 3  
+    then
+        put "Level 0 operators associate"
+    fi
+    put "Level 0 operators are not associating?"
+}

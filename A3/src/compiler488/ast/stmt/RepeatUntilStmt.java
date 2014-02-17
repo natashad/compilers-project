@@ -2,12 +2,19 @@ package compiler488.ast.stmt;
 
 import java.io.PrintStream;
 
+import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
+import compiler488.ast.expn.Expn;
 
 /**
  * Represents a loop in which the exit condition is evaluated after each pass.
  */
 public class RepeatUntilStmt extends LoopingStmt {
+	
+	public RepeatUntilStmt(Expn expn, ASTList<Stmt> statements) {
+		super(expn, statements);
+	}
+	
 	/**
 	 * Print a description of the <b>repeat-until</b> construct.
 	 * 
@@ -19,7 +26,7 @@ public class RepeatUntilStmt extends LoopingStmt {
 	@Override
 	public void printOn(PrintStream out, int depth) {
 		Indentable.printIndentOnLn(out, depth, "repeat");
-		body.printOn(out, depth + 1);
+		body.printOnSeperateLines(out, depth + 1);
 		Indentable.printIndentOnLn(out, depth, " until "  + expn );
 
 	}

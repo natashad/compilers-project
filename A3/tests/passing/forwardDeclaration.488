@@ -1,0 +1,27 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0dalaln
+
+    % A test for forward declarations of procedures and integers
+
+    forward func add ( x : integer , y : integer ) : integer
+
+    forward proc printInt ( x : integer )
+
+    func add ( x : integer , y : integer ) : integer
+    {
+        result x + y
+    }
+
+    proc printInt ( x : integer )
+    {
+        put x
+    }
+
+    put add(2, 2)
+    printInt(3)
+}
