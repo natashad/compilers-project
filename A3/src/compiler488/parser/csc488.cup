@@ -257,10 +257,10 @@ declaration	::=
 
 variablenames	::=	
 			variablename:v  				// list of variables being declared
-			{: RESULT = new	ASTList<ScalarDeclPart>((ScalarDeclPart)v); :}
+			{: RESULT = new	ASTList<DeclarationPart>((DeclarationPart)v); :}
 			
 		|	variablenames:vList COMMA variablename:v
-			{: RESULT = ((ASTList<ScalarDeclPart>)vList).addLast((ScalarDeclPart)v); :}
+			{: RESULT = ((ASTList<DeclarationPart>)vList).addLast((DeclarationPart)v); :}
 		 
 		;
 

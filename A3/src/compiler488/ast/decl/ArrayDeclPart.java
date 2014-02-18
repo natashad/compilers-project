@@ -18,18 +18,17 @@ public class ArrayDeclPart extends DeclarationPart {
 	public ArrayDeclPart(String name, IntConstExpn[] firstBounds, IntConstExpn[] secondBounds) {
 		super(name);
 		
-		int totalLength = firstBounds.length + secondBounds.length;
-		switch (totalLength) {
-		case 1:
-			this.lb1 = firstBounds[0].getValue();
-		case 2:
+		this.lb1 = firstBounds[0].getValue();
+		if (firstBounds.length == 2) {
 			this.ub1 = firstBounds[1].getValue();
-		case 3:
+		}
+		
+		if (secondBounds.length == 2) {
 			this.lb2 = secondBounds[0].getValue();
-		case 4:
 			this.ub2 = secondBounds[1].getValue();
-		default:
-			break;
+		}
+		else if (secondBounds.length == 1) {
+			this.lb2 = secondBounds[0].getValue();
 		}
 		
 		// If we provide a second lower bounds, then it 
