@@ -43,7 +43,7 @@ public class symbolTable {
 	 */
 	Symbol getSymbol(String name)
 	{
-		for (int i = depth; i >= 0; i++)
+		for (int i = depth; i >= 0; i--)
 		{
 			Symbol result = (scopeTable.get(i)).get(name);
 			if (result != null)
