@@ -1,7 +1,7 @@
 package compiler488.symbol;
 
-import java.io.*;
-
+import java.util.HashMap;
+import java.util.Map.Entry;
 /** Symbol Table
  *  This almost empty class is a framework for implementing
  *  a Symbol Table class for the CSC488S compiler
@@ -11,15 +11,17 @@ import java.io.*;
  *
  *  @author  <B> PUT YOUR NAMES HERE </B>
  */
+/* extending hash map gives us all the methods needed*/
+public class SymbolTable extends HashMap<String, Entry> {
 
-public class SymbolTable {
-	
 	/** Symbol Table  constructor
          *  Create and initialize a symbol table 
 	 */
 	public SymbolTable  (){
-	
+		super();
 	}
+
+	
 
 	/**  Initialize - called once by semantic analysis  
 	 *                at the start of  compilation     
@@ -45,12 +47,12 @@ public class SymbolTable {
 	   *  
 	   */
 	}
-	
-
 	/** The rest of Symbol Table
 	 *  Data structures, public and private functions
  	 *  to implement the Symbol Table
 	 *  GO HERE.				
 	 */
+	 
+
 
 }

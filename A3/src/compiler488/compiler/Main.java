@@ -447,6 +447,9 @@ public class Main {
 	   // programAST.doSemantics() ;
 	   // or
 	   // Semantics.doIt( programAST );
+		Semantics semantic = new Semantics();
+		semantic.doSemanticAnalysis(programAST);
+		
 	}
         catch( Exception e) 
 	    {

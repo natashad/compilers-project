@@ -1,6 +1,9 @@
 package compiler488.semantics;
 
 import java.io.*;
+import java.util.LinkedList;
+
+import compiler488.ast.stmt.Program;
 import compiler488.symbol.SymbolTable;
 
 /** Implement semantic analysis for compiler 488 
@@ -14,12 +17,12 @@ public class Semantics {
 	private String traceFile = new String();
 	public FileWriter Tracer;
 	public File f;
-
+   
+	private LinkedList<SymbolTable> symbolTableList; 
      
      
      /** SemanticAnalyzer constructor */
 	public Semantics (){
-	
 	}
 
 	/**  semanticsInitialize - called once by the parser at the      */
@@ -27,8 +30,8 @@ public class Semantics {
 	void Initialize() {
 	
 	   /*   Initialize the symbol table             */
-	
-	   // Symbol.Initialize();
+		symbolTableList = new LinkedList<SymbolTable>();
+	   //Symbol.Initialize();
 	   
 	   /*********************************************/
 	   /*  Additional initialization code for the   */
@@ -37,7 +40,14 @@ public class Semantics {
 	   /*********************************************/
 	   
 	}
-
+	
+	/**
+	 * Start the semantic analysis chain from the root (Program)
+	 * Does depth first search.
+	 */
+	public void doSemanticAnalysis(Program program) throws Exception {
+		program.semanticCheck();
+	}
 	/**  semanticsFinalize - called by the parser once at the        */
 	/*                      end of compilation                      */
 	void Finalize(){
@@ -54,46 +64,47 @@ public class Semantics {
 	  
 	}
 	
+	
 	/**
 	 *  Perform one semantic analysis action
          *  @param  actionNumber  semantic analysis action number
          */
-	void semanticAction( int actionNumber ) {
-
-	if( traceSemantics ){
-		if(traceFile.length() > 0 ){
-	 		//output trace to the file represented by traceFile
-	 		try{
-	 			//open the file for writing and append to it
-	 			File f = new File(traceFile);
-	 		    Tracer = new FileWriter(traceFile, true);
-	 				          
-	 		    Tracer.write("Sematics: S" + actionNumber + "\n");
-	 		    //always be sure to close the file
-	 		    Tracer.close();
-	 		}
-	 		catch (IOException e) {
-	 		  System.out.println(traceFile + 
-				" could be opened/created.  It may be in use.");
-	 	  	}
-	 	}
-	 	else{
-	 		//output the trace to standard out.
-	 		System.out.println("Sematics: S" + actionNumber );
-	 	}
-	 
-	}
-	                     
-	   /*************************************************************/
-	   /*  Code to implement each semantic action GOES HERE         */
-	   /*  This stub semantic analyzer just prints the actionNumber */   
-	   /*                                                           */
-           /*  FEEL FREE TO ignore or replace this procedure            */
-	   /*************************************************************/
-	                     
-	   System.out.println("Semantic Action: S" + actionNumber  );
-	   return ;
-	}
+//	void semanticAction( int actionNumber ) {
+//
+//		if( traceSemantics ){
+//			if(traceFile.length() > 0 ){
+//		 		//output trace to the file represented by traceFile
+//		 		try{
+//		 			//open the file for writing and append to it
+//		 			File f = new File(traceFile);
+//		 		    Tracer = new FileWriter(traceFile, true);
+//		 				          
+//		 		    Tracer.write("Sematics: S" + actionNumber + "\n");
+//		 		    //always be sure to close the file
+//		 		    Tracer.close();
+//		 		}
+//		 		catch (IOException e) {
+//		 		  System.out.println(traceFile + 
+//					" could be opened/created.  It may be in use.");
+//		 	  	}
+//		 	}
+//		 	else{
+//		 		//output the trace to standard out.
+//		 		System.out.println("Sematics: S" + actionNumber );
+//		 	}
+//		 
+//		}
+//	                     
+//	   /*************************************************************/
+//	   /*  Code to implement each semantic action GOES HERE         */
+//	   /*  This stub semantic analyzer just prints the actionNumber */   
+//	   /*                                                           */
+//       /*  FEEL FREE TO ignore or replace this procedure            */
+//	   /* *********************************************************** */
+//	                     
+//	   System.out.println("Semantic Action: S" + actionNumber  );
+//	   return ;
+//	} 
 
 	// ADDITIONAL FUNCTIONS TO IMPLEMENT SEMANTIC ANALYSIS GO HERE
 

@@ -66,5 +66,11 @@ public class Scope extends Stmt {
 	public void setStatements(ASTList<Stmt> statements) {
 		this.statements = statements;
 	}
+	
+	/* Run semantic analysis */
+	public void semanticCheck(){
+		//Add semantic analysis code here
+		//Initialize symbol table too (I think)
+	}
 
 }
