@@ -26,12 +26,14 @@ public class Semantics {
     
     
     public enum ScopeType {
-		Function, 
-		If,
-		Procedure,
-		Loop,
-		Stmt,
-		Program
+//		Function, 
+//		If,
+//		Procedure,
+//		Loop,
+//		Stmt,
+//		Program
+    	Major,
+    	Minor
 	}
      /** SemanticAnalyzer constructor */
 	public Semantics (){

@@ -10,14 +10,44 @@ public class Entry {
 		Variable,
 		Array,
 		Function,
-		Procedure
+		Procedure,
+		ForwardFunction, 
+		ForwardProcedure
 	}
 	
-	Kind kind;
-	String name;
-	AST node;
-	Integer orderNumber;
+	private Kind kind;
+	private String name;
+	private AST node;
+	private Integer orderNumber;
 	
+	public Kind getKind() {
+		return kind;
+	}
+
+	public void setKind(Kind kind) {
+		this.kind = kind;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public AST getNode() {
+		return node;
+	}
+
+	public void setNode(AST node) {
+		this.node = node;
+	}
+
+	public Integer getOrderNumber() {
+		return orderNumber;
+	}
+
 	public Entry(Kind kind, String name, AST node) {
 		this.kind = kind;
 		this.name = name;

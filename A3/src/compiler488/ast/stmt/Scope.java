@@ -7,6 +7,7 @@ import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.decl.Declaration;
 import compiler488.semantics.Semantics;
+import compiler488.semantics.Semantics.ScopeType;
 import compiler488.symbol.SymbolTable;
 
 /**
@@ -18,6 +19,8 @@ public class Scope extends Stmt {
 	private ASTList<Stmt> statements; // The statements to execute.
 	
 	public SymbolTable symtable;
+	
+	private Semantics.ScopeType scopeType = ScopeType.Major;
 
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts) {
 		this.declarations = declarations;
@@ -72,12 +75,20 @@ public class Scope extends Stmt {
 		this.statements = statements;
 	}
 	
+	public Semantics.ScopeType getScopeType() {
+		return scopeType;
+	}
+	
+	public void setScopeType(Semantics.ScopeType scopeType) {
+		this.scopeType = scopeType;
+	}
+	
 	/* Run semantic analysis */
 	@Override
 	public void semanticCheck(Semantics semantics) throws Exception {
 		//Add semantic analysis code here
 		symtable = new SymbolTable();
-		semantics.openScope(symtable, Semantics.ScopeType.Stmt);
+		semantics.openScope(symtable, scopeType);
 		symtable = semantics.symbolTableList.getLast(); //make sure we are editing the master symbol table list! (pass by reference/value)
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		ListIterator<Stmt> statements = this.statements.listIterator();

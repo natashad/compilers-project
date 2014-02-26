@@ -12,6 +12,7 @@ import compiler488.ast.decl.*;
 import compiler488.ast.expn.*;
 import compiler488.ast.stmt.*;
 import compiler488.ast.type.*;
+import compiler488.semantics.*;
 
 
 /* User code components 1: action code components.
@@ -223,7 +224,7 @@ statement	::=
 		 	{: RESULT = new ProcedureCallStmt(i.toString(), (ASTList<Expn>)args); :}
 		 	
 		|	scope:s					// embedded scope
-			{: RESULT = (Scope)s; :}
+			{: ((Scope)s).setScopeType(Semantics.ScopeType.Minor); RESULT = (Scope)s; :}
 		;
 
 declaration	::=	

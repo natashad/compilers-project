@@ -17,10 +17,24 @@ public class RoutineDecl extends Declaration {
 	 * statements to execute when the procedure is called.
 	 */
 	private RoutineBody routineBody;
+	private boolean isForward = false;
 	
 	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody ) {
+		this(declPart, type, routineBody, false);
+	}
+	
+	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody, boolean isForward ) {
 		super(declPart.getName(), type);
 		this.routineBody = routineBody;
+		this.isForward = isForward;
+	}
+
+	public boolean isForward() {
+		return isForward;
+	}
+
+	public void setForward(boolean isForward) {
+		this.isForward = isForward;
 	}
 
 	/**
@@ -68,11 +82,30 @@ public class RoutineDecl extends Declaration {
 	@Override
 	public void semanticCheck(Semantics semantics) throws Exception{
 		Entry entry;
-		if (this.type == null) {
-			entry = new Entry(Kind.Procedure, this.name, this);
-		}else {
-			entry = new Entry(Kind.Function, this.name, this);
+		Kind kind;
+		
+		if (isForward) {
+			if (this.type == null) {
+				kind = Kind.ForwardProcedure;	
+			} else {
+				kind = Kind.ForwardFunction;
+			}
+		} else {
+			if (this.type == null) {
+				kind = Kind.Procedure;
+			} else {
+				kind = Kind.Function;
+			}
 		}
+		
+		
+		
+		entry = new Entry(kind, this.name, this);
+		
+		//TODO: If function and in symbol but not forward. then do check.
+	
+		
+		
 		semantics.addToCurrScope(this.name, entry);
 	}
 	
