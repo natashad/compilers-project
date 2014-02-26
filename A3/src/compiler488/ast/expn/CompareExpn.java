@@ -1,5 +1,6 @@
 package compiler488.ast.expn;
 
+import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
 import compiler488.semantics.Semantics;
@@ -22,8 +23,8 @@ public class CompareExpn extends BinaryExpn {
 	@Override
 	public void semanticCheck(Semantics semantics){
 		
-		//Set type to Integer.
-		this.type = new IntegerType();
+		//Set type to Boolean.
+		this.type = new BooleanType();
 		
 		//TODO: Error checking if both expr type are same.
 	}
