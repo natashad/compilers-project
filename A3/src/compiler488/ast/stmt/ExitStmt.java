@@ -1,6 +1,7 @@
 package compiler488.ast.stmt;
 
 import compiler488.ast.expn.*;
+import compiler488.semantics.Semantics;
 
 /**
  * Represents the command to exit from a loop.
@@ -34,5 +35,9 @@ public class ExitStmt extends Stmt {
 	public void setExpn(Expn expn) {
 		this.expn = expn;
 	}
-
+	public void semanticCheck(Semantics semantic) {
+		if (semantic.getCurrScopeType() == Semantics.ScopeType.Loop) {
+			//TODO:error
+		}
+	}
 }

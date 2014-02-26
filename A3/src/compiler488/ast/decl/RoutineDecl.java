@@ -82,7 +82,7 @@ public class RoutineDecl extends Declaration {
 	 * Do semantic analysis
 	 * */
 	@Override
-	public void semanticCheck(Semantics semantics) throws Exception{
+	public void semanticCheck(Semantics semantics) {
 		Entry entry;
 		Kind kind;
 		
@@ -92,6 +92,7 @@ public class RoutineDecl extends Declaration {
 			} else {
 				kind = Kind.ForwardFunction;
 			}
+			
 		} else {
 			if (this.type == null) {
 				kind = Kind.Procedure;
@@ -113,14 +114,14 @@ public class RoutineDecl extends Declaration {
 			ASTList<ScalarDecl> currDeclParams = this.getRoutineBody().getParameters();
 			
 			if (forwardDeclParams.size() != currDeclParams.size()) {
-				//error
+				//TODO: Add error message
 			}
 			ListIterator<ScalarDecl> listPrevParams = forwardDeclParams.listIterator();
 			ListIterator<ScalarDecl> listCurrParams = currDeclParams.listIterator();
 			
 			while (listPrevParams.hasNext()) {
 				if (listPrevParams.next().getType() != listCurrParams.next().getType()){
-					//error
+					//TODO: Add error message
 				}	
 			}
 			if (this.getType() != ((RoutineDecl) prevDecl.getNode()).getType()) {

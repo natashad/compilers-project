@@ -28,7 +28,7 @@ public class ScalarDecl extends Declaration {
 	 * Do semantic analysis
 	 * */
 	@Override
-	public void semanticCheck(Semantics semantics) throws Exception{
+	public void semanticCheck(Semantics semantics) {
 		Entry entry = new Entry(Kind.Scalar, this.name, this);
 		semantics.addToCurrScope(this.name, entry);
 	}

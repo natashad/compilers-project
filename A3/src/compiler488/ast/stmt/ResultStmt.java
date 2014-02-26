@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
+import compiler488.semantics.Semantics;
 
 /**
  * The command to return from a function or procedure.
@@ -36,5 +37,11 @@ public class ResultStmt extends Stmt {
 
 	public void setValue(Expn value) {
 		this.value = value;
+	}
+	
+	public void semanticCheck(Semantics semantic) {
+		if (semantic.getCurrScopeType() == Semantics.ScopeType.Function) {
+			//TODO: Add error message
+		}
 	}
 }

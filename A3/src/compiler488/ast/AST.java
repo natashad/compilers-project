@@ -10,7 +10,7 @@ import compiler488.semantics.Semantics;
 public class AST {
 	
 	// override this for child classes 
-	public void semanticCheck(Semantics semantics) throws Exception {
+	public void semanticCheck(Semantics semantics) {
 		
 	}
  }

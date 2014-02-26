@@ -41,7 +41,7 @@ public class AssignStmt extends Stmt {
 		this.rval = rval;
 	}
 	@Override 
-	public void semanticCheck(Semantics semantic) throws Exception{
+	public void semanticCheck(Semantics semantic){
 		this.lval.semanticCheck(semantic);
 		this.rval.semanticCheck(semantic);
 		

@@ -26,14 +26,12 @@ public class Semantics {
     
     
     public enum ScopeType {
-//		Function, 
-//		If,
-//		Procedure,
-//		Loop,
-//		Stmt,
-//		Program
-    	Major,
-    	Minor
+		Function, 
+		If,
+		Procedure,
+		Loop,
+		Stmt,
+		Program
 	}
      /** SemanticAnalyzer constructor */
 	public Semantics (){
@@ -75,6 +73,10 @@ public class Semantics {
 		return null;
 	}
 	
+	public Semantics.ScopeType getCurrScopeType() {
+		return this.scopeStack.lastElement();
+	}
+	
 	public void remove(String name) {
 		if (this.allScopeLookup(name) != null) {
 			Iterator<SymbolTable> listTables = this.symbolTableList.descendingIterator();
@@ -90,7 +92,7 @@ public class Semantics {
 	
 	
 	/** Add symbol to the current scope*/
-	public void addToCurrScope(String name, Entry entry) throws Exception {
+	public void addToCurrScope(String name, Entry entry) {
 		if (this.symbolTableList.getLast().containsKey(name)) {
 			// ERROR MULTIPLE DECLARATIONS (THROW EXCEPTION HERE)
 		}

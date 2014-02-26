@@ -20,7 +20,7 @@ public class Scope extends Stmt {
 	
 	public SymbolTable symtable;
 	
-	private Semantics.ScopeType scopeType = ScopeType.Major;
+	private boolean isMajor = true;
 
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts) {
 		this.declarations = declarations;
@@ -75,20 +75,20 @@ public class Scope extends Stmt {
 		this.statements = statements;
 	}
 	
-	public Semantics.ScopeType getScopeType() {
-		return scopeType;
+	public boolean getIsMajor() {
+		return isMajor;
 	}
 	
-	public void setScopeType(Semantics.ScopeType scopeType) {
-		this.scopeType = scopeType;
+	public void setIsMajor(boolean scopeType) {
+		this.isMajor= scopeType; 
 	}
 	
 	/* Run semantic analysis */
 	@Override
-	public void semanticCheck(Semantics semantics) throws Exception {
+	public void semanticCheck(Semantics semantics) {
 		//Add semantic analysis code here
 		symtable = new SymbolTable();
-		semantics.openScope(symtable, scopeType);
+		semantics.symbolTableList.push(symtable);
 		symtable = semantics.symbolTableList.getLast(); //make sure we are editing the master symbol table list! (pass by reference/value)
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		ListIterator<Stmt> statements = this.statements.listIterator();

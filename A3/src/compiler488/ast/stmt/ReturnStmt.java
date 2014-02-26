@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
+import compiler488.semantics.Semantics;
 
 /**
  * The command to return from a procedure.
@@ -23,5 +24,9 @@ public class ReturnStmt extends Stmt {
 		Indentable.printIndentOn(out, depth);
 		out.println("return ");
 	}
-
+	public void semanticChecking(Semantics semantic) {
+		if (semantic.getCurrScopeType() == Semantics.ScopeType.Procedure) {
+			//TODO: Add error message;
+		}
+	}
 }
