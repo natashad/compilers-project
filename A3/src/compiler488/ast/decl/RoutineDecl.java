@@ -4,6 +4,9 @@ import java.io.PrintStream;
 
 import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
+import compiler488.semantics.Semantics;
+import compiler488.symbol.Entry;
+import compiler488.symbol.Entry.Kind;
 
 /**
  * Represents the declaration of a function or procedure.
@@ -58,4 +61,20 @@ public class RoutineDecl extends Declaration {
 	public void setRoutineBody(RoutineBody routineBody) {
 		this.routineBody = routineBody;
 	}
+	
+	/** 
+	 * Do semantic analysis
+	 * */
+	@Override
+	public void semanticCheck(Semantics semantics) throws Exception{
+		Entry entry;
+		if (this.type == null) {
+			entry = new Entry(Kind.Procedure, this.name, this);
+		}else {
+			entry = new Entry(Kind.Function, this.name, this);
+		}
+		semantics.addToCurrScope(this.name, entry);
+	}
+	
+	
 }

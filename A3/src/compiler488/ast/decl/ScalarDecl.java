@@ -23,6 +23,10 @@ public class ScalarDecl extends Declaration {
 	public String toString() {
 		return   name + " : " + type ;
 	}
+	
+	/** 
+	 * Do semantic analysis
+	 * */
 	@Override
 	public void semanticCheck(Semantics semantics) throws Exception{
 		Entry entry = new Entry(Kind.Scalar, this.name, this);
