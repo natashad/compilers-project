@@ -35,16 +35,17 @@ public class Semantics {
 	}
      /** SemanticAnalyzer constructor */
 	public Semantics (){
+		this.symbolTableList = new LinkedList<SymbolTable>();
+		this.scopeStack = new Stack<ScopeType>();
+		this.errorList = new LinkedList<Exception>();
 	}
 
 	/**  semanticsInitialize - called once by the parser at the      */
 	/*                        start of  compilation                 */
-	void Initialize() {
+	public void Initialize() {
 	
 	   /*   Initialize the symbol table             */
-		this.symbolTableList = new LinkedList<SymbolTable>();
-		this.scopeStack = new Stack<ScopeType>();
-		this.errorList = new LinkedList<Exception>();
+		
 	   //Symbol.Initialize();
 	   
 	   /*********************************************/
