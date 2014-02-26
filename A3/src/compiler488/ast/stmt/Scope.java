@@ -1,10 +1,13 @@
 package compiler488.ast.stmt;
 
 import java.io.PrintStream;
+import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.decl.Declaration;
+import compiler488.semantics.Semantics;
+import compiler488.symbol.SymbolTable;
 
 /**
  * Represents the declarations and instructions of a scope construct.
@@ -13,6 +16,8 @@ public class Scope extends Stmt {
 	private ASTList<Declaration> declarations; // The declarations at the top.
 
 	private ASTList<Stmt> statements; // The statements to execute.
+	
+	public SymbolTable symtable;
 
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts) {
 		this.declarations = declarations;
@@ -68,9 +73,24 @@ public class Scope extends Stmt {
 	}
 	
 	/* Run semantic analysis */
-	public void semanticCheck(){
+	public void semanticCheck(Semantics semantics) throws Exception{
 		//Add semantic analysis code here
-		//Initialize symbol table too (I think)
+		symtable = new SymbolTable();
+		semantics.openScope(symtable);
+		ListIterator<Declaration> declarations = this.declarations.listIterator();
+		ListIterator<Stmt> statements = this.statements.listIterator();
+
+		while (declarations.hasNext()) {
+			Declaration decl = declarations.next();
+			decl.semanticCheck(semantics);
+		}
+		while (statements.hasNext()) {
+			Stmt statement = statements.next();
+			statement.semanticCheck(semantics);
+		}
+		
+		// add code for forward declarations!
+		semantics.closeScope();
 	}
 
 }

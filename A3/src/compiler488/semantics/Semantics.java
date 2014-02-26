@@ -18,6 +18,7 @@ public class Semantics {
 	public FileWriter Tracer;
 	public File f;
    
+	//List of symbol tables (one for each scope)
 	private LinkedList<SymbolTable> symbolTableList; 
      
      
@@ -41,13 +42,14 @@ public class Semantics {
 	   
 	}
 	
-	/**
-	 * Start the semantic analysis chain from the root (Program)
-	 * Does depth first search.
-	 */
-	public void doSemanticAnalysis(Program program) throws Exception {
-		program.semanticCheck();
+	public void openScope(SymbolTable symtable) {
+		symbolTableList.addLast(symtable); //copy all the elements of the previous scope into the new scope
 	}
+	
+	public void closeScope() {
+		symbolTableList.removeLast();
+	}
+	
 	/**  semanticsFinalize - called by the parser once at the        */
 	/*                      end of compilation                      */
 	void Finalize(){

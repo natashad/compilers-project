@@ -20,7 +20,7 @@ public class ASTList<E> extends AST {
 	public ASTList() {
 		ll = new LinkedList<E>();
 	}
-
+	 
 	/**
 	 * Create a list with one element.
 	 */
@@ -28,7 +28,9 @@ public class ASTList<E> extends AST {
 		ll = new LinkedList<E>();
 		ll.addLast(ast);
 	}
-
+	public  ListIterator<E> listIterator(){
+		return ll.listIterator();
+	}
 	/**
 	 * The number of elements in the list.
 	 */

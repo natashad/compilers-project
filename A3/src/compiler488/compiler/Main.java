@@ -428,7 +428,7 @@ public class Main {
                     dumpStream = new PrintStream( new FileOutputStream( dumpFile )) ;
 		    programAST.printOn( dumpStream , 0 );
 		    if( ! dumpAST2 )		// finished with dump stream
-		    	dumpStream.close();
+		    	dumpStream.close(); 
 	        }
                 else 
 		    programAST.printOn( saveSysOut  , 0 );
@@ -448,7 +448,7 @@ public class Main {
 	   // or
 	   // Semantics.doIt( programAST );
 		Semantics semantic = new Semantics();
-		semantic.doSemanticAnalysis(programAST);
+		programAST.semanticCheck(semantic);
 		
 	}
         catch( Exception e) 
