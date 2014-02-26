@@ -3,6 +3,7 @@ package compiler488.ast.decl;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
+import compiler488.semantics.Semantics;
 
 /**
  * The common features of declarations.
@@ -33,5 +34,9 @@ public class Declaration extends Indentable {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+	@Override
+	public void semanticCheck(Semantics semantic) {
+		
 	}
 }

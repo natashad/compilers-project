@@ -73,19 +73,28 @@ public class Scope extends Stmt {
 	}
 	
 	/* Run semantic analysis */
-	public void semanticCheck(Semantics semantics) throws Exception{
+	@Override
+	public void semanticCheck(Semantics semantics) throws Exception {
 		//Add semantic analysis code here
 		symtable = new SymbolTable();
 		semantics.openScope(symtable);
+		symtable = semantics.symbolTableList.getLast(); //make sure we are editing the master symbol table list! (pass by reference/value)
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		ListIterator<Stmt> statements = this.statements.listIterator();
-
+		
+		
 		while (declarations.hasNext()) {
 			Declaration decl = declarations.next();
+		//		Define an entry
+		//	Entry entry = new Entry();
+		//	symtable.put(decl.getName(), entry )
 			decl.semanticCheck(semantics);
 		}
 		while (statements.hasNext()) {
 			Stmt statement = statements.next();
+			//	Define an entry Here
+			//	Entry entry = new Entry();
+			//	symtable.put(statement.getName(), entry )
 			statement.semanticCheck(semantics);
 		}
 		

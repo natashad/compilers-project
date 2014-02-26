@@ -19,7 +19,7 @@ public class Semantics {
 	public File f;
    
 	//List of symbol tables (one for each scope)
-	private LinkedList<SymbolTable> symbolTableList; 
+	public LinkedList<SymbolTable> symbolTableList; 
      
      
      /** SemanticAnalyzer constructor */
@@ -43,7 +43,7 @@ public class Semantics {
 	}
 	
 	public void openScope(SymbolTable symtable) {
-		symbolTableList.addLast(symtable); //copy all the elements of the previous scope into the new scope
+		symbolTableList.addLast(symtable); 
 	}
 	
 	public void closeScope() {

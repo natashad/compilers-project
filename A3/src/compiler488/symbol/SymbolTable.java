@@ -29,12 +29,12 @@ public class SymbolTable extends HashMap<String, Entry> {
  	 *                does all required initialization	
 	 */
 	public void Initialize() {
-	
 	   /**   Initialize the symbol table             
 	    *	Any additional symbol table initialization
 	    *  GOES HERE                                	
 	    */
-	   
+		
+		
 	}
 
 	/**  Finalize - called once by Semantics at the end of compilation
@@ -52,7 +52,4 @@ public class SymbolTable extends HashMap<String, Entry> {
  	 *  to implement the Symbol Table
 	 *  GO HERE.				
 	 */
-	 
-
-
 }
