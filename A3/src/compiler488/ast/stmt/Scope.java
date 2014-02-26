@@ -77,7 +77,7 @@ public class Scope extends Stmt {
 	public void semanticCheck(Semantics semantics) throws Exception {
 		//Add semantic analysis code here
 		symtable = new SymbolTable();
-		semantics.openScope(symtable);
+		semantics.openScope(symtable, Semantics.ScopeType.Stmt);
 		symtable = semantics.symbolTableList.getLast(); //make sure we are editing the master symbol table list! (pass by reference/value)
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		ListIterator<Stmt> statements = this.statements.listIterator();

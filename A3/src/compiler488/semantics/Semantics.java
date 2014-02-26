@@ -3,9 +3,7 @@ package compiler488.semantics;
 import java.io.*;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ListIterator;
-
-import compiler488.ast.stmt.Program;
+import java.util.Stack;
 import compiler488.symbol.Entry;
 import compiler488.symbol.SymbolTable;
 
@@ -20,11 +18,21 @@ public class Semantics {
 	private String traceFile = new String();
 	public FileWriter Tracer;
 	public File f;
-   
+    
 	//List of symbol tables (one for each scope)
 	public LinkedList<SymbolTable> symbolTableList; 
-     
-     
+    public LinkedList<Exception> errorList;
+	public Stack<ScopeType> scopeStack;
+    
+    
+    public enum ScopeType {
+		Function, 
+		If,
+		Procedure,
+		Loop,
+		Stmt,
+		Program
+	}
      /** SemanticAnalyzer constructor */
 	public Semantics (){
 	}
@@ -34,7 +42,9 @@ public class Semantics {
 	void Initialize() {
 	
 	   /*   Initialize the symbol table             */
-		symbolTableList = new LinkedList<SymbolTable>();
+		this.symbolTableList = new LinkedList<SymbolTable>();
+		this.scopeStack = new Stack<ScopeType>();
+		this.errorList = new LinkedList<Exception>();
 	   //Symbol.Initialize();
 	   
 	   /*********************************************/
@@ -73,14 +83,14 @@ public class Semantics {
 	}
 	
 	
-	public void openScope(SymbolTable symtable) {
-		
+	public void openScope(SymbolTable symtable, ScopeType type) {
+		this.scopeStack.push(type);
 		this.symbolTableList.addLast(symtable); 
 	
 	}
 	
 	public void closeScope() {
-	
+		this.scopeStack.pop();
 		this.symbolTableList.removeLast();
 	
 	}
