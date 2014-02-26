@@ -1,9 +1,12 @@
 package compiler488.semantics;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import compiler488.ast.stmt.Program;
+import compiler488.symbol.Entry;
 import compiler488.symbol.SymbolTable;
 
 /** Implement semantic analysis for compiler 488 
@@ -41,13 +44,45 @@ public class Semantics {
 	   /*********************************************/
 	   
 	}
+	/** Returns the symbol table entry if found otherwise null */
+	public Entry curScopeLookup(String name) {
+		
+		return this.symbolTableList.getLast().get(name);
+		
+	}
+	/** Iterate through all the scopes to find Entry. If no entry return null. */
+	public Entry allScopeLookup(String name) {
+		Iterator<SymbolTable> listTables = this.symbolTableList.descendingIterator();
+		while (listTables.hasNext()) {
+				SymbolTable symtable =  listTables.next();
+				if (symtable.containsKey(name)) {
+					return symtable.get(name);
+				}
+		}
+		return null;
+	}
+	
+	/** Add symbol to the current scope*/
+	public void addToCurrScope(String name, Entry entry) throws Exception {
+		if (this.symbolTableList.getLast().containsKey(name)) {
+			// ERROR MULTIPLE DECLARATIONS (THROW EXCEPTION HERE)
+		}
+		SymbolTable curTable = this.symbolTableList.getLast();
+		this.symbolTableList.getLast().put(name, entry);
+	
+	}
+	
 	
 	public void openScope(SymbolTable symtable) {
-		symbolTableList.addLast(symtable); 
+		
+		this.symbolTableList.addLast(symtable); 
+	
 	}
 	
 	public void closeScope() {
-		symbolTableList.removeLast();
+	
+		this.symbolTableList.removeLast();
+	
 	}
 	
 	/**  semanticsFinalize - called by the parser once at the        */

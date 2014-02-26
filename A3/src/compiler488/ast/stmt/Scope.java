@@ -85,16 +85,10 @@ public class Scope extends Stmt {
 		
 		while (declarations.hasNext()) {
 			Declaration decl = declarations.next();
-		//		Define an entry
-		//	Entry entry = new Entry();
-		//	symtable.put(decl.getName(), entry )
 			decl.semanticCheck(semantics);
 		}
 		while (statements.hasNext()) {
 			Stmt statement = statements.next();
-			//	Define an entry Here
-			//	Entry entry = new Entry();
-			//	symtable.put(statement.getName(), entry )
 			statement.semanticCheck(semantics);
 		}
 		

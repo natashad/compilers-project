@@ -16,10 +16,15 @@ public class Entry {
 	Kind kind;
 	String name;
 	AST node;
+	Integer orderNumber;
 	
 	public Entry(Kind kind, String name, AST node) {
 		this.kind = kind;
 		this.name = name;
 		this.node = node;
+	}
+	
+	public void setOrderNumber(Integer orderNumber) {
+		this.orderNumber = orderNumber;
 	}
 }

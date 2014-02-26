@@ -35,8 +35,5 @@ public class Declaration extends Indentable {
 	public void setType(Type type) {
 		this.type = type;
 	}
-	@Override
-	public void semanticCheck(Semantics semantic) {
-		
-	}
+	
 }

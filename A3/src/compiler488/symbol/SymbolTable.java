@@ -1,7 +1,6 @@
 package compiler488.symbol;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 /** Symbol Table
  *  This almost empty class is a framework for implementing
  *  a Symbol Table class for the CSC488S compiler
@@ -17,11 +16,20 @@ public class SymbolTable extends HashMap<String, Entry> {
 	/** Symbol Table  constructor
          *  Create and initialize a symbol table 
 	 */
+	public Integer orderNumber;
 	public SymbolTable  (){
 		super();
+		this.orderNumber = 0;
+		
 	}
 
-	
+	@Override
+	public Entry put(String key, Entry value) {
+		value.setOrderNumber(this.orderNumber);
+		this.orderNumber += 1;
+		return super.put(key, value);
+	}
+
 
 	/**  Initialize - called once by semantic analysis  
 	 *                at the start of  compilation     
