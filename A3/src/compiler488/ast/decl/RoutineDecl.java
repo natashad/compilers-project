@@ -1,7 +1,9 @@
 package compiler488.ast.decl;
 
 import java.io.PrintStream;
+import java.util.ListIterator;
 
+import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
 import compiler488.semantics.Semantics;
@@ -97,16 +99,39 @@ public class RoutineDecl extends Declaration {
 				kind = Kind.Function;
 			}
 		}
-		
-		
-		
 		entry = new Entry(kind, this.name, this);
 		
 		//TODO: If function and in symbol but not forward. then do check.
-	
 		
+		Entry prevDecl = semantics.allScopeLookup(this.name);
+		if (prevDecl == null) {
+			semantics.addToCurrScope(this.name, entry);
+		}else if ( (prevDecl.getKind() == Kind.ForwardFunction) || (prevDecl.getKind() == 
+				Kind.ForwardProcedure) && kind == prevDecl.getKind()) {
+			
+			ASTList<ScalarDecl> forwardDeclParams = ((RoutineDecl) prevDecl.getNode()).getRoutineBody().getParameters();
+			ASTList<ScalarDecl> currDeclParams = this.getRoutineBody().getParameters();
+			
+			if (forwardDeclParams.size() != currDeclParams.size()) {
+				//error
+			}
+			ListIterator<ScalarDecl> listPrevParams = forwardDeclParams.listIterator();
+			ListIterator<ScalarDecl> listCurrParams = currDeclParams.listIterator();
+			
+			while (listPrevParams.hasNext()) {
+				if (listPrevParams.next().getType() != listCurrParams.next().getType()){
+					//error
+				}	
+			}
+			if (this.getType() != ((RoutineDecl) prevDecl.getNode()).getType()) {
+				//error
+			}
+			semantics.remove(name); //remove forward decl
+			semantics.addToCurrScope(this.name, entry);  //add new declaration
+		}else {
+			//Error
+		}
 		
-		semantics.addToCurrScope(this.name, entry);
 	}
 	
 	

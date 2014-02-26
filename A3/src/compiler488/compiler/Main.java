@@ -460,7 +460,7 @@ public class Main {
 	    }
 	
         if( errorOccurred ){
-	    System.out.println("Processing Terminated due to errors");
+	    System.out.println("Processing Termilnated due to errors");
 	    return ;
         }
 

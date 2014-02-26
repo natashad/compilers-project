@@ -75,6 +75,20 @@ public class Semantics {
 		return null;
 	}
 	
+	public void remove(String name) {
+		if (this.allScopeLookup(name) != null) {
+			Iterator<SymbolTable> listTables = this.symbolTableList.descendingIterator();
+			while (listTables.hasNext()) {
+					SymbolTable symtable =  listTables.next();
+					if (symtable.containsKey(name)) {
+						symtable.remove(name);
+						return;
+					}
+			}
+		}
+	}
+	
+	
 	/** Add symbol to the current scope*/
 	public void addToCurrScope(String name, Entry entry) throws Exception {
 		if (this.symbolTableList.getLast().containsKey(name)) {
