@@ -6,7 +6,7 @@ import compiler488.symbol.Entry;
 import compiler488.symbol.Entry.Kind;
 
 /**
- * Represents the declaration of a simple variable.
+ * Represents the declaration of a variable when passed as parameter to function or procedure
  */
 
 public class ScalarDecl extends Declaration {
