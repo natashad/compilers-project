@@ -119,14 +119,14 @@ public class ArrayDeclPart extends DeclarationPart {
 	 * Do semantic analysis
 	 * */
 	@Override
-	public void semanticCheck(Semantics semantics) throws Exception{
+	public void semanticCheck(Semantics semantics){
 		
 		//S19
 		Entry entry = new Entry(Kind.Array, this.name, this);
 		semantics.addToCurrScope(this.name, entry);
 		
 		//S46 - Check the array bounds.
-		//Add line number to errors.
+		//TODO: Add line number to errors.
 		if (this.ub1 != null && this.lb1 > this.ub1) {
 			Exception error = new Exception("Lower bound of array " + this.name + " is bigger then upper bound");
 			semantics.errorList.add(error);

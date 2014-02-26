@@ -61,7 +61,7 @@ public class MultiDeclarations extends Declaration {
 	 * Do semantic analysis
 	 * */
 	@Override
-	public void semanticCheck(Semantics semantics) throws Exception{
+	public void semanticCheck(Semantics semantics){
 		
 		//S47 - Associating type with variables.
 		ListIterator<DeclarationPart> declarations = elements.listIterator();
