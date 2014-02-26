@@ -1,10 +1,14 @@
 package compiler488.ast.decl;
 
 import java.io.PrintStream;
+import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
+import compiler488.semantics.Semantics;
+import compiler488.symbol.Entry;
+import compiler488.symbol.Entry.Kind;
 
 /**
  * Holds the declaration of multiple elements.
@@ -51,5 +55,20 @@ public class MultiDeclarations extends Declaration {
 
 	public void setElements(ASTList<DeclarationPart> elements) {
 		this.elements = elements;
+	}
+	
+	/** 
+	 * Do semantic analysis
+	 * */
+	@Override
+	public void semanticCheck(Semantics semantics) throws Exception{
+		
+		//S47 - Associating type with variables.
+		ListIterator<DeclarationPart> declarations = elements.listIterator();
+		while (declarations.hasNext()) {
+			DeclarationPart decl = declarations.next();
+			Entry entry = semantics.curScopeLookup(decl.getName());
+			entry.setType(type);
+		}
 	}
 }

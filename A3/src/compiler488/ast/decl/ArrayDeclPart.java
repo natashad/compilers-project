@@ -1,6 +1,9 @@
 package compiler488.ast.decl;
 
 import compiler488.ast.expn.IntConstExpn;
+import compiler488.semantics.Semantics;
+import compiler488.symbol.Entry;
+import compiler488.symbol.Entry.Kind;
 
 /**
  * Holds the declaration part of an array.
@@ -110,5 +113,30 @@ public class ArrayDeclPart extends DeclarationPart {
 
 	public void setSize(Integer size) {
 		this.size = size;
+	}
+	
+	/** 
+	 * Do semantic analysis
+	 * */
+	@Override
+	public void semanticCheck(Semantics semantics) throws Exception{
+		
+		//S19
+		Entry entry = new Entry(Kind.Array, this.name, this);
+		semantics.addToCurrScope(this.name, entry);
+		
+		//S46 - Check the array bounds.
+		//Add line number to errors.
+		if (this.ub1 != null && this.lb1 > this.ub1) {
+			Exception error = new Exception("Lower bound of array " + this.name + " is bigger then upper bound");
+			semantics.errorList.add(error);
+		}
+		if (isTwoDimensional) {
+			//S48
+			if (this.ub2 != null && this.lb2 > this.ub2) {
+				Exception error = new Exception("Lower bound of array " + this.name + " is bigger then upper bound");
+				semantics.errorList.add(error);
+			}
+		}
 	}
 }

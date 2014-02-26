@@ -1,5 +1,6 @@
 package compiler488.symbol;
 import compiler488.ast.*;
+import compiler488.ast.type.Type;
 /* Class representing a symbol table entry */
 
 public class Entry {
@@ -19,6 +20,17 @@ public class Entry {
 	private String name;
 	private AST node;
 	private Integer orderNumber;
+	//Associate type with entry if possible.
+	private Type type;
+	
+	
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
+	public Type getType() {
+		return this.type;
+	}
 	
 	public Kind getKind() {
 		return kind;
