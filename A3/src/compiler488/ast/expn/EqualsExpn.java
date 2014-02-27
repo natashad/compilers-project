@@ -1,5 +1,8 @@
 package compiler488.ast.expn;
 
+
+import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.Type;
 import compiler488.semantics.Semantics;
 
 /**
@@ -8,17 +11,28 @@ import compiler488.semantics.Semantics;
  */
 public class EqualsExpn extends BinaryExpn {
 	
+	private Type type;
+	
 	public EqualsExpn(String opSymbols, Expn left, Expn right) {
 		super(opSymbols, left, right);
 	}
-	
+	/**
+	 * Do semantic analysis
+	 */
 	public void semanticCheck(Semantics semantic) {
 		left.semanticCheck(semantic);
 		right.semanticCheck(semantic);
 		if (left.getType().toString() != right.getType().toString()) {
 			//TODO: Add error
 		}
+		this.type = new BooleanType();
 	}
 	
-
+	/** 
+	 * Set the type to the variable in the symbol table.
+	 * */
+	@Override
+	public Type getType() {
+		return this.type;
+	}
 }

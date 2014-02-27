@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
+import compiler488.semantics.Semantics;
 
 /**
  * Represents an if-then or an if-then-else construct.
@@ -76,4 +77,14 @@ public class IfStmt extends Stmt {
 	public void setWhenTrue(ASTList<Stmt> whenTrue) {
 		this.whenTrue = whenTrue;
 	}
+	
+	public void semanticCheck(Semantics semantics)  {
+		condition.semanticCheck(semantics);
+		whenTrue.semanticCheck(semantics);
+		if (whenFalse != null) {
+			whenFalse.semanticCheck(semantics);
+		}
+		
+	}
+	
 }
