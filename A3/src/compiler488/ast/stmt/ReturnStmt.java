@@ -29,7 +29,7 @@ public class ReturnStmt extends Stmt {
 		out.println("return ");
 	}
 	public void semanticChecking(Semantics semantic) {
-		if (semantic.getCurrScopeType() == Semantics.ScopeType.Procedure) {
+		if (semantic.getCurrMajorScope() != Semantics.ScopeType.Procedure) {
 			SemanticError error = new SemanticError("Cannot return from outside a procedure.", getLineNumber());
 			semantic.errorList.add(error);
 		}

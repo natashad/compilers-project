@@ -61,6 +61,7 @@ public class Semantics {
 		return this.symbolTableList.getLast().get(name);
 		
 	}
+	
 	/** Iterate through all the scopes to find Entry. If no entry return null. */
 	public Entry allScopeLookup(String name) {
 		Iterator<SymbolTable> listTables = this.symbolTableList.descendingIterator();
@@ -76,6 +77,20 @@ public class Semantics {
 	public Semantics.ScopeType getCurrScopeType() {
 		return this.scopeStack.lastElement();
 	}
+	
+	public Semantics.ScopeType getCurrMajorScope() {
+		Integer count = this.scopeStack.size() - 1;
+		while (count >= 0) {
+			ScopeType scope = this.scopeStack.get(count);
+			if (scope == ScopeType.Function || scope == ScopeType.Program || scope == ScopeType.Procedure) {
+				return scope;
+			}
+			count -= 1;
+		}
+		return null;
+	}
+	
+	
 	
 	public void remove(String name) {
 		if (this.allScopeLookup(name) != null) {

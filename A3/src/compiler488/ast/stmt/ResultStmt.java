@@ -42,7 +42,7 @@ public class ResultStmt extends Stmt {
 	}
 	
 	public void semanticCheck(Semantics semantic) {
-		if (semantic.getCurrScopeType() == Semantics.ScopeType.Function) {
+		if (semantic.getCurrMajorScope() != Semantics.ScopeType.Function) {
 			SemanticError error = new SemanticError("Cannot return result from outside a function body", getLineNumber());
 			semantic.errorList.add(error);
 		}
