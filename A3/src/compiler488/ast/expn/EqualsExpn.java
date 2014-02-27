@@ -20,12 +20,15 @@ public class EqualsExpn extends BinaryExpn {
 	 * Do semantic analysis
 	 */
 	public void semanticCheck(Semantics semantic) {
+		
 		left.semanticCheck(semantic);
 		right.semanticCheck(semantic);
+		
 		if (left.getType().toString() != right.getType().toString()) {
 			//TODO: Add error
 		}
 		this.type = new BooleanType();
+		
 	}
 	
 	/** 

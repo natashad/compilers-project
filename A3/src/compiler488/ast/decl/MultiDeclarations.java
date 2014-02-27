@@ -67,7 +67,8 @@ public class MultiDeclarations extends Declaration {
 		ListIterator<DeclarationPart> declarations = elements.listIterator();
 		while (declarations.hasNext()) {
 			DeclarationPart decl = declarations.next();
-			Entry entry = semantics.curScopeLookup(decl.getName());
+			decl.semanticCheck(semantics);
+			Entry entry = semantics.allScopeLookup(decl.getName());
 			entry.setType(this.type);
 		}
 	}

@@ -19,6 +19,7 @@ public class BoolExpn extends BinaryExpn {
 	}
 	
 	public void semanticCheck(Semantics semantic) {
+		
 		left.semanticCheck(semantic);
 		right.semanticCheck(semantic);
 		if (left.getType().toString() != "boolean" || left.getType().toString() != right.getType().toString()) {
