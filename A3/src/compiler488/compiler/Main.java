@@ -1,10 +1,12 @@
 package compiler488.compiler;
 
 import java.io.*;
+import java.util.ListIterator;
 
 import compiler488.parser.*;
 import compiler488.ast.AST ;
 import compiler488.ast.stmt.Program;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.SymbolTable;
 import compiler488.codegen.CodeGen;
@@ -449,6 +451,12 @@ public class Main {
 	   // Semantics.doIt( programAST );
 		Semantics semantic = new Semantics();
 		programAST.semanticCheck(semantic);
+		ListIterator<SemanticError> errorList = semantic.errorList.listIterator();
+		System.err.println(semantic.errorList.size());
+		while (errorList.hasNext()) {
+			SemanticError error = errorList.next();
+			System.err.println("At line number " + error.getLineNum() + error.getMessage());
+		}
 		
 	}
         catch( Exception e) 
