@@ -11,8 +11,8 @@ import compiler488.ast.expn.Expn;
  */
 public class RepeatUntilStmt extends LoopingStmt {
 	
-	public RepeatUntilStmt(Expn expn, ASTList<Stmt> statements) {
-		super(expn, statements);
+	public RepeatUntilStmt(Expn expn, ASTList<Stmt> statements, int lineNum) {
+		super(expn, statements, lineNum);
 	}
 	
 	/**

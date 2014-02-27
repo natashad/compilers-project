@@ -3,7 +3,7 @@ package compiler488.ast.stmt;
 import java.io.PrintStream;
 
 import compiler488.ast.Indentable;
-import compiler488.ast.expn.Expn;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -11,6 +11,10 @@ import compiler488.semantics.Semantics;
  */
 public class ReturnStmt extends Stmt {
 
+	public ReturnStmt(int lineNum) {
+		super(lineNum);
+	}
+	
 	/**
 	 * Print <b>return</b> on a line, by itself.
 	 * 
@@ -26,7 +30,8 @@ public class ReturnStmt extends Stmt {
 	}
 	public void semanticChecking(Semantics semantic) {
 		if (semantic.getCurrScopeType() == Semantics.ScopeType.Procedure) {
-			//TODO: Add error message;
+			SemanticError error = new SemanticError("Cannot return from outside a procedure.", getLineNumber());
+			semantic.errorList.add(error);
 		}
 	}
 }

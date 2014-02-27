@@ -12,7 +12,8 @@ public abstract class LoopingStmt extends Stmt
     protected ASTList<Stmt> body ;	  // body of ther loop
     protected Expn expn;          // Loop condition
 
-    public LoopingStmt(Expn expn, ASTList<Stmt> body) {
+    public LoopingStmt(Expn expn, ASTList<Stmt> body, int lineNum) {
+    	super(lineNum);
     	this.expn = expn;
     	this.body = body;
     }

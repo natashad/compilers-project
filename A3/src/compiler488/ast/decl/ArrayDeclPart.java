@@ -1,6 +1,7 @@
 package compiler488.ast.decl;
 
 import compiler488.ast.expn.IntConstExpn;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
 import compiler488.symbol.Entry.Kind;
@@ -128,13 +129,15 @@ public class ArrayDeclPart extends DeclarationPart {
 		//S46 - Check the array bounds.
 		//TODO: Add line number to errors.
 		if (this.ub1 != null && this.lb1 > this.ub1) {
-			Exception error = new Exception("Lower bound of array " + this.name + " is bigger then upper bound");
+			//TODO: FIX THE LINE NUMBER
+			SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", -1);
 			semantics.errorList.add(error);
 		}
 		if (isTwoDimensional) {
 			//S48
 			if (this.ub2 != null && this.lb2 > this.ub2) {
-				Exception error = new Exception("Lower bound of array " + this.name + " is bigger then upper bound");
+				//TODO: FIX THE LINE NUMBER
+				SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", -1);
 				semantics.errorList.add(error);
 			}
 		}

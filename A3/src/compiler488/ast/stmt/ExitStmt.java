@@ -1,6 +1,7 @@
 package compiler488.ast.stmt;
 
 import compiler488.ast.expn.*;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -12,7 +13,8 @@ public class ExitStmt extends Stmt {
 	// condition for 'exit when'
     private Expn expn = null;
     
-    public ExitStmt(Expn expn) {
+    public ExitStmt(Expn expn, int lineNum) {
+    	super(lineNum);
     	this.expn = expn;
     }
 
@@ -37,7 +39,9 @@ public class ExitStmt extends Stmt {
 	}
 	public void semanticCheck(Semantics semantic) {
 		if (semantic.getCurrScopeType() == Semantics.ScopeType.Loop) {
-			//TODO:error
+			SemanticError error = new SemanticError("Exit statement is being used outside of a loop.", getLineNumber());
+			semantic.errorList.add(error);
 		}
+		//TODO: Ensure tat if expn is not null, it is a booeanExpn
 	}
 }

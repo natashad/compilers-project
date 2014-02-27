@@ -21,7 +21,7 @@ public class Semantics {
     
 	//List of symbol tables (one for each scope)
 	public LinkedList<SymbolTable> symbolTableList; 
-    public LinkedList<Exception> errorList;
+    public LinkedList<SemanticError> errorList;
 	public Stack<ScopeType> scopeStack;
     
     
@@ -37,7 +37,7 @@ public class Semantics {
 	public Semantics (){
 		this.symbolTableList = new LinkedList<SymbolTable>();
 		this.scopeStack = new Stack<ScopeType>();
-		this.errorList = new LinkedList<Exception>();
+		this.errorList = new LinkedList<SemanticError>();
 	}
 
 	/**  semanticsInitialize - called once by the parser at the      */

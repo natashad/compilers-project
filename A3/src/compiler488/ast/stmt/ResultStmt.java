@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -13,7 +14,8 @@ public class ResultStmt extends Stmt {
 	// The value to be returned by a function.
 	private Expn value = null;
 	
-	public ResultStmt(Expn value) {
+	public ResultStmt(Expn value, int lineNum) {
+		super(lineNum);
 		this.value = value;
 	}
 
@@ -41,7 +43,8 @@ public class ResultStmt extends Stmt {
 	
 	public void semanticCheck(Semantics semantic) {
 		if (semantic.getCurrScopeType() == Semantics.ScopeType.Function) {
-			//TODO: Add error message
+			SemanticError error = new SemanticError("Cannot return result from outside a function body", getLineNumber());
+			semantic.errorList.add(error);
 		}
 	}
 }

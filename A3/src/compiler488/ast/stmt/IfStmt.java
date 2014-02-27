@@ -20,17 +20,15 @@ public class IfStmt extends Stmt {
 	// Represents the statement to execute when the condition is false.
 	private ASTList<Stmt> whenFalse = new ASTList<Stmt>();
 	
-	public IfStmt(Expn cond, ASTList<Stmt> whenTrue, ASTList<Stmt> whenFalse) {
-		super();
+	public IfStmt(Expn cond, ASTList<Stmt> whenTrue, ASTList<Stmt> whenFalse, int lineNum) {
+		super(lineNum);
 		this.condition = cond;
 		this.whenFalse = whenFalse;
 		this.whenTrue = whenTrue;
 	}
 	
-	public IfStmt(Expn cond, ASTList<Stmt> whenTrue) {
-		super();
-		this.condition = cond;
-		this.whenTrue = whenTrue;
+	public IfStmt(Expn cond, ASTList<Stmt> whenTrue, int lineNum) {
+		this(cond, whenTrue, new ASTList<Stmt>(), lineNum);
 	}
 
 	/**
@@ -79,6 +77,7 @@ public class IfStmt extends Stmt {
 	}
 	
 	public void semanticCheck(Semantics semantics)  {
+		//TODO: We should probably check that condition is a boolean/ can evaluate to one.
 		condition.semanticCheck(semantics);
 		whenTrue.semanticCheck(semantics);
 		if (whenFalse != null) {

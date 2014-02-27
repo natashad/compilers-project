@@ -158,16 +158,16 @@ start with program;
  */
 
 program		::=	scope:s				// the main program
-				{: RESULT = new Program((Scope)s); :}; 
+				{: RESULT = new Program((Scope)s, sleft); :}; 
 				
 scope		::=	L_CURLEY declarations:dList statements:sList R_CURLEY  // scope with declarations and statements
-				{: RESULT = new Scope((ASTList<Declaration>)dList, (ASTList<Stmt>)sList); :}	
+				{: RESULT = new Scope((ASTList<Declaration>)dList, (ASTList<Stmt>)sList, dListleft); :}	
 						
 			|	L_CURLEY statements:sList  R_CURLEY 		// scope with statements only
-				{: RESULT = new Scope((ASTList<Stmt>)sList); :}
+				{: RESULT = new Scope((ASTList<Stmt>)sList, sListleft); :}
 			
-			|	L_CURLEY  R_CURLEY			// empty scope
-				{: RESULT = new Scope(); :}
+			|	L_CURLEY:l  R_CURLEY			// empty scope
+				{: RESULT = new Scope(lleft); :}
 		;
 
 statements	::=	statement:s				// sequence of statements
@@ -188,43 +188,43 @@ declarations	::=	declaration:d				// sequence of declarations
 
 statement	::=	
 			variable:v COLON EQUAL expression:e		// assignment statement
-			{: RESULT = new AssignStmt((Expn)v, (Expn)e); :}
+			{: RESULT = new AssignStmt((Expn)v, (Expn)e, vleft); :}
 
 		|	IF expression:e THEN statements:sList FI 	// if statements
-			{: RESULT = new IfStmt((Expn)e, (ASTList<Stmt>)sList); :}
+			{: RESULT = new IfStmt((Expn)e, (ASTList<Stmt>)sList, eleft); :}
 		 	
 		|	IF expression:e THEN statements:sList1 ELSE statements:sList2 FI
-			{: RESULT = new IfStmt((Expn)e, (ASTList<Stmt>)sList1, (ASTList<Stmt>) sList2); :}
+			{: RESULT = new IfStmt((Expn)e, (ASTList<Stmt>)sList1, (ASTList<Stmt>) sList2, eleft); :}
 		 	
 		|	WHILE expression:e DO statements:sList END	// while statement
-		 	{: RESULT = new WhileDoStmt((Expn)e, (ASTList<Stmt>) sList); :}
+		 	{: RESULT = new WhileDoStmt((Expn)e, (ASTList<Stmt>) sList, eleft); :}
 		 	
 		|   REPEAT statements:sList UNTIL expression:e	// repeat statement
-			{: RESULT = new RepeatUntilStmt((Expn)e, (ASTList<Stmt>)sList); :}
+			{: RESULT = new RepeatUntilStmt((Expn)e, (ASTList<Stmt>)sList, sListleft); :}
 		 	
-		|	EXIT					// exit statements
-			{: RESULT = new ExitStmt(null); :}
+		|	EXIT:exit					// exit statements
+			{: RESULT = new ExitStmt(null, exitleft); :}
 		 	
 		|	EXIT WHEN expression:e
-			{: RESULT = new ExitStmt((Expn)e); :}
+			{: RESULT = new ExitStmt((Expn)e, eleft); :}
 		 	
 		|	RESULT expression:e		// return from function
-			{: RESULT = new ResultStmt((Expn)e); :}
+			{: RESULT = new ResultStmt((Expn)e, eleft); :}
 		 	
-		|	RETURN 					// return from procedure
-			{: RESULT = new ReturnStmt(); :}
+		|	RETURN:r					// return from procedure
+			{: RESULT = new ReturnStmt(rleft); :}
 		 	
 		|	PUT outputs:oList				// output statment
-			{: RESULT = new PutStmt((ASTList<Printable>)oList); :}
+			{: RESULT = new PutStmt((ASTList<Printable>)oList, oListleft); :}
 		 	
 		|	GET  inputs:iList				// input statement
-			{: RESULT = new GetStmt((ASTList<compiler488.ast.Readable>)iList); :}
+			{: RESULT = new GetStmt((ASTList<compiler488.ast.Readable>)iList, iListleft); :}
 		 	
 		|	IDENT:i L_PAREN  argumentList:args  R_PAREN 	// call procedure
-		 	{: RESULT = new ProcedureCallStmt(i.toString(), (ASTList<Expn>)args); :}
+		 	{: RESULT = new ProcedureCallStmt(i.toString(), (ASTList<Expn>)args, ileft); :}
 		 	
 		|	scope:s					// embedded scope
-			{: ((Scope)s).setScopeType(Semantics.ScopeType.Minor); RESULT = (Scope)s; :}
+			{: ((Scope)s).setIsMajor(false); RESULT = (Scope)s; :}
 		;
 
 declaration	::=	
@@ -247,13 +247,13 @@ declaration	::=
 			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
-														new Scope())); :}
+														new Scope(fHeadleft))); :}
 			
 		|	FORWARD  procedureHead:pHead			// forward procedure declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
-															new Scope())); :}
+															new Scope(pHeadleft))); :}
 		;
 
 variablenames	::=	

@@ -11,8 +11,8 @@ import compiler488.ast.expn.Expn;
  */
 public class WhileDoStmt extends LoopingStmt {
 	
-	public WhileDoStmt(Expn expn, ASTList<Stmt> statements) {
-		super(expn, statements);
+	public WhileDoStmt(Expn expn, ASTList<Stmt> statements, int lineNum) {
+		super(expn, statements, lineNum);
 		
 	}
 	
@@ -27,6 +27,7 @@ public class WhileDoStmt extends LoopingStmt {
 	@Override
 	public void printOn(PrintStream out, int depth) {
 		Indentable.printIndentOnLn(out, depth, "while " + expn + " do");
+		//TODO: We should check that expn is a boolean expn
 		body.printOnSeperateLines(out, depth + 1);
 		Indentable.printIndentOnLn(out, depth, "end");
 	}

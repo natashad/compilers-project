@@ -1,6 +1,7 @@
 package compiler488.ast.stmt;
 
 import compiler488.ast.expn.Expn;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -13,8 +14,8 @@ public class AssignStmt extends Stmt {
 	 */
 	private Expn lval, rval;
 	
-	public AssignStmt(Expn lval, Expn rval) {
-		super();
+	public AssignStmt(Expn lval, Expn rval, int lineNum) {
+		super(lineNum);
 		this.lval = lval; 
 		this.rval = rval;
 	}
@@ -45,7 +46,9 @@ public class AssignStmt extends Stmt {
 		this.lval.semanticCheck(semantic);
 		this.rval.semanticCheck(semantic);
 		if (lval.getType().toString() != rval.getType().toString()) {
-				//TODO: Add error message
+			//TODO: Should we be checking tht lval is a variable here as opposed to some other type of epression?
+			SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
+			semantic.errorList.add(error);
 		}
 	}
 }

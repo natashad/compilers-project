@@ -10,7 +10,8 @@ public class GetStmt extends Stmt {
 	
 	private ASTList<Readable> inputs; // A list of locations to put the values read.
 
-	public GetStmt (ASTList<Readable> inputs) {
+	public GetStmt (ASTList<Readable> inputs, int lineNum) {
+		super(lineNum);
 		this.inputs = inputs;
 	}
 	

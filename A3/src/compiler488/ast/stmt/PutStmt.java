@@ -9,7 +9,8 @@ import compiler488.ast.Printable;
 public class PutStmt extends Stmt {
 	private ASTList<Printable> outputs; // The objects to be printed.
 
-	public PutStmt (ASTList<Printable> outputs) {
+	public PutStmt (ASTList<Printable> outputs, int lineNum) {
+		super(lineNum);
 		this.outputs = outputs;
 	}
 	

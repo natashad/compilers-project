@@ -22,19 +22,18 @@ public class Scope extends Stmt {
 	
 	private boolean isMajor = true;
 
-	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts) {
+	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts, int lineNumber) {
+		super(lineNumber);
 		this.declarations = declarations;
 		this.statements = stmts;
 	}
 	
-	public Scope() {
-		this.declarations = new ASTList<Declaration>();
-		this.statements = new ASTList<Stmt>();
+	public Scope(int lineNumber) {
+		this(new ASTList<Declaration>(), new ASTList<Stmt>(), lineNumber);
 	}
 	
-	public Scope(ASTList<Stmt> stmt) {
-		this.declarations = new ASTList<Declaration>();
-		this.statements = stmt;
+	public Scope(ASTList<Stmt> stmt, int lineNumber) {
+		this(new ASTList<Declaration>(), stmt, lineNumber);
 	}
 
 	/**
