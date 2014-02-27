@@ -7,17 +7,8 @@ import compiler488.ast.AST;
  */
 public class Type extends AST {
 	
-	private int lineNumber;
-	
 	public Type(int lineNum) {
-		this.lineNumber = lineNum;
+		super(lineNum);
 	}
 	
-	public int getLineNumber() {
-		return lineNumber;
-	}
-	
-	public void setLineNumber(int lineNumber) {
-		this.lineNumber = lineNumber;
-	}
 }

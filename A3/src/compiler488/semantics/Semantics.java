@@ -95,6 +95,7 @@ public class Semantics {
 	public void addToCurrScope(String name, Entry entry) {
 		if (this.symbolTableList.getLast().containsKey(name)) {
 			// ERROR MULTIPLE DECLARATIONS (THROW EXCEPTION HERE)
+			return;
 		}
 		SymbolTable curTable = this.symbolTableList.getLast();
 		this.symbolTableList.getLast().put(name, entry);

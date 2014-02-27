@@ -9,10 +9,8 @@ import compiler488.ast.type.Type;
  */
 public class Expn extends AST implements Printable {
 	
-	private int lineNumber;
-	
 	public Expn(int lineNum) {
-		this.lineNumber = lineNum;
+		super(lineNum);
 	}
 	
 	//Return the type of variable.
@@ -20,12 +18,5 @@ public class Expn extends AST implements Printable {
 		return null;
 	}
 	
-	public void setLineNumber(int lineNum) {
-		this.lineNumber = lineNum;
-	}
-	
-	public int getLineNumber() {
-		return lineNumber;
-	}
 	
 }

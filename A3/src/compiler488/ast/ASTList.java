@@ -18,6 +18,8 @@ public class ASTList<E> extends AST {
 	 * Create an empty list.
 	 */
 	public ASTList() {
+		//Line numbers *shouldn't* matter here.
+		super(-1);
 		ll = new LinkedList<E>();
 	}
 	 
@@ -25,6 +27,7 @@ public class ASTList<E> extends AST {
 	 * Create a list with one element.
 	 */
 	public ASTList(E ast) {
+		super(-1);
 		ll = new LinkedList<E>();
 		ll.addLast(ast);
 	}

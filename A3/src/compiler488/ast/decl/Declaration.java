@@ -18,6 +18,7 @@ public class Declaration extends Indentable {
 	protected int lineNumber;
 	
 	public Declaration(String name, Type type, int lineNum) {
+		super(lineNum);
 		this.name = name;
 		this.type = type;
 		this.lineNumber = lineNum;

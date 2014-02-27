@@ -235,21 +235,21 @@ declaration	::=
 			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
-														(Scope)s),
+														(Scope)s, sleft),
 										fHeadleft); :}
 			
 		|	procedureHead:pHead  scope:s			// procedure declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
-															(Scope)s),
+															(Scope)s, sleft),
 											pHeadleft); :}
 		
 		|   FORWARD  functionHead:fHead			// forward function declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
-														new Scope(fHeadleft)),
+														new Scope(fHeadleft), fHeadleft),
 										true,
 										fHeadleft); :}
 			
@@ -257,7 +257,7 @@ declaration	::=
 			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
-															new Scope(pHeadleft)),
+															new Scope(pHeadleft), pHeadleft),
 											true,
 											pHeadleft); :}
 		;

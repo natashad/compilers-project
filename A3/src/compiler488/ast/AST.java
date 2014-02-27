@@ -9,6 +9,21 @@ import compiler488.semantics.Semantics;
  */
 public class AST {
 	
+	private int lineNumber;
+	
+	public AST(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+	
+	public int getLineNumber() {
+		return lineNumber;
+	}
+	
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+	
+	//TODO: THIS SHOULD BE AN ABSTRACT METHOD IN AN ABSTRACT CLASS.
 	// override this for child classes 
 	public void semanticCheck(Semantics semantics) {
 		
