@@ -107,7 +107,7 @@ public class Semantics {
 	
 	
 	/** Add symbol to the current scope*/
-	public void addToCurrScope(String name, Entry entry) {
+	public void addToCurrScope(String name, Entry entry, int lineNum) {
 		if (this.symbolTableList.getLast().containsKey(name)) {
 			// ERROR MULTIPLE DECLARATIONS (THROW EXCEPTION HERE)
 			return;

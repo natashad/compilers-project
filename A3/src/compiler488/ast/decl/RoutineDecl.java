@@ -113,7 +113,7 @@ public class RoutineDecl extends Declaration {
 		
 		Entry prevDecl = semantics.curScopeLookup(this.name);
 		if (prevDecl == null) {
-			semantics.addToCurrScope(this.name, entry);
+			semantics.addToCurrScope(this.name, entry, getLineNumber());
 		}else if ( ( prevDecl.getKind() == Kind.ForwardFunction
 						&& kind == Kind.Function) 
 					|| (prevDecl.getKind() == Kind.ForwardProcedure
@@ -148,7 +148,7 @@ public class RoutineDecl extends Declaration {
 				semantics.errorList.add(error);
 			}
 			semantics.remove(name); //remove forward decl
-			semantics.addToCurrScope(this.name, entry);  //add new declaration
+			semantics.addToCurrScope(this.name, entry, getLineNumber());  //add new declaration
 		}else {
 			SemanticError error = new SemanticError("Cannot declare function " + this.getName() + 
 													". Variable name already used.", getLineNumber());

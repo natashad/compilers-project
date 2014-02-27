@@ -32,6 +32,6 @@ public class ScalarDeclPart extends DeclarationPart {
 		
 		//S10
 		Entry entry = new Entry(Kind.Variable, this.name, this);
-		semantics.addToCurrScope(this.name, entry);
+		semantics.addToCurrScope(this.name, entry, getLineNumber());
 	}
 }

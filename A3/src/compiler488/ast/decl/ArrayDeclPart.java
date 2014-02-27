@@ -124,7 +124,7 @@ public class ArrayDeclPart extends DeclarationPart {
 		
 		//S19
 		Entry entry = new Entry(Kind.Array, this.name, this);
-		semantics.addToCurrScope(this.name, entry);
+		semantics.addToCurrScope(this.name, entry, getLineNumber());
 		
 		//S46 - Check the array bounds.
 		if (this.ub1 != null && this.lb1 > this.ub1) {

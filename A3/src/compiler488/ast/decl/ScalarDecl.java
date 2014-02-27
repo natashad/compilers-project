@@ -30,6 +30,6 @@ public class ScalarDecl extends Declaration {
 	@Override
 	public void semanticCheck(Semantics semantics) {
 		Entry entry = new Entry(Kind.Scalar, this.name, this);
-		semantics.addToCurrScope(this.name, entry);
+		semantics.addToCurrScope(this.name, entry, getLineNumber());
 	}
 }

@@ -1,7 +1,10 @@
 package compiler488.ast.stmt;
 
+import compiler488.ast.AST;
 import compiler488.ast.ASTList;
 import compiler488.ast.expn.Expn;
+import compiler488.semantics.Semantics;
+import compiler488.symbol.SymbolTable;
 
 
 /**
@@ -32,6 +35,18 @@ public abstract class LoopingStmt extends Stmt
 
 	public void setBody(ASTList<Stmt> body) {
 		this.body = body;
+	}
+	
+	@Override
+	public void semanticCheck(Semantics semantic) {
+		SymbolTable symTable = new SymbolTable();
+		semantic.openScope(symTable, Semantics.ScopeType.Loop);
+		
+		for(AST a : body) {
+			a.semanticCheck(semantic);
+		}
+		
+		semantic.closeScope();
 	}
 
 }
