@@ -14,8 +14,8 @@ public class BoolExpn extends BinaryExpn {
 
 	private Type type;
 	
-	public BoolExpn(String opSymbol, Expn left, Expn right) {
-		super(opSymbol, left, right);
+	public BoolExpn(String opSymbol, Expn left, Expn right, int lineNum) {
+		super(opSymbol, left, right, lineNum);
 	}
 	
 	public void semanticCheck(Semantics semantic) {

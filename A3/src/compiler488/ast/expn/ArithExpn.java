@@ -12,8 +12,8 @@ public class ArithExpn extends BinaryExpn {
 
 	private Type type;
 	
-	public ArithExpn(String opSymbol, Expn left, Expn right) {
-		super(opSymbol, left, right);
+	public ArithExpn(String opSymbol, Expn left, Expn right, int lineNum) {
+		super(opSymbol, left, right, lineNum);
 	}
 	
 	/** 

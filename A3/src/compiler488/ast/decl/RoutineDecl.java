@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
 import compiler488.symbol.Entry.Kind;
@@ -21,12 +22,12 @@ public class RoutineDecl extends Declaration {
 	private RoutineBody routineBody;
 	private boolean isForward = false;
 	
-	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody ) {
-		this(declPart, type, routineBody, false);
+	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody, int lineNum ) {
+		this(declPart, type, routineBody, false, lineNum);
 	}
 	
-	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody, boolean isForward ) {
-		super(declPart.getName(), type);
+	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody, boolean isForward, int lineNum ) {
+		super(declPart.getName(), type, lineNum);
 		this.routineBody = routineBody;
 		this.isForward = isForward;
 	}
@@ -46,14 +47,20 @@ public class RoutineDecl extends Declaration {
 	 */
 	@Override
 	public String toString() {
+	
+	  String ret = "";
+	  if(isForward()) {
+		  ret += "Forward: ";
+	  }
 	  if(type==null)
 	    {
-	      return " proc " + name;
+	      ret += " proc " + name;
 	    }
 	  else
 	    {
-	      return " func "  + name  + " : " + type ;
+	      ret += " func "  + name  + " : " + type ;
 	    }
+	  return ret;
 	}
 
 	/**
@@ -104,33 +111,48 @@ public class RoutineDecl extends Declaration {
 		
 		//TODO: If function and in symbol but not forward. then do check.
 		
-		Entry prevDecl = semantics.allScopeLookup(this.name);
+		Entry prevDecl = semantics.curScopeLookup(this.name);
 		if (prevDecl == null) {
 			semantics.addToCurrScope(this.name, entry);
-		}else if ( (prevDecl.getKind() == Kind.ForwardFunction) || (prevDecl.getKind() == 
-				Kind.ForwardProcedure) && kind == prevDecl.getKind()) {
+		}else if ( ( prevDecl.getKind() == Kind.ForwardFunction
+						&& kind == Kind.Function) 
+					|| (prevDecl.getKind() == Kind.ForwardProcedure
+						&& kind == Kind.Procedure) ) {
 			
 			ASTList<ScalarDecl> forwardDeclParams = ((RoutineDecl) prevDecl.getNode()).getRoutineBody().getParameters();
 			ASTList<ScalarDecl> currDeclParams = this.getRoutineBody().getParameters();
 			
 			if (forwardDeclParams.size() != currDeclParams.size()) {
-				//TODO: Add error message
+				SemanticError error = new SemanticError("Forward Declaration of function " + 
+														this.getName() + " specifies " + forwardDeclParams.size()
+														+ " parameters (Given: " + currDeclParams.size() + ").", 
+														getLineNumber());
+				semantics.errorList.add(error);
 			}
 			ListIterator<ScalarDecl> listPrevParams = forwardDeclParams.listIterator();
 			ListIterator<ScalarDecl> listCurrParams = currDeclParams.listIterator();
 			
 			while (listPrevParams.hasNext()) {
-				if (listPrevParams.next().getType() != listCurrParams.next().getType()){
-					//TODO: Add error message
+				Type forwardType = listPrevParams.next().getType();
+				Type currType = listCurrParams.next().getType();
+				if (forwardType != currType){
+					SemanticError error = new SemanticError("Expected Parameter Type: " + forwardType + 
+															", Given Parameter Type: " + currType + ".", getLineNumber());
+					semantics.errorList.add(error);
 				}	
 			}
 			if (this.getType() != ((RoutineDecl) prevDecl.getNode()).getType()) {
-				//error
+				SemanticError error = new SemanticError("Forward Declaration specifies return type of function " + this.getName() 
+														+ " to be " + ((RoutineDecl) prevDecl.getNode()).getType() + 
+														" (Given: " + this.getType() + ").", getLineNumber());
+				semantics.errorList.add(error);
 			}
 			semantics.remove(name); //remove forward decl
 			semantics.addToCurrScope(this.name, entry);  //add new declaration
 		}else {
-			//Error
+			SemanticError error = new SemanticError("Cannot declare function " + this.getName() + 
+													". Variable name already used.", getLineNumber());
+			semantics.errorList.add(error);
 		}
 		
 	}

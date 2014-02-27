@@ -9,8 +9,8 @@ public class UnaryExpn extends Expn
     Expn  operand ;	/* operand of the unary  operator. */
     String opSymbol;	/* Name of the operator. */
 
-    public UnaryExpn (Expn operand, String opSymbol) {
-    	super();
+    public UnaryExpn (Expn operand, String opSymbol, int lineNum) {
+    	super(lineNum);
     	this.operand = operand;
     	this.opSymbol = opSymbol;
     }

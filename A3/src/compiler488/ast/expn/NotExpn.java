@@ -11,8 +11,8 @@ import compiler488.semantics.Semantics;
 public class NotExpn extends UnaryExpn {
 
 	private Type type;
-	public NotExpn(String opSymbol, Expn operand) {
-		super(operand, opSymbol);
+	public NotExpn(String opSymbol, Expn operand, int lineNum) {
+		super(operand, opSymbol, lineNum);
 	}
 	
 	/** 

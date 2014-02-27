@@ -46,7 +46,6 @@ public class AssignStmt extends Stmt {
 		this.lval.semanticCheck(semantic);
 		this.rval.semanticCheck(semantic);
 		if (lval.getType().toString() != rval.getType().toString()) {
-			//TODO: Should we be checking tht lval is a variable here as opposed to some other type of epression?
 			SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
 			semantic.errorList.add(error);
 		}

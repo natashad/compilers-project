@@ -19,8 +19,8 @@ public class ArrayDeclPart extends DeclarationPart {
 	/* The number of objects the array holds. */
 	private Integer size;
 	
-	public ArrayDeclPart(String name, IntConstExpn[] firstBounds, IntConstExpn[] secondBounds) {
-		super(name);
+	public ArrayDeclPart(String name, IntConstExpn[] firstBounds, IntConstExpn[] secondBounds, int lineNum) {
+		super(name, lineNum);
 		
 		this.lb1 = firstBounds[0].getValue();
 		if (firstBounds.length == 2) {
@@ -127,17 +127,15 @@ public class ArrayDeclPart extends DeclarationPart {
 		semantics.addToCurrScope(this.name, entry);
 		
 		//S46 - Check the array bounds.
-		//TODO: Add line number to errors.
 		if (this.ub1 != null && this.lb1 > this.ub1) {
-			//TODO: FIX THE LINE NUMBER
-			SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", -1);
+			SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", getLineNumber());
 			semantics.errorList.add(error);
 		}
 		if (isTwoDimensional) {
 			//S48
 			if (this.ub2 != null && this.lb2 > this.ub2) {
 				//TODO: FIX THE LINE NUMBER
-				SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", -1);
+				SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", getLineNumber());
 				semantics.errorList.add(error);
 			}
 		}

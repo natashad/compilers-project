@@ -9,8 +9,8 @@ public class BinaryExpn extends Expn
     Expn left, right;	/* Left and right operands of the binary operator. */
     String opSymbol;	/* Name of the operator. */
 
-    public BinaryExpn(String opSymbol, Expn left, Expn right) {
-    	super();
+    public BinaryExpn(String opSymbol, Expn left, Expn right, int lineNum) {
+    	super(lineNum);
     	this.left = left;
     	this.right = right;
     	this.opSymbol = opSymbol;

@@ -13,8 +13,8 @@ public class CompareExpn extends BinaryExpn {
 	
 	private Type type;
 	
-	public CompareExpn(String opSymbol, Expn left, Expn right) {
-		super(opSymbol, left, right);
+	public CompareExpn(String opSymbol, Expn left, Expn right, int lineNum) {
+		super(opSymbol, left, right, lineNum);
 	}
 	
 	/** 

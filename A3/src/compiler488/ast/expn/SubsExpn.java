@@ -12,8 +12,8 @@ public class SubsExpn extends Expn implements Readable {
 	private Expn   subscript1  ;	 // first subscript
     private Expn   subscript2 = null ;	// second subscript (if any)
 
-    public SubsExpn(String variable, Expn sub1, Expn sub2) {
-    	super();
+    public SubsExpn(String variable, Expn sub1, Expn sub2, int lineNum) {
+    	super(lineNum);
     	this.variable = variable;
     	this.subscript1 = sub1;
     	this.subscript2 = sub2;

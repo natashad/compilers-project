@@ -13,8 +13,8 @@ public class EqualsExpn extends BinaryExpn {
 	
 	private Type type;
 	
-	public EqualsExpn(String opSymbols, Expn left, Expn right) {
-		super(opSymbols, left, right);
+	public EqualsExpn(String opSymbols, Expn left, Expn right, int lineNum) {
+		super(opSymbols, left, right, lineNum);
 	}
 	/**
 	 * Do semantic analysis

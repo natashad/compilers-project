@@ -18,8 +18,8 @@ public class MultiDeclarations extends Declaration {
 	private ASTList<DeclarationPart> elements;
 //	private Type type;
 	
-	public MultiDeclarations (ASTList<DeclarationPart> declParts, Type type) {
-		super(null, type);
+	public MultiDeclarations (ASTList<DeclarationPart> declParts, Type type, int lineNum) {
+		super(null, type, lineNum);
 //		this.type = type;
 		elements = declParts;
 	}

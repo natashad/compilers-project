@@ -14,8 +14,8 @@ public class IdentExpn extends Expn implements Readable
     private String ident;  	// name of the identifier
     private Type type;
     
-    public IdentExpn(String ident) {
-    	super();
+    public IdentExpn(String ident, int lineNum) {
+    	super(lineNum);
     	this.ident = ident;
     }
     

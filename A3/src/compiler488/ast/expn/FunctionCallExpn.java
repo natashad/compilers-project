@@ -10,7 +10,8 @@ public class FunctionCallExpn extends Expn {
 
 	private ASTList<Expn> arguments; // The arguments passed to the function.
 	
-	public FunctionCallExpn(String ident, ASTList<Expn> args) {
+	public FunctionCallExpn(String ident, ASTList<Expn> args, int lineNum) {
+		super(lineNum);
 		this.ident = ident;
 		this.arguments = args;
 	}

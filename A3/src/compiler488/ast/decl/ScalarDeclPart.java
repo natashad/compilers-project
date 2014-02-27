@@ -11,8 +11,8 @@ import compiler488.symbol.Entry.Kind;
  */
 public class ScalarDeclPart extends DeclarationPart {
 
-	public ScalarDeclPart(String name) {
-		super(name);
+	public ScalarDeclPart(String name, int lineNum) {
+		super(name, lineNum);
 	}
 	
 	/**

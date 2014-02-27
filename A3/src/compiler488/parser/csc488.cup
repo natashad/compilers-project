@@ -229,31 +229,37 @@ statement	::=
 
 declaration	::=	
 			VAR variablenames:v COLON type:t		// declare scalar/array variables
-			{: RESULT = new MultiDeclarations((ASTList<DeclarationPart>)v, (Type)t); :}
+			{: RESULT = new MultiDeclarations((ASTList<DeclarationPart>)v, (Type)t, vleft); :}
 				
 		|	functionHead:fHead  scope:s			// function declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
-														(Scope)s)); :}
+														(Scope)s),
+										fHeadleft); :}
 			
 		|	procedureHead:pHead  scope:s			// procedure declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
-															(Scope)s)); :}
+															(Scope)s),
+											pHeadleft); :}
 		
 		|   FORWARD  functionHead:fHead			// forward function declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
-														new Scope(fHeadleft))); :}
+														new Scope(fHeadleft)),
+										true,
+										fHeadleft); :}
 			
 		|	FORWARD  procedureHead:pHead			// forward procedure declaration
 			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
-															new Scope(pHeadleft))); :}
+															new Scope(pHeadleft)),
+											true,
+											pHeadleft); :}
 		;
 
 variablenames	::=	
@@ -267,18 +273,18 @@ variablenames	::=
 
 variablename	::=	
 			IDENT:i 					// scalar variable
-			{: RESULT = new ScalarDeclPart(i.toString()); :}
+			{: RESULT = new ScalarDeclPart(i.toString(), ileft); :}
 			
 		|	IDENT:name L_SQUARE bound:b R_SQUARE		// 1 dimensional array
-			{: RESULT = new ArrayDeclPart(name.toString(), (IntConstExpn[])b, new IntConstExpn[]{}); :}
+			{: RESULT = new ArrayDeclPart(name.toString(), (IntConstExpn[])b, new IntConstExpn[]{}, nameleft ); :}
 		
 		|	IDENT:name L_SQUARE bound:b1 COMMA bound:b2  R_SQUARE // 2 dimensional array
-			{: RESULT = new ArrayDeclPart(name.toString(), (IntConstExpn[])b1, (IntConstExpn[])b2); :}
+			{: RESULT = new ArrayDeclPart(name.toString(), (IntConstExpn[])b1, (IntConstExpn[])b2, nameleft ); :}
 		;
 
 bound		::=     
 				INTCONST:i				// integer array bound
-				{: RESULT = new IntConstExpn[]{new IntConstExpn(i.intValue())}; :}
+				{: RESULT = new IntConstExpn[]{new IntConstExpn(i.intValue(), ileft)}; :}
 					
 		|       generalBound:lb DOT DOT generalBound:ub	// explicit lower/upper bounds
 				{: RESULT = new IntConstExpn[]{(IntConstExpn)lb, (IntConstExpn)ub}; :}
@@ -286,26 +292,26 @@ bound		::=
 
 generalBound	::=	
 			INTCONST:i			// positive array bound
-			{: RESULT = new IntConstExpn(i.intValue()); :}
+			{: RESULT = new IntConstExpn(i.intValue(), ileft); :}
 					
 		|	MINUS INTCONST:i			// negative array bound
-			{: RESULT = new IntConstExpn(-(i.intValue())); :}
+			{: RESULT = new IntConstExpn(-(i.intValue()), ileft); :}
 		;
 
 type		::=	
-			INTEGER				// integer type
-			{: RESULT = new IntegerType(); :}
+			INTEGER:i				// integer type
+			{: RESULT = new IntegerType(ileft); :}
 			
-		|	BOOLEAN				// boolean type
-			{: RESULT = new BooleanType(); :}
+		|	BOOLEAN:b				// boolean type
+			{: RESULT = new BooleanType(bleft); :}
 		;
 
 functionHead	::=	FUNC IDENT:name L_PAREN parameterList:pList R_PAREN COLON type:t	// function head
-					{: RESULT = new DeclarationHead(new DeclarationPart((String)name), (ASTList<ScalarDecl>)pList, (Type)t); :}
+					{: RESULT = new DeclarationHead(new DeclarationPart((String)name,  nameleft), (ASTList<ScalarDecl>)pList, (Type)t); :}
 		;
 
 procedureHead	::=	PROCEDURE  IDENT:name L_PAREN parameterList:pList  R_PAREN		// procedure head
-					{: RESULT = new DeclarationHead(new DeclarationPart((String)name), (ASTList<ScalarDecl>)pList, null); :}
+					{: RESULT = new DeclarationHead(new DeclarationPart((String)name, nameleft), (ASTList<ScalarDecl>)pList, null); :}
 		;
 
 outputs		::=	
@@ -321,10 +327,10 @@ output		::=
 			{: RESULT = (Expn)e; :}
 			
 		|	TEXTCONST:t		// text constant
-			{: RESULT = new TextConstExpn(t.toString()); :}
+			{: RESULT = new TextConstExpn(t.toString(), tleft); :}
 			
-		|	NEWLINE			// newline constant
-			{: RESULT = new NewlineConstExpn(); :}
+		|	NEWLINE:n			// newline constant
+			{: RESULT = new NewlineConstExpn(nleft); :}
 		;
 
 inputs		::=	
@@ -369,7 +375,7 @@ parameters	::=
 		;
 
 parameter	::=	IDENT:name COLON type:t		// declare one parameter
-				{: RESULT = new ScalarDecl(name.toString(), (Type)t); :}
+				{: RESULT = new ScalarDecl(name.toString(), (Type)t, nameleft); :}
 		;
 
 expression	::=	
@@ -377,7 +383,7 @@ expression	::=
 			{: RESULT = (Expn)con; :}
 
 		|	expression:exp OR conjunction:con
-			{: RESULT = new BoolExpn("or", (Expn)exp, (Expn)con); :}
+			{: RESULT = new BoolExpn("or", (Expn)exp, (Expn)con, expleft); :}
 		;
 
 conjunction	::=	
@@ -385,7 +391,7 @@ conjunction	::=
 			{: RESULT = (Expn)neg; :}
 	
 		|	conjunction:con AND negation:neg
-			{: RESULT = new BoolExpn("and", (Expn)con, (Expn)neg); :}
+			{: RESULT = new BoolExpn("and", (Expn)con, (Expn)neg, conleft); :}
 		;
 
 negation	::=	
@@ -393,7 +399,7 @@ negation	::=
 			{: RESULT = (Expn)c; :}
 				
 		|	NOT negation:neg
-			{: RESULT = new NotExpn("not", (Expn)neg); :} 
+			{: RESULT = new NotExpn("not", (Expn)neg, negleft); :} 
 		;
 
 compareExpn	::=	
@@ -401,22 +407,22 @@ compareExpn	::=
 			{: RESULT = (Expn)a; :}
 			 
 		|	arithExpn:a1 EQUAL arithExpn:a2
-			{: RESULT = new EqualsExpn("=", (Expn)a1, (Expn)a2); :} 
+			{: RESULT = new EqualsExpn("=", (Expn)a1, (Expn)a2, a1left); :} 
 			
 		| 	arithExpn:a1 NOT EQUAL arithExpn:a2 
-			{: RESULT = new EqualsExpn("not =", (Expn)a1, (Expn)a2); :} 
+			{: RESULT = new EqualsExpn("not =", (Expn)a1, (Expn)a2, a1left); :} 
 			
 		|	arithExpn:a1 LESS arithExpn:a2
-			{: RESULT = new CompareExpn("<", (Expn)a1, (Expn)a2); :}
+			{: RESULT = new CompareExpn("<", (Expn)a1, (Expn)a2, a1left); :}
 		
 		|	arithExpn:a1 LESS EQUAL arithExpn:a2
-			{: RESULT = new CompareExpn("<=", (Expn)a1, (Expn)a2); :}
+			{: RESULT = new CompareExpn("<=", (Expn)a1, (Expn)a2, a1left); :}
 		
 		|	arithExpn:a1 GREATER arithExpn:a2
-			{: RESULT = new CompareExpn(">", (Expn)a1, (Expn)a2); :}
+			{: RESULT = new CompareExpn(">", (Expn)a1, (Expn)a2, a1left); :}
 		
 		|	arithExpn:a1 GREATER EQUAL arithExpn:a2
-			{: RESULT = new CompareExpn(">=", (Expn)a1, (Expn)a2); :}
+			{: RESULT = new CompareExpn(">=", (Expn)a1, (Expn)a2, a1left); :}
 		;
 
 arithExpn	::=	
@@ -424,10 +430,10 @@ arithExpn	::=
 			{: RESULT = (Expn)t; :}
 
 		|	arithExpn:aExp  PLUS  term:t
-			{: RESULT = new ArithExpn("+", (Expn)aExp, (Expn)t); :} 
+			{: RESULT = new ArithExpn("+", (Expn)aExp, (Expn)t, aExpleft); :} 
 			
 		|	arithExpn:aExp  MINUS term:t
-			{: RESULT = new ArithExpn("-", (Expn)aExp, (Expn)t); :} 
+			{: RESULT = new ArithExpn("-", (Expn)aExp, (Expn)t, aExpleft); :} 
 		;
 
 term		::=	
@@ -435,10 +441,10 @@ term		::=
 			{: RESULT = (Expn)f; :}
 			
 		|	term:t TIMES factor:f
-			{: RESULT = new ArithExpn("*", (Expn)t, (Expn)f); :}
+			{: RESULT = new ArithExpn("*", (Expn)t, (Expn)f, tleft); :}
 			
 		|	term:t DIVIDE factor:f
-			{: RESULT = new ArithExpn("/", (Expn)t, (Expn)f); :}
+			{: RESULT = new ArithExpn("/", (Expn)t, (Expn)f, tleft); :}
 		;
 
 factor		::=	
@@ -446,7 +452,7 @@ factor		::=
 			{: RESULT = (Expn)p; :}
 							
 		|	MINUS factor:f			// unary minus
-			{: RESULT = new UnaryMinusExpn((Expn)f); :}
+			{: RESULT = new UnaryMinusExpn((Expn)f, fleft); :}
 		;
 
 primary		::=	
@@ -461,33 +467,33 @@ primary		::=
 			
 		|	L_PAREN  expression:cond QUESTION expression:tExp COLON expression:fExp R_PAREN
 								// conditional expression
-			{: RESULT = new ConditionalExpn((Expn)cond, (Expn)tExp, (Expn)fExp); :}
+			{: RESULT = new ConditionalExpn((Expn)cond, (Expn)tExp, (Expn)fExp, condleft); :}
 					
 		|	IDENT:ident L_PAREN argumentList:args R_PAREN 	// function call
-			{: RESULT = new FunctionCallExpn(ident.toString(), (ASTList<Expn>)args); :}
+			{: RESULT = new FunctionCallExpn(ident.toString(), (ASTList<Expn>)args, identleft); :}
 		;
 
 constant	::=	
 			INTCONST:val	// integer constant
-			{: RESULT = new IntConstExpn(val); :}
+			{: RESULT = new IntConstExpn(val, valleft); :}
 			
-		|	TRUE		// constant true
-			{: RESULT = new BoolConstExpn(true); :}
+		|	TRUE:t		// constant true
+			{: RESULT = new BoolConstExpn(true, tleft); :}
 		
-		|	FALSE		// constant false
-			{: RESULT = new BoolConstExpn(false); :}
+		|	FALSE:f		// constant false
+			{: RESULT = new BoolConstExpn(false, fleft); :}
 		
 		;
 
 variable	::=
 			IDENT:ident					// scalar variable or parameter
-			{: RESULT = new IdentExpn(ident.toString()); :}
+			{: RESULT = new IdentExpn(ident.toString(), identleft); :}
 
 		|	IDENT:ident L_SQUARE expression:e R_SQUARE	// element of 1 dimensional array
-			{: RESULT = new SubsExpn(ident.toString(), (Expn)e, null); :}
+			{: RESULT = new SubsExpn(ident.toString(), (Expn)e, null, identleft); :}
 			
 		|   IDENT:ident L_SQUARE expression:e1 COMMA expression:e2 R_SQUARE // element of 2 dimensional array
-			{: RESULT = new SubsExpn(ident.toString(), (Expn)e1, (Expn)e2); :}
+			{: RESULT = new SubsExpn(ident.toString(), (Expn)e1, (Expn)e2, identleft); :}
 		;
 
 

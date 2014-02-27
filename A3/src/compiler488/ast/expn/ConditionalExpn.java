@@ -11,8 +11,8 @@ public class ConditionalExpn extends Expn {
 
 	private Expn falseValue; // Otherwise, the value is this.
 	
-	public ConditionalExpn(Expn cond, Expn trueVal, Expn falseVal) {
-		super();
+	public ConditionalExpn(Expn cond, Expn trueVal, Expn falseVal, int lineNum) {
+		super(lineNum);
 		this.condition = cond;
 		this.trueValue = trueVal;
 		this.falseValue = falseVal;

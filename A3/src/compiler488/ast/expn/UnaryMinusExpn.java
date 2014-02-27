@@ -10,8 +10,8 @@ import compiler488.semantics.Semantics;
 public class UnaryMinusExpn extends UnaryExpn {
 	
 	private Type type;
-	public UnaryMinusExpn(Expn factor) {
-		super(factor, "-");
+	public UnaryMinusExpn(Expn factor, int lineNum) {
+		super(factor, "-", lineNum);
 	}
 	
 	/** 
