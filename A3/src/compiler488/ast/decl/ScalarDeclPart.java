@@ -28,7 +28,7 @@ public class ScalarDeclPart extends DeclarationPart {
 	 * Do semantic analysis
 	 * */
 	@Override
-	public void semanticCheck(Semantics semantics) throws Exception{
+	public void semanticCheck(Semantics semantics) {
 		
 		//S10
 		Entry entry = new Entry(Kind.Variable, this.name, this);

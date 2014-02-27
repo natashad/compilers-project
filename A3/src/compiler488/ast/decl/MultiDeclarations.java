@@ -17,7 +17,7 @@ public class MultiDeclarations extends Declaration {
 	/* The elements being declared */
 	private ASTList<DeclarationPart> elements;
 //	private Type type;
-
+	
 	public MultiDeclarations (ASTList<DeclarationPart> declParts, Type type) {
 		super(null, type);
 //		this.type = type;
@@ -68,7 +68,7 @@ public class MultiDeclarations extends Declaration {
 		while (declarations.hasNext()) {
 			DeclarationPart decl = declarations.next();
 			Entry entry = semantics.curScopeLookup(decl.getName());
-			entry.setType(type);
+			entry.setType(this.type);
 		}
 	}
 }

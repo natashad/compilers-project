@@ -23,6 +23,16 @@ public class CompareExpn extends BinaryExpn {
 	public void semanticCheck(Semantics semantics){
 		
 		//Set type to Integer.
+		left.semanticCheck(semantics);
+		right.semanticCheck(semantics);
+		try {
+			if (left.getType().toString() != "integer" || (left.getType().toString() != right.getType().toString())) {
+				//TODO: Add error
+			}
+		
+		} catch (Exception e){
+			//TODO: Add error 
+		}
 		this.type = new IntegerType();
 		
 		//TODO: Error checking if both expr type are same.

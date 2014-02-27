@@ -44,6 +44,8 @@ public class AssignStmt extends Stmt {
 	public void semanticCheck(Semantics semantic){
 		this.lval.semanticCheck(semantic);
 		this.rval.semanticCheck(semantic);
-		
+		if (lval.getType().toString() != rval.getType().toString()) {
+				//TODO: Add error message
+		}
 	}
 }
