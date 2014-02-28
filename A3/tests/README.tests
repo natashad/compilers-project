@@ -27,17 +27,34 @@ passingAssociativity4.488 - Test to see if level 4 operators associate
 passingAssociativity5.488 - Test to see if level 5 operators associate
 passingAssociativity6.488 - Test to see if level 6 operators associate
 
+SuccessfulGetAndPut.488 - Test a successful use of get and put with integers, text, and newlines.
+^^TODO: This doesn't work.
+
 Failing Tests:
 --------------
-//
+
 IncorrectVariableAssignment.488 -  Assigning to variables with incorrect value type.
-//TODO: Assigning value to array works : <--- var w[2] : integer; w:=2 ... SHOULD NOT WORK.
+^^TODO: Assigning value to array works : <--- var w[2] : integer; w:=2 ... SHOULD NOT WORK.
 
 FunctionCallOutsideScope.488 - Calling a function declared in an ended scope.
 
-//
 CallingUndeclaredFunction.488 - Calling an undeclared function.
-//TODO: Should not pass!
+^^TODO: Should not pass!
 
 FunctionCallBadParams.488 - Making a function call with incorrect arguments.
 ProcedureIncorrectArgs.488 - Procedure call with incorrect number of arguments.
+IndexingScalar.488 - Trying to subscript/index into a scalar variable as though it was an array.
+
+ForwardDeclarationsUndefined.488 - Forward Declared Functions are not actually ever defined.
+^^TODO: Should not pass.
+
+RedeclaringVariables.488 - Declaring a variable that has already been declared.
+
+IncompatibleReturns.488 - Returning an incompatable type from a function.
+^^TODO: Should not pass.
+
+BadArrayIndex.488 - Attempting to Index into an array using another array.
+^^TODO: Should not pass.
+
+ExitWhenNotBoolean.488 - Attempting to use an int as a condition for an exit when.
+GetAndPutBoolean.488 - Attempting to get and put boolean values.

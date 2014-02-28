@@ -60,7 +60,9 @@ public class SubsExpn extends Expn implements Readable {
 	public void semanticCheck(Semantics semantics) {
 		
 		this.subscript1.semanticCheck(semantics);
-		this.subscript2.semanticCheck(semantics);
+		if (subscript2 != null) {
+			this.subscript2.semanticCheck(semantics);
+		}
 		
 		//S31
 		//Check type of expressions is integer
@@ -69,9 +71,11 @@ public class SubsExpn extends Expn implements Readable {
 			semantics.errorList.add(error);
 		}
 		
-		if (subscript2.getType() == null || subscript2.getType().toString() != "integer") {
-			SemanticError error = new SemanticError("Type of expression for index " + this.subscript2.toString() + " is not Integer", getLineNumber());
-			semantics.errorList.add(error);
+		if (subscript2 != null) {
+			if (subscript2.getType() == null || subscript2.getType().toString() != "integer") {
+				SemanticError error = new SemanticError("Type of expression for index " + this.subscript2.toString() + " is not Integer", getLineNumber());
+				semantics.errorList.add(error);
+			}
 		}
 		
 	

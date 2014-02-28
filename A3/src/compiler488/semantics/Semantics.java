@@ -125,11 +125,12 @@ public class Semantics {
 	/** Add symbol to the current scope*/
 	public void addToCurrScope(String name, Entry entry, int lineNum) {
 		if (this.symbolTableList.getLast().containsKey(name)) {
-			// ERROR MULTIPLE DECLARATIONS (THROW EXCEPTION HERE)
+			SemanticError error = new SemanticError("Symbol " + name + " has a previous declaration.", lineNum);
+			this.errorList.add(error);
 			return;
+		} else {
+			this.symbolTableList.getLast().put(name, entry);
 		}
-		SymbolTable curTable = this.symbolTableList.getLast();
-		this.symbolTableList.getLast().put(name, entry);
 	
 	}
 	

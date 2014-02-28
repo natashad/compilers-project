@@ -27,7 +27,6 @@ public class WhileDoStmt extends LoopingStmt {
 	@Override
 	public void printOn(PrintStream out, int depth) {
 		Indentable.printIndentOnLn(out, depth, "while " + expn + " do");
-		//TODO: We should check that expn is a boolean expn
 		body.printOnSeperateLines(out, depth + 1);
 		Indentable.printIndentOnLn(out, depth, "end");
 	}

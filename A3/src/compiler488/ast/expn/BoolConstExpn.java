@@ -11,11 +11,11 @@ import compiler488.semantics.Semantics;
 public class BoolConstExpn extends ConstExpn
     {
     private boolean  value ;	/* value of the constant */
-    private Type type;
     
     public BoolConstExpn(boolean value, int lineNum) {
     	super(lineNum);
     	this.value = value;
+    	this.setType(new BooleanType());
     }
     
     /** Returns the value of the boolean constant */
@@ -40,14 +40,6 @@ public class BoolConstExpn extends ConstExpn
 		
 		//S20
 		//Set type to Integer.
-		this.type = new BooleanType();
-	}
-	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
+		this.setType(new BooleanType());
 	}
 }

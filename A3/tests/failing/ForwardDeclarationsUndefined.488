@@ -1,0 +1,6 @@
+{
+	forward proc procedurename()
+	forward func functionname():integer
+	var x : integer
+	x := 1
+}

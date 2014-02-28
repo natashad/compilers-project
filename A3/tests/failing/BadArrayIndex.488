@@ -1,0 +1,12 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Attempting to index into an array using another array.
+
+    var x[1] : integer
+    var y[2] : integer
+    x[y] := 1
+}

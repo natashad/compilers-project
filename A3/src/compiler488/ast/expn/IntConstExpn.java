@@ -15,6 +15,7 @@ public class IntConstExpn extends ConstExpn
     public IntConstExpn(Integer value, int lineNum) {
     	super(lineNum);
     	this.value = value;
+    	this.setType(new IntegerType());
     }
 
     /** Returns a string representing the value of the literal. */

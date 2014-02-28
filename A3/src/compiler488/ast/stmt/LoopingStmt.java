@@ -3,6 +3,8 @@ package compiler488.ast.stmt;
 import compiler488.ast.AST;
 import compiler488.ast.ASTList;
 import compiler488.ast.expn.Expn;
+import compiler488.ast.type.BooleanType;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.SymbolTable;
 
@@ -39,6 +41,14 @@ public abstract class LoopingStmt extends Stmt
 	
 	@Override
 	public void semanticCheck(Semantics semantic) {
+		
+		if (! (expn.getType() instanceof BooleanType) ) {
+			SemanticError error = new SemanticError("Looping Condition must evaluate to a boolean.", getLineNumber());
+			semantic.errorList.add(error);
+		}
+		
+		expn.semanticCheck(semantic);
+		
 		SymbolTable symTable = new SymbolTable();
 		semantic.openScope(symTable, Semantics.ScopeType.Loop);
 		

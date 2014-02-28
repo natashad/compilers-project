@@ -1,0 +1,15 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Attempting to redeclare a variable.
+
+    var y: integer
+    var x: integer
+    var y: boolean
+    var x: integer
+
+    y := 1
+}

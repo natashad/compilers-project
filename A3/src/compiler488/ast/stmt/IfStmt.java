@@ -5,6 +5,8 @@ import java.io.PrintStream;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
+import compiler488.ast.type.BooleanType;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -77,7 +79,10 @@ public class IfStmt extends Stmt {
 	}
 	
 	public void semanticCheck(Semantics semantics)  {
-		//TODO: We should probably check that condition is a boolean/ can evaluate to one.
+		if (!(condition.getType() instanceof BooleanType)) {
+			SemanticError error = new SemanticError("If condition must evaluate to a boolean.", getLineNumber());
+			semantics.errorList.add(error);
+		}
 		condition.semanticCheck(semantics);
 		whenTrue.semanticCheck(semantics);
 		if (whenFalse != null) {
