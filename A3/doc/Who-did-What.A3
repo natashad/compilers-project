@@ -1,0 +1,24 @@
+%%%%%%%% GROUP INFO %%%%%%%%
+           GROUP 2
+g0dalaln - Natasha Dalal
+g0getter - Tony (Hao) Cheng
+g0faizan - Faizan Rashid
+g0alimuh - Showzeb Ali
+g3ksingh - Karandeep Basi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+g0dalaln - Worked on designing and implementing AST. Implemented functionality to
+	   get line numbers and print error messages. Added some semantic checking.
+	 - Wrote test cases for legal and illegal semantics.
+
+
+g0faizan - Worked on designing and implementing AST. Design and implemented symbol
+	   table. Added semantic checking on scopes, functions, and procedures.
+
+
+g0alimuh - Added semantic checking on statements and expressions.
+         - Wrote test cases for legal and illegal semantics.
+
+g0getter -
+
+g3ksingh -
