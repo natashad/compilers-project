@@ -50,7 +50,7 @@ public class ConditionalExpn extends Expn {
 	public void semanticCheck(Semantics semantic) {
 		trueValue.semanticCheck(semantic);
 		falseValue.semanticCheck(semantic);
-		if (trueValue.getType().toString() != falseValue.getType().toString()) {
+		if (trueValue.getType().getClass() != falseValue.getType().getClass()) {
 			//TODO: ADD ERROR MESSAGE
 		}
 		this.setType(trueValue.getType());
