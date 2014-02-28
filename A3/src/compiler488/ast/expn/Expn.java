@@ -10,7 +10,7 @@ import compiler488.ast.type.Type;
 public class Expn extends AST implements Printable {
 
     private Type type = null;
-	
+
 	public enum OpSymbols {
 		And("and"),
 		Or("or"), 
@@ -40,19 +40,21 @@ public class Expn extends AST implements Printable {
 	       return name;
 	    }
 	}
-	
+
 	public Expn(int lineNum) {
 		super(lineNum);
+		type = null;
 	}
 	
 	//Return the type of variable.
 	public Type getType() {
-		return type;
+		return type; 
 	}
 	
 	public void setType(Type type) {
 		this.type = type;
 	}
 	
+
 	
 }

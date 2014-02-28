@@ -108,9 +108,7 @@ public class RoutineDecl extends Declaration {
 			}
 		}
 		entry = new Entry(kind, this.name, this);
-		
-		//TODO: If function and in symbol but not forward. then do check.
-		
+				
 		Entry prevDecl = semantics.curScopeLookup(this.name);
 		if (prevDecl == null) {
 			semantics.addToCurrScope(this.name, entry, getLineNumber());

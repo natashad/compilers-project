@@ -456,6 +456,7 @@ public class Main {
 		while (errorList.hasNext()) {
 			SemanticError error = errorList.next();
 			System.err.println("Error at line " + error.getLineNum() + ": "+ error.getMessage());
+
 		}
 		
 	}
