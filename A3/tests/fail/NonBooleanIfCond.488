@@ -1,0 +1,16 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % If statement can't have array as condition.
+
+    var z[5]:boolean
+
+    if z then
+        put "ok"
+    else
+        put "no way"
+    fi
+}

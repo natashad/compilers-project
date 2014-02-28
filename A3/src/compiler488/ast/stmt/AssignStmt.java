@@ -51,27 +51,32 @@ public class AssignStmt extends Stmt {
 	}
 	@Override 
 	public void semanticCheck(Semantics semantic){
+
 		this.rval.semanticCheck(semantic);
 		this.lval.semanticCheck(semantic);
-		
-		if (lval.getClass() == IdentExpn.class) {
-			IdentExpn lval = (IdentExpn) this.lval;
-			if (semantic.allScopeLookup(lval.getIdent()) == null || semantic.allScopeLookup(lval.getIdent()).getKind() != Kind.Variable) {
+		if (lval != null && rval != null) {
+			if (lval.getClass() == IdentExpn.class) {
+				IdentExpn lval = (IdentExpn) this.lval;
+				if (semantic.allScopeLookup(lval.getIdent()) == null || semantic.allScopeLookup(lval.getIdent()).getKind() != Kind.Variable) {
+					SemanticError error = new SemanticError("Variable assignment incorrect", getLineNumber());
+					semantic.errorList.add(error);
+				}
+			}else if (lval.getClass() == SubsExpn.class) {
+				SubsExpn lval = (SubsExpn) this.lval;
+				if (semantic.allScopeLookup(lval.getVariable()) == null || semantic.allScopeLookup(lval.getVariable()).getKind() != Kind.Array) {
+					SemanticError error = new SemanticError("Variable assignment incorrect", getLineNumber());
+					semantic.errorList.add(error);
+				}
+			}else {
 				SemanticError error = new SemanticError("Variable assignment incorrect", getLineNumber());
 				semantic.errorList.add(error);
 			}
-		}else if (lval.getClass() == SubsExpn.class) {
-			SubsExpn lval = (SubsExpn) this.lval;
-			if (semantic.allScopeLookup(lval.getVariable()) == null || semantic.allScopeLookup(lval.getVariable()).getKind() != Kind.Array) {
-				SemanticError error = new SemanticError("Variable assignment incorrect", getLineNumber());
+			if (lval.getType().getClass() != rval.getType().getClass()) {
+				SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
 				semantic.errorList.add(error);
 			}
-		}else {
-			SemanticError error = new SemanticError("Variable assignment incorrect", getLineNumber());
-			semantic.errorList.add(error);
-		}
-		if (lval.getType().getClass() != rval.getType().getClass()) {
-			SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
+		} else {
+			SemanticError error = new SemanticError("Incorrect assignment statement, getLineNumber());
 			semantic.errorList.add(error);
 		}
 		
