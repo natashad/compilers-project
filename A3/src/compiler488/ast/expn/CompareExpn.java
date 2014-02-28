@@ -24,7 +24,8 @@ public class CompareExpn extends BinaryExpn {
 
 		right.semanticCheck(semantics);
 		try {
-			if (left.getType().toString() != "integer" || (left.getType().toString() != right.getType().toString())) {
+			if (	left.getType() instanceof IntegerType 
+				|| (left.getType().getClass() != right.getType().getClass())) {
 				//TODO: Add error
 			}
 		

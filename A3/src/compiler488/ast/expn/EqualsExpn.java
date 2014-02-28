@@ -22,7 +22,7 @@ public class EqualsExpn extends BinaryExpn {
 		left.semanticCheck(semantic);
 		right.semanticCheck(semantic);
 		
-		if (left.getType().toString() != right.getType().toString()) {
+		if (left.getType().getClass() != right.getType().getClass()) {
 			//TODO: Add error
 		}
 		this.setType(new BooleanType());
