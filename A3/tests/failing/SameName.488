@@ -1,0 +1,11 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Using variables and proc names with the same name.
+
+	var x:integer
+    forward proc x (x:integer)
+	x := 2
+}

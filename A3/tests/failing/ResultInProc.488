@@ -1,0 +1,13 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Using result in a procedure
+
+    proc foo() {
+        result 4
+    }
+    var x : integer
+    x := 1
+}

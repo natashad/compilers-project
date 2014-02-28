@@ -1,0 +1,17 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Using Booleans in Arithmatic expressions.
+
+
+    var y: boolean
+    var x: integer
+    x := 2
+    y := false
+    x := x + y
+    x := x - y
+    x := y * x
+    x := y / x
+}

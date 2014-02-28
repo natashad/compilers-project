@@ -6,9 +6,9 @@ import java.util.ListIterator;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
-import compiler488.symbol.Entry.Kind;
 
 /**
  * Holds the declaration of multiple elements.
@@ -69,7 +69,12 @@ public class MultiDeclarations extends Declaration {
 			DeclarationPart decl = declarations.next();
 			decl.semanticCheck(semantics);
 			Entry entry = semantics.allScopeLookup(decl.getName());
-			entry.setType(this.type);
+			if (entry != null) {
+				entry.setType(this.type);
+			} else {
+				SemanticError error = new SemanticError(decl.getName() + " has not been declared.", getLineNumber());
+				semantics.errorList.add(error);
+			}
 		}
 	}
 }

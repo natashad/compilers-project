@@ -44,10 +44,14 @@ public class AssignStmt extends Stmt {
 	@Override 
 	public void semanticCheck(Semantics semantic){
 		this.lval.semanticCheck(semantic);
-		this.rval.semanticCheck(semantic);
-		if (lval.getType().getClass() != rval.getType().getClass()) {
-			SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
-			semantic.errorList.add(error);
+		if (lval != null && rval != null) {
+			this.rval.semanticCheck(semantic);
+			if (rval.getType() != null && lval.getType() !=null) {
+				if (lval.getType().getClass() != rval.getType().getClass()) {
+					SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
+					semantic.errorList.add(error);
+				}
+			}	
 		}
 	}
 }

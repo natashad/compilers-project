@@ -58,3 +58,22 @@ BadArrayIndex.488 - Attempting to Index into an array using another array.
 
 ExitWhenNotBoolean.488 - Attempting to use an int as a condition for an exit when.
 GetAndPutBoolean.488 - Attempting to get and put boolean values.
+NonBooleanIfCond.488 - Attempting to use an array as the condition for an if statement.
+ArithExpnWithBools.488 - Using booleans in arithmatic expressions.
+BoolInComparison.488 - Using booleans in comparison expressions with <, >, <=, >=.
+ExitOutsideLoop.488 - Using exit outside a loop.
+ResultInProc.488 - Using result in a procedure.
+ResultOutsideFunctionScope.488 - Using result in main scope outside of function declaration.
+
+ReturnInFunction.488 - Attempting to return from a funciton.
+^^TODO: should not pass.
+ReturnOutsideProcScope.488 - Attempting to return from the main program scope outside of procedure scope.
+^^TODO: Should not pass.
+
+UnaryFails.488 - Using Unary operators on incorrect types.
+^^TODO: y=-True should not pass!
+
+UndeclaredIdents.488 - Using undeclared variables and functions.
+SameName.488 - Using the same identifier for variables and methods
+
+FunctionWithoutResult.488 - Declaring a function without a result.

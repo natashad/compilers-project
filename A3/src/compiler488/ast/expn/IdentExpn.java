@@ -2,6 +2,7 @@ package compiler488.ast.expn;
 
 import compiler488.ast.Readable;
 import compiler488.ast.type.Type;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
 import compiler488.symbol.Entry.Kind;
@@ -41,7 +42,12 @@ public class IdentExpn extends Expn implements Readable
 		//S26
 		//Set type to the the type of variable in the entry table.
 		Entry entry = semantics.allScopeLookup(this.ident);
-		this.setType(entry.getType());
+		if (entry != null ) {
+			this.setType(entry.getType());
+		} else {
+			SemanticError error = new SemanticError(this.ident + " has not been declared.", getLineNumber());
+			semantics.errorList.add(error);
+		}
 	}
 
 }
