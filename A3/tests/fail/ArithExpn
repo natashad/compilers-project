@@ -13,8 +13,8 @@
 	var tri_area : boolean
 	
 	
-	proc test() {
-        return
+	func test():boolean {
+        result true
     }
     
     rect_width := 5

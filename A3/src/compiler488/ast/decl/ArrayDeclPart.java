@@ -75,7 +75,10 @@ public class ArrayDeclPart extends DeclarationPart {
 		return size;
 	}
 
-
+	public Boolean getIsTwoDimensional() {
+		return this.isTwoDimensional;
+	}
+	
 	public Integer getLowerBoundary1() {
 		return lb1;
 	}

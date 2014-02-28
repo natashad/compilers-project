@@ -1,8 +1,11 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.Readable;
+import compiler488.ast.decl.ArrayDeclPart;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
+import compiler488.symbol.Entry.Kind;
 
 /**
  * References to an array element variable
@@ -55,7 +58,46 @@ public class SubsExpn extends Expn implements Readable {
 	
 	@Override
 	public void semanticCheck(Semantics semantics) {
+		
+		this.subscript1.semanticCheck(semantics);
+		this.subscript2.semanticCheck(semantics);
+		
+		//S31
+		//Check type of expressions is integer
+		if (subscript1.getType() == null || subscript1.getType().toString() != "integer") {
+			SemanticError error = new SemanticError("Type of expression for index " + this.subscript1.toString() + " is not Integer", getLineNumber());
+			semantics.errorList.add(error);
+		}
+		
+		if (subscript2.getType() == null || subscript2.getType().toString() != "integer") {
+			SemanticError error = new SemanticError("Type of expression for index " + this.subscript2.toString() + " is not Integer", getLineNumber());
+			semantics.errorList.add(error);
+		}
+		
+	
 		Entry entry = semantics.allScopeLookup(this.variable);
-		this.setType(entry.getType());
+		if (entry == null) {
+			//S39
+			//Check if array is visible according to scope rule.
+			SemanticError error = new SemanticError("Variable " + this.variable + " is not declared in the scope", getLineNumber());
+			semantics.errorList.add(error);
+		} else {
+			//S38 and S55
+			//Check array been declared as one dimensional or two dimensional
+			if (entry.getKind() != Kind.Array) {
+				SemanticError error = new SemanticError("Variable " + this.variable + " is not declared as array type", getLineNumber());
+				semantics.errorList.add(error);
+			} else {
+				if (subscript2 != null && !((ArrayDeclPart)entry.getNode()).getIsTwoDimensional()) {
+					SemanticError error = new SemanticError("Variable " + this.variable + " is not declared as a 2-D array type", getLineNumber());
+					semantics.errorList.add(error);
+				}
+			}
+			
+			//S39
+			//Set result type to type of array element
+			this.setType(entry.getType());
+		}
+		
 	}
 }
