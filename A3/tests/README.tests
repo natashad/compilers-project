@@ -26,6 +26,11 @@ passingAssociativity2.488 - Test to see if level 2 operators associate
 passingAssociativity4.488 - Test to see if level 4 operators associate
 passingAssociativity5.488 - Test to see if level 5 operators associate
 passingAssociativity6.488 - Test to see if level 6 operators associate
+ArithExpn - Test simple and complex arithmetic expressions (+, -, *, /)
+BoolExpn - Test simple and complex boolean expressions (and, or)
+CompareExprn - Test compare expressions (<, >, <=, >=)
+ConditionalExpn - Test conditional expression ( if ? then : else )
+EqualsExpn - Test equal expressions ( =, not = )
 
 SuccessfulGetAndPut.488 - Test a successful use of get and put with integers, text, and newlines.
 ^^TODO: This doesn't work.
@@ -58,3 +63,10 @@ BadArrayIndex.488 - Attempting to Index into an array using another array.
 
 ExitWhenNotBoolean.488 - Attempting to use an int as a condition for an exit when.
 GetAndPutBoolean.488 - Attempting to get and put boolean values.
+
+
+ArithExpn - Testing illegal complex and simple arithmetic expressions (+, -, *, /)
+BoolExpn - Testing illegal simple and complex boolean expressions (and, or)
+CompareExprn - Testing illegal compare expressions (<, >, <=, >=)
+ConditionalExpn - Testing illegal conditional expression ( if ? then : else )
+EqualsExpn - Test illegal equal expressions ( =, not = )
