@@ -30,4 +30,5 @@ passingAssociativity6.488 - Test to see if level 6 operators associate
 Failing Tests:
 --------------
 
-
+IncorrectVariableAssignment.488 -  Assigning to variables with incorrect value type
+FunctionCallOutsideScope.488 - Calling a function declared in an ended scope.

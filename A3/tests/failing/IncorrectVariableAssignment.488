@@ -1,0 +1,17 @@
+{
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    %  Assignign to variables with incorrect value type
+
+    var y: integer
+    var x: boolean
+    var z[1] : integer
+    var w[1] : boolean
+    y := true
+    x := 9
+    z := w
+
+}
