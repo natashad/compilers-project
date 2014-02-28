@@ -3,7 +3,7 @@ package compiler488.ast.expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
-
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -22,8 +22,10 @@ public class BoolExpn extends BinaryExpn {
 		
 		left.semanticCheck(semantic);
 		right.semanticCheck(semantic);
-		if (left.getType().toString() != "boolean" || left.getType().toString() != right.getType().toString()) {
-			//TODO Add error message
+		if (	!(left.getType() instanceof BooleanType) 
+			||  !(right.getType() instanceof BooleanType)) {
+			SemanticError error = new SemanticError("Comparison must be between boolean types", getLineNumber());
+			semantic.errorList.add(error);
 		}
 		this.type = new BooleanType();
 	}

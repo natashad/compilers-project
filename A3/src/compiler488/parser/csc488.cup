@@ -383,7 +383,7 @@ expression	::=
 			{: RESULT = (Expn)con; :}
 
 		|	expression:exp OR conjunction:con
-			{: RESULT = new BoolExpn("or", (Expn)exp, (Expn)con, expleft); :}
+			{: RESULT = new BoolExpn(Expn.OpSymbols.Or.toString(), (Expn)exp, (Expn)con, expleft); :}
 		;
 
 conjunction	::=	
@@ -391,7 +391,7 @@ conjunction	::=
 			{: RESULT = (Expn)neg; :}
 	
 		|	conjunction:con AND negation:neg
-			{: RESULT = new BoolExpn("and", (Expn)con, (Expn)neg, conleft); :}
+			{: RESULT = new BoolExpn(Expn.OpSymbols.And.toString(), (Expn)con, (Expn)neg, conleft); :}
 		;
 
 negation	::=	
@@ -399,7 +399,7 @@ negation	::=
 			{: RESULT = (Expn)c; :}
 				
 		|	NOT negation:neg
-			{: RESULT = new NotExpn("not", (Expn)neg, negleft); :} 
+			{: RESULT = new NotExpn(Expn.OpSymbols.Not.toString(), (Expn)neg, negleft); :} 
 		;
 
 compareExpn	::=	
@@ -407,22 +407,22 @@ compareExpn	::=
 			{: RESULT = (Expn)a; :}
 			 
 		|	arithExpn:a1 EQUAL arithExpn:a2
-			{: RESULT = new EqualsExpn("=", (Expn)a1, (Expn)a2, a1left); :} 
+			{: RESULT = new EqualsExpn(Expn.OpSymbols.Equals.toString(), (Expn)a1, (Expn)a2, a1left); :} 
 			
 		| 	arithExpn:a1 NOT EQUAL arithExpn:a2 
-			{: RESULT = new EqualsExpn("not =", (Expn)a1, (Expn)a2, a1left); :} 
+			{: RESULT = new EqualsExpn(Expn.OpSymbols.NotEquals.toString(), (Expn)a1, (Expn)a2, a1left); :} 
 			
 		|	arithExpn:a1 LESS arithExpn:a2
-			{: RESULT = new CompareExpn("<", (Expn)a1, (Expn)a2, a1left); :}
+			{: RESULT = new CompareExpn(Expn.OpSymbols.LessThan.toString(), (Expn)a1, (Expn)a2, a1left); :}
 		
 		|	arithExpn:a1 LESS EQUAL arithExpn:a2
-			{: RESULT = new CompareExpn("<=", (Expn)a1, (Expn)a2, a1left); :}
+			{: RESULT = new CompareExpn(Expn.OpSymbols.LessEqual.toString(), (Expn)a1, (Expn)a2, a1left); :}
 		
 		|	arithExpn:a1 GREATER arithExpn:a2
-			{: RESULT = new CompareExpn(">", (Expn)a1, (Expn)a2, a1left); :}
+			{: RESULT = new CompareExpn(Expn.OpSymbols.GreaterThan.toString(), (Expn)a1, (Expn)a2, a1left); :}
 		
 		|	arithExpn:a1 GREATER EQUAL arithExpn:a2
-			{: RESULT = new CompareExpn(">=", (Expn)a1, (Expn)a2, a1left); :}
+			{: RESULT = new CompareExpn(Expn.OpSymbols.GreaterEqual.toString(), (Expn)a1, (Expn)a2, a1left); :}
 		;
 
 arithExpn	::=	
