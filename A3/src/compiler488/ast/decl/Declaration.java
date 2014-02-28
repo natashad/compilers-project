@@ -10,7 +10,7 @@ import compiler488.semantics.Semantics;
  */
 public class Declaration extends Indentable {
 	/** The type of thing being declared. */
-	protected Type type=null;
+	protected Type type = null;
 
 	/** The name of the thing being declared. */
 	protected String name;

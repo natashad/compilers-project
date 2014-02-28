@@ -55,10 +55,26 @@ public class Semantics {
 	   /*********************************************/
 	   
 	}
-	/** Returns the symbol table entry if found otherwise null */
+	/** Returns the symbol table entry if found in the major scope otherwise null */
 	public Entry curScopeLookup(String name) {
+		ScopeType curScope = this.scopeStack.lastElement();
+		if (curScope == ScopeType.Function || curScope == ScopeType.Procedure || curScope == ScopeType.Program) {
+			return this.symbolTableList.getLast().get(name);
+		}
+		Integer count = this.scopeStack.size() - 2;
+		while (count >= 0) {
+			ScopeType scope = this.scopeStack.get(count);
+			if (scope == ScopeType.Function || scope == ScopeType.Procedure || scope == ScopeType.Program) {
+				if (this.symbolTableList.get(count).containsKey(name)) {
+					return this.symbolTableList.get(count).get(name);
+				}else {
+					break;
+				}
+			}
+			count -= 1;
+		}
+		return null;
 		
-		return this.symbolTableList.getLast().get(name);
 		
 	}
 	

@@ -9,14 +9,21 @@ import compiler488.ast.type.Type;
  */
 public class Expn extends AST implements Printable {
 	
+	private Type type;
 	public Expn(int lineNum) {
 		super(lineNum);
+		type = null;
 	}
 	
 	//Return the type of variable.
 	public Type getType() {
-		return null;
+		return type;
 	}
 	
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
+
 	
 }
