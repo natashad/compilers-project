@@ -89,12 +89,12 @@ public class Semantics {
 		}
 		return null;
 	}
-	
+	/** Return the type of the current scope*/
 	public Semantics.ScopeType getCurrScopeType() {
 		return this.scopeStack.lastElement();
 	}
 	
-	
+	/** Return the type of the current major scope */
 	public Semantics.ScopeType getCurrMajorScope() {
 		Integer count = this.scopeStack.size() - 1;
 		while (count >= 0) {
@@ -107,7 +107,8 @@ public class Semantics {
 		return null;
 	}
 	
-	
+	/** Remove the first symbol table entry found starting from the current scope
+	 * and moving up to parent scopes  */
 	public void remove(String name) {
 		if (this.allScopeLookup(name) != null) {
 			Iterator<SymbolTable> listTables = this.symbolTableList.descendingIterator();
@@ -134,14 +135,14 @@ public class Semantics {
 	
 	}
 	
-	
+	/** Open a scope */
 	public void openScope(SymbolTable symtable, ScopeType type) {
 		this.scopeStack.push(type);
 		this.symbolTableList.addLast(symtable); 
 		
 	
 	}
-	
+	/** Close a scope */
 	public void closeScope() {
 		this.scopeStack.pop();
 		this.symbolTableList.removeLast();
