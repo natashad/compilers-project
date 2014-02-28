@@ -75,5 +75,3 @@ UnaryFails.488 - Using Unary operators on incorrect types.
 
 UndeclaredIdents.488 - Using undeclared variables and functions.
 SameName.488 - Using the same identifier for variables and methods
-
-FunctionWithoutResult.488 - Declaring a function without a result.
