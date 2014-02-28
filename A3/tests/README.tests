@@ -16,7 +16,6 @@ A1dFixed.488 - a program using non-recursive functions and procedures with and w
 A1eFixed.488 - a program using recursive functions and procedures with and without parameters
              - including one nested procedure and one nested function declaration.
 FunctionProcedureVariableDeclaration.488 - Test of correct syntax for: functionHead, procedureHead, variable declarations.
-StatementsVsListsTest.488 - Test of using multiple statements vs a single statement in if conditions, while loops and repeat loops.
 nestedFunctions.488 - Test of nesting functions inside other functions.
 passingAssociativity0.488 - Test to see if level 0 operators associate
 passingAssociativity1.488 - Test to see if level 1 operators associate
