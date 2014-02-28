@@ -1,6 +1,7 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
@@ -58,6 +59,10 @@ public class ConditionalExpn extends Expn {
 		trueValue.semanticCheck(semantic);
 		falseValue.semanticCheck(semantic);
 		
+		//S24
+		//Setting result type to type of conditional expression.
+		this.type = trueValue.getType();
+		
 		//S30
 		//Checking the type of condition expression is boolean
 		if (!(condition.getType() instanceof BooleanType)) {
@@ -73,12 +78,11 @@ public class ConditionalExpn extends Expn {
 			SemanticError error = new SemanticError("Type of expression " + this.trueValue.toString() + " does not match"
 					+ " the type of expression " + this.falseValue.toString(), getLineNumber());
 			semantic.errorList.add(error);
+			
+			//Setting it to type of Integer even if the type doesn't match because it can be null too
+			this.type = new IntegerType();
 		}
 		
-		//S24
-		//Setting result type to type of conditional expression.
-		//Setting it to type of Integer even if the type doesn't match because it can be null too
-		this.type = new BooleanType();
 	}
 	
 	/** 
