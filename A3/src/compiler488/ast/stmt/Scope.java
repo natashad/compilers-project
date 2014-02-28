@@ -18,10 +18,14 @@ public class Scope extends Stmt {
 
 	private ASTList<Stmt> statements; // The statements to execute.
 	
-	public SymbolTable symtable;
+	private SymbolTable symtable = new SymbolTable();
 	
+	
+
 	private boolean isMajor = true;
 
+	private ScopeType scopeType = ScopeType.Stmt;
+	
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts, int lineNumber) {
 		super(lineNumber);
 		this.declarations = declarations;
@@ -32,10 +36,24 @@ public class Scope extends Stmt {
 		this(new ASTList<Declaration>(), new ASTList<Stmt>(), lineNumber);
 	}
 	
+
 	public Scope(ASTList<Stmt> stmt, int lineNumber) {
 		this(new ASTList<Declaration>(), stmt, lineNumber);
 	}
 
+	
+	public void setScopeType(ScopeType type) {
+		this.scopeType = type;
+	}
+	
+	
+	public SymbolTable getSymtable() {
+		return symtable;
+	}
+
+	public void setSymtable(SymbolTable symtable) {
+		this.symtable = symtable;
+	}
 	/**
 	 * Print a description of the <b>scope</b> construct.
 	 * 
@@ -86,8 +104,8 @@ public class Scope extends Stmt {
 	@Override
 	public void semanticCheck(Semantics semantics) {
 		//Add semantic analysis code here
-		symtable = new SymbolTable();
-		semantics.symbolTableList.push(symtable);
+		
+		semantics.openScope(symtable, this.scopeType);
 		symtable = semantics.symbolTableList.getLast(); //make sure we are editing the master symbol table list! (pass by reference/value)
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		ListIterator<Stmt> statements = this.statements.listIterator();

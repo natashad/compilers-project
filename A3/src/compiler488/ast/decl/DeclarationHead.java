@@ -2,6 +2,7 @@ package compiler488.ast.decl;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.type.Type;
+import compiler488.semantics.Semantics;
 
 
 public class DeclarationHead {
@@ -39,4 +40,5 @@ public class DeclarationHead {
 	public void setType(Type type) {
 		this.type = type;
 	}
+	
 }

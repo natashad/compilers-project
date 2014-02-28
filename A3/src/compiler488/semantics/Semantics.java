@@ -23,7 +23,7 @@ public class Semantics {
 	public LinkedList<SymbolTable> symbolTableList; 
     public LinkedList<SemanticError> errorList;
 	public Stack<ScopeType> scopeStack;
-    
+ 
     
     public enum ScopeType {
 		Function, 
@@ -55,6 +55,8 @@ public class Semantics {
 	   /*********************************************/
 	   
 	}
+	
+	
 	/** Returns the symbol table entry if found in the major scope otherwise null */
 	public Entry curScopeLookup(String name) {
 		ScopeType curScope = this.scopeStack.lastElement();
@@ -73,9 +75,7 @@ public class Semantics {
 			}
 			count -= 1;
 		}
-		return null;
-		
-		
+		return null;	
 	}
 	
 	/** Iterate through all the scopes to find Entry. If no entry return null. */
@@ -94,6 +94,7 @@ public class Semantics {
 		return this.scopeStack.lastElement();
 	}
 	
+	
 	public Semantics.ScopeType getCurrMajorScope() {
 		Integer count = this.scopeStack.size() - 1;
 		while (count >= 0) {
@@ -105,7 +106,6 @@ public class Semantics {
 		}
 		return null;
 	}
-	
 	
 	
 	public void remove(String name) {
@@ -137,6 +137,7 @@ public class Semantics {
 	public void openScope(SymbolTable symtable, ScopeType type) {
 		this.scopeStack.push(type);
 		this.symbolTableList.addLast(symtable); 
+		
 	
 	}
 	

@@ -232,21 +232,21 @@ declaration	::=
 			{: RESULT = new MultiDeclarations((ASTList<DeclarationPart>)v, (Type)t, vleft); :}
 				
 		|	functionHead:fHead  scope:s			// function declaration
-			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
+			{: RESULT = new RoutineDecl((DeclarationHead) fHead,((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
 														(Scope)s, sleft),
 										fHeadleft); :}
 			
 		|	procedureHead:pHead  scope:s			// procedure declaration
-			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
+			{: RESULT = new RoutineDecl((DeclarationHead) pHead,((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
 															(Scope)s, sleft),
 											pHeadleft); :}
 		
 		|   FORWARD  functionHead:fHead			// forward function declaration
-			{: RESULT = new RoutineDecl(((DeclarationHead)fHead).getDeclarationPart(), 
+			{: RESULT = new RoutineDecl((DeclarationHead) fHead,((DeclarationHead)fHead).getDeclarationPart(), 
 										((DeclarationHead)fHead).getType(), 
 										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
 														new Scope(fHeadleft), fHeadleft),
@@ -254,7 +254,7 @@ declaration	::=
 										fHeadleft); :}
 			
 		|	FORWARD  procedureHead:pHead			// forward procedure declaration
-			{: RESULT = new RoutineDecl(((DeclarationHead)pHead).getDeclarationPart(), 
+			{: RESULT = new RoutineDecl((DeclarationHead) pHead,((DeclarationHead)pHead).getDeclarationPart(), 
 											null, 
 											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
 															new Scope(pHeadleft), pHeadleft),
