@@ -1,0 +1,13 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Returns wrong type for function
+
+   func foo():bool {
+       result 2
+   }
+   var x: integer
+   x := 2
+}
