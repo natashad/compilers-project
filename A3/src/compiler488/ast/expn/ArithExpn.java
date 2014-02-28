@@ -33,12 +33,12 @@ public class ArithExpn extends BinaryExpn {
 		
 		//S31
 		//Check that type of expression or variable is integar.
-		if (!this.left.getType().toString().equals(type.toString())) {
+		if (left.getType() != null && left.getType().toString() != "integer") {
 			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " is not Integer", getLineNumber());
 			semantics.errorList.add(error);
 		}
 		
-		if (!this.right.getType().toString().equals(type.toString())) {
+		if (right.getType() != null && right.getType().toString() != "integer") {
 			SemanticError error = new SemanticError("Type of expression " + this.right.toString() + " is not Integer", getLineNumber());
 			semantics.errorList.add(error);
 		}

@@ -28,7 +28,9 @@ public class EqualsExpn extends BinaryExpn {
 		
 		//S32
 		//Check that left and right expressions are the same type.
-		if (left.getType().toString() != right.getType().toString()) {
+		if (left.getType() == null ||
+				right.getType() == null ||
+				left.getType().toString() != right.getType().toString()) {
 			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " does not match"
 					+ " the type of expression " + this.right.toString(), getLineNumber());
 			semantic.errorList.add(error);
