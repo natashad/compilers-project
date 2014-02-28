@@ -33,18 +33,16 @@ ConditionalExpn.488 - Test conditional expression ( if ? then : else )
 EqualsExpn.488 - Test equal expressions ( =, not = )
 
 SuccessfulGetAndPut.488 - Test a successful use of get and put with integers, text, and newlines.
-^^TODO: This doesn't work.
 
 Failing Tests:
 --------------
 
 IncorrectVariableAssignment.488 -  Assigning to variables with incorrect value type.
-^^TODO: Assigning value to array works : <--- var w[2] : integer; w:=2 ... SHOULD NOT WORK.
+
 
 FunctionCallOutsideScope.488 - Calling a function declared in an ended scope.
 
 CallingUndeclaredFunction.488 - Calling an undeclared function.
-^^TODO: Should not pass!
 
 FunctionCallBadParams.488 - Making a function call with incorrect arguments.
 ProcedureIncorrectArgs.488 - Procedure call with incorrect number of arguments.
@@ -59,11 +57,10 @@ IncompatibleReturns.488 - Returning an incompatable type from a function.
 ^^TODO: Should not pass.
 
 BadArrayIndex.488 - Attempting to Index into an array using another array.
-^^TODO: Should not pass.
 
 ExitWhenNotBoolean.488 - Attempting to use an int as a condition for an exit when.
 GetAndPutBoolean.488 - Attempting to get and put boolean values.
-<<<<<<< HEAD:A3/tests/1README.tests
+
 NonBooleanIfCond.488 - Attempting to use an array as the condition for an if statement.
 ArithExpnWithBools.488 - Using booleans in arithmatic expressions.
 BoolInComparison.488 - Using booleans in comparison expressions with <, >, <=, >=.
@@ -72,12 +69,12 @@ ResultInProc.488 - Using result in a procedure.
 ResultOutsideFunctionScope.488 - Using result in main scope outside of function declaration.
 
 ReturnInFunction.488 - Attempting to return from a funciton.
-^^TODO: should not pass.
+
 ReturnOutsideProcScope.488 - Attempting to return from the main program scope outside of procedure scope.
-^^TODO: Should not pass.
+
 
 UnaryFails.488 - Using Unary operators on incorrect types.
-^^TODO: y=-True should not pass!
+
 
 UndeclaredIdents.488 - Using undeclared variables and functions.
 SameName.488 - Using the same identifier for variables and methods

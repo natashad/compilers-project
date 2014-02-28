@@ -11,8 +11,10 @@ import compiler488.semantics.Semantics;
  */
 public class UnaryMinusExpn extends UnaryExpn {
 	
+	private Expn factor;
 	public UnaryMinusExpn(Expn factor, int lineNum) {
 		super(factor, "-", lineNum);
+		this.factor = factor;
 	}
 	
 	/** 
@@ -21,9 +23,7 @@ public class UnaryMinusExpn extends UnaryExpn {
 	@Override
 	public void semanticCheck(Semantics semantics){
 		
-		//S21
-		//Set type to Integer.
-		this.setType(new IntegerType());
+		this.factor.semanticCheck(semantics);
 		
 		//S31
 		//Check the type of expression is Integer
@@ -31,6 +31,9 @@ public class UnaryMinusExpn extends UnaryExpn {
 			SemanticError error = new SemanticError("Expression " + this.getOperand() + " is not Integer type", getLineNumber());
 			semantics.errorList.add(error);
 		}
+		//S21
+		//Set type to Integer.
+		this.setType(new IntegerType());
 	}
 
 }

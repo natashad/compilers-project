@@ -39,6 +39,7 @@ public class PutStmt extends Stmt {
 		//Text, newline, expn --> 
 		for (Printable p : outputs) {
 			if (p instanceof Expn) {
+				((Expn) p).semanticCheck(semantics);
 				if ((p instanceof TextConstExpn) || (p instanceof NewlineConstExpn)) {
 					continue;
 				}else if ( ! (((Expn)p).getType() instanceof IntegerType)) {

@@ -76,7 +76,7 @@ public class AssignStmt extends Stmt {
 				semantic.errorList.add(error);
 			}
 		} else {
-			SemanticError error = new SemanticError("Incorrect assignment statement, getLineNumber());
+			SemanticError error = new SemanticError("Incorrect assignment statement", getLineNumber());
 			semantic.errorList.add(error);
 		}
 		

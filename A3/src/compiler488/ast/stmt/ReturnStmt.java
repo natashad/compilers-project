@@ -28,7 +28,8 @@ public class ReturnStmt extends Stmt {
 		Indentable.printIndentOn(out, depth);
 		out.println("return ");
 	}
-	public void semanticChecking(Semantics semantic) {
+
+	public void semanticCheck(Semantics semantic) {
 		if (semantic.getCurrMajorScope() != Semantics.ScopeType.Procedure) {
 			SemanticError error = new SemanticError("Cannot return from outside a procedure.", getLineNumber());
 			semantic.errorList.add(error);
