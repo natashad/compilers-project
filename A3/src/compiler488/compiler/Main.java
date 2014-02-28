@@ -455,7 +455,7 @@ public class Main {
 		System.err.println(semantic.errorList.size());
 		while (errorList.hasNext()) {
 			SemanticError error = errorList.next();
-			System.err.println("Error at line " + error.getLineNum()+1 + ": "+ error.getMessage());
+			System.err.println("Error at line " + (error.getLineNum()+1) + ": "+ error.getMessage());
 
 		}
 		

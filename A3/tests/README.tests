@@ -29,6 +29,15 @@ passingAssociativity6.488 - Test to see if level 6 operators associate
 
 Failing Tests:
 --------------
+//
+IncorrectVariableAssignment.488 -  Assigning to variables with incorrect value type.
+//TODO: Assigning value to array works : <--- var w[2] : integer; w:=2 ... SHOULD NOT WORK.
 
-IncorrectVariableAssignment.488 -  Assigning to variables with incorrect value type
 FunctionCallOutsideScope.488 - Calling a function declared in an ended scope.
+
+//
+CallingUndeclaredFunction.488 - Calling an undeclared function.
+//TODO: Should not pass!
+
+FunctionCallBadParams.488 - Making a function call with incorrect arguments.
+ProcedureIncorrectArgs.488 - Procedure call with incorrect number of arguments.
