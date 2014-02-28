@@ -30,7 +30,6 @@ public class SymbolTable extends HashMap<String, Entry> {
 		return super.put(key, value);
 	}
 
-
 	/**  Initialize - called once by semantic analysis  
 	 *                at the start of  compilation     
 	 *                May be unnecessary if constructor

@@ -66,13 +66,13 @@ public class SubsExpn extends Expn implements Readable {
 		
 		//S31
 		//Check type of expressions is integer
-		if (subscript1.getType() == null || subscript1.getType().toString() != "integer") {
+		if (subscript1.getType() == null || subscript1.getType().toString().equals("integer")) {
 			SemanticError error = new SemanticError("Type of expression for index " + this.subscript1.toString() + " is not Integer", getLineNumber());
 			semantics.errorList.add(error);
 		}
 		
 		if (subscript2 != null) {
-			if (subscript2.getType() == null || subscript2.getType().toString() != "integer") {
+			if (subscript2.getType() == null || subscript2.getType().toString().equals("integer")) {
 				SemanticError error = new SemanticError("Type of expression for index " + this.subscript2.toString() + " is not Integer", getLineNumber());
 				semantics.errorList.add(error);
 			}

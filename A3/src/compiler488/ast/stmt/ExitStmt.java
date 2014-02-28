@@ -40,13 +40,14 @@ public class ExitStmt extends Stmt {
 		this.expn = expn;
 	}
 	public void semanticCheck(Semantics semantic) {
-		
-		if (!(expn.getType() instanceof BooleanType)) {
-			SemanticError error = new SemanticError("When condition must evaluate to a boolean.", getLineNumber());
-			semantic.errorList.add(error);
-			return;
+		if (this.expn != null) {
+			this.expn.semanticCheck(semantic);
+			if (!(expn.getType() instanceof BooleanType)) {
+				SemanticError error = new SemanticError("When condition must evaluate to a boolean.", getLineNumber());
+				semantic.errorList.add(error);
+				return;
+			}
 		}
-		
 		Integer count = semantic.scopeStack.size() - 1;
 		while (count >= 0) {
 			ScopeType scope = semantic.scopeStack.get(count);

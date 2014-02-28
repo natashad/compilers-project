@@ -8,7 +8,7 @@
 
     var y: integer
     var x: boolean
-    var z[1] : integer
+    var z[1] : boolean
     var w[1] : boolean
     y := true
     x := 9
