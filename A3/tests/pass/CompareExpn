@@ -1,0 +1,28 @@
+{
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+	% a program that test all compare expressions
+	
+	var rect_width : integer
+	var rect_height : integer
+	var rect_area : integer
+	var tri_base : boolean
+	var tri_height : boolean
+	var tri_area : boolean
+	
+	
+	func test():integer {
+        result 5
+    }
+    
+    rect_width := 5
+	rect_height := 10
+	rect_area := 15
+	
+	tri_base := rect_width <= rect_height
+	tri_height := rect_area >= rect_height
+	tri_area := (rect_width + rect_height) > test()
+	tri_area := (test() * (rect_area - rect_width)) < (rect_width + rect_height)
+}

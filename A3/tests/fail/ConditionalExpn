@@ -1,0 +1,34 @@
+{
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+	% a program that test conditional expressions.
+	
+	var rect_width : integer
+	var rect_height : integer
+	var rect_area : integer
+	var tri_base : integer
+	var tri_height : integer
+	var tri_area : integer
+	
+	
+	func test():integer {
+        result 5
+    }
+    
+    func test2():integer {
+        result 5
+    }
+    
+    func test3():integer {
+        result true
+    }
+    
+    rect_width := 5
+	rect_height := 10
+	tri_base := 3
+	tri_height := (tri_base ? rect_width : rect_height)
+	tri_area := (test3() ? tri_base : false )
+	tri_height := ( (rect_width > rect_height) ? test2() = test3()  : (rect_width * (test() + rect_area)) - rect_height)
+}
