@@ -134,7 +134,6 @@ public class ArrayDeclPart extends DeclarationPart {
 		if (isTwoDimensional) {
 			//S48
 			if (this.ub2 != null && this.lb2 > this.ub2) {
-				//TODO: FIX THE LINE NUMBER
 				SemanticError error = new SemanticError("Lower bound of array " + this.name + " is bigger then upper bound", getLineNumber());
 				semantics.errorList.add(error);
 			}

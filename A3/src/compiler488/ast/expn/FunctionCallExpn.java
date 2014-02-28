@@ -70,9 +70,9 @@ public class FunctionCallExpn extends Expn {
 							semantic.errorList.add(error);
 						}
 					}
-				}
 			}
 			
+	
 			this.setType(entry.getType());
 		}else {
 			SemanticError error = new SemanticError("Function does not exist", getLineNumber());
