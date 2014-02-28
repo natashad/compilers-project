@@ -35,12 +35,12 @@ public class CompareExpn extends BinaryExpn {
 	
 		//S31
 		//Check that type of expression or variable is integar.
-		if (left.getType() == null || left.getType().toString() != "integer") {
+		if (left.getType() == null || left.getType() instanceof IntegerType) {
 			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " is not Integer", getLineNumber());
 			semantics.errorList.add(error);
 		}
 		
-		if (right.getType() == null || right.getType().toString() != "integer") {
+		if (right.getType() == null || right.getType() instanceof IntegerType) {
 			SemanticError error = new SemanticError("Type of expression " + this.right.toString() + " is not Integer", getLineNumber());
 			semantics.errorList.add(error);
 		}
