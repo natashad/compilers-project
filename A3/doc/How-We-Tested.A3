@@ -1,0 +1,28 @@
+%%%%%%%% GROUP INFO %%%%%%%%
+           GROUP 2
+g0dalaln - Natasha Dalal
+g0getter - Tony (Hao) Cheng
+g0faizan - Faizan Rashid
+g0alimuh - Showzeb Ali
+g3ksingh - Karandeep Basi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+=======
+  AST
+=======
+
+When we were building the AST we ran the program on multiple test files using "-D a" parameters.
+This enabled the output of the AST representation that we were creating. We then tested our AST
+with the test files we created in A1 and A2
+
+======================================
+  Symbol Table and Semantic Analysis
+======================================
+
+We tested symbol table along side with semantic analysis. We started off by creating small test
+cases (1 test file for a class e.g. Test file for ArithExpn.java) of both illegal and legal semantics 
+which to see if our implementation was working. Then we created more complex test files to 
+thoroughly test our symbol table which took care of corner cases. Our main focus was to make as many
+test files with illegal semantics to see that if we haven't missed any case and that it is reporting 
+all the errors with the right line number.

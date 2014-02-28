@@ -13,10 +13,10 @@ g0dalaln - Worked on designing and implementing AST. Implemented functionality t
 
 
 g0faizan - Worked on designing and implementing AST. Design and implemented symbol
-	   table. Added semantic checking on scopes, functions, and procedures.
+	   table. Added semantic checking for scopes, declarations, functions, and procedures.
 
 
-g0alimuh - Added semantic checking on statements and expressions.
+g0alimuh - Added semantic checking for declarations, statements and expressions.
          - Wrote test cases for legal and illegal semantics.
 
 g0getter -
