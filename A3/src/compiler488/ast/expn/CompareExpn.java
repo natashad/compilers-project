@@ -3,6 +3,7 @@ package compiler488.ast.expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -10,6 +11,9 @@ import compiler488.semantics.Semantics;
  * be integer expressions. e.g. < , > etc. comparisons
  */
 public class CompareExpn extends BinaryExpn {
+	
+	
+	private Type type;
 	
 	public CompareExpn(String opSymbol, Expn left, Expn right, int lineNum) {
 		super(opSymbol, left, right, lineNum);
@@ -23,20 +27,30 @@ public class CompareExpn extends BinaryExpn {
 		
 
 		right.semanticCheck(semantics);
-		try {
-			if (	left.getType() instanceof IntegerType 
-				|| (left.getType().getClass() != right.getType().getClass())) {
-				//TODO: Add error
-			}
-		
-		} catch (Exception e){
-			//TODO: Add error 
-		}
+		left.semanticCheck(semantics);
 		//Set type to Boolean.
-		this.setType(new BooleanType());
-
+		//S20
+		this.type = new BooleanType();
+	
+		//S31
+		//Check that type of expression or variable is integar.
+		if (left.getType().toString() != "integer") {
+			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " is not Integer", getLineNumber());
+			semantics.errorList.add(error);
+		}
 		
-		//TODO: Error checking if both expr type are same.
+		if (right.getType().toString() != "integer") {
+			SemanticError error = new SemanticError("Type of expression " + this.right.toString() + " is not Integer", getLineNumber());
+			semantics.errorList.add(error);
+		}
+	}
+	
+	/** 
+	 * Set the type to the variable in the symbol table.
+	 * */
+	@Override
+	public Type getType() {
+		return this.type;
 	}
 
 }
