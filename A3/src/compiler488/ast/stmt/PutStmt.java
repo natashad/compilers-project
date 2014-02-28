@@ -43,7 +43,6 @@ public class PutStmt extends Stmt {
 				if ((p instanceof TextConstExpn) || (p instanceof NewlineConstExpn)) {
 					continue;
 				}else if ( ! (((Expn)p).getType() instanceof IntegerType)) {
-					System.out.println(((Expn)p).getType());
 					SemanticError error = new SemanticError("Variable output of Put must evaluate to an integer.", getLineNumber());
 					semantics.errorList.add(error);
 				}

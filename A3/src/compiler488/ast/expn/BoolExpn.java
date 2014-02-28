@@ -12,6 +12,7 @@ public class BoolExpn extends BinaryExpn {
 
 	public BoolExpn(String opSymbol, Expn left, Expn right, int lineNum) {
 		super(opSymbol, left, right, lineNum);
+		this.setType(new BooleanType());
 	}
 	
 	public void semanticCheck(Semantics semantic) {

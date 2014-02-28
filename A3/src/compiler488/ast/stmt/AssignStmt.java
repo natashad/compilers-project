@@ -71,9 +71,13 @@ public class AssignStmt extends Stmt {
 				SemanticError error = new SemanticError("Variable assignment incorrect", getLineNumber());
 				semantic.errorList.add(error);
 			}
-			if (lval.getType().getClass() != rval.getType().getClass()) {
-				SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
-				semantic.errorList.add(error);
+			if (rval.getType() != null && lval.getType() != null) {
+				if (lval.getType().getClass() != rval.getType().getClass()) {
+			
+					SemanticError error = new SemanticError("Assigning incompatible type (" + rval.getType() + ") to variable " + lval, getLineNumber());
+					semantic.errorList.add(error);
+				
+				}
 			}
 		} else {
 			SemanticError error = new SemanticError("Incorrect assignment statement", getLineNumber());

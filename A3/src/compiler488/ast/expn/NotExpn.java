@@ -13,6 +13,7 @@ public class NotExpn extends UnaryExpn {
 
 	public NotExpn(String opSymbol, Expn operand, int lineNum) {
 		super(operand, opSymbol, lineNum);
+		this.setType(new BooleanType());
 	}
 	
 	/** 

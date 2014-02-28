@@ -15,6 +15,7 @@ public class ArithExpn extends BinaryExpn {
 	
 	public ArithExpn(String opSymbol, Expn left, Expn right, int lineNum) {
 		super(opSymbol, left, right, lineNum);
+		this.setType(new IntegerType());
 	}
 	
 	/** 

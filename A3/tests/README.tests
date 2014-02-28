@@ -15,11 +15,9 @@ A1c.488 - a program using all forms of loop building and loop exit constructs.
 A1dFixed.488 - a program using non-recursive functions and procedures with and without parameters.
 A1eFixed.488 - a program using recursive functions and procedures with and without parameters
              - including one nested procedure and one nested function declaration.
-forwardDeclaration.488 - A test for forward declarations of procedures and integers
 FunctionProcedureVariableDeclaration.488 - Test of correct syntax for: functionHead, procedureHead, variable declarations.
 StatementsVsListsTest.488 - Test of using multiple statements vs a single statement in if conditions, while loops and repeat loops.
 nestedFunctions.488 - Test of nesting functions inside other functions.
-Variables.488 - Test of correct syntax in the declaration and use of variables.
 passingAssociativity0.488 - Test to see if level 0 operators associate
 passingAssociativity1.488 - Test to see if level 1 operators associate
 passingAssociativity2.488 - Test to see if level 2 operators associate
@@ -31,55 +29,32 @@ BoolExpn.488 - Test simple and complex boolean expressions (and, or)
 CompareExprn.488- Test compare expressions (<, >, <=, >=)
 ConditionalExpn.488 - Test conditional expression ( if ? then : else )
 EqualsExpn.488 - Test equal expressions ( =, not = )
-
 SuccessfulGetAndPut.488 - Test a successful use of get and put with integers, text, and newlines.
 
 Failing Tests:
 --------------
 
 IncorrectVariableAssignment.488 -  Assigning to variables with incorrect value type.
-
-
 FunctionCallOutsideScope.488 - Calling a function declared in an ended scope.
-
 CallingUndeclaredFunction.488 - Calling an undeclared function.
-
 FunctionCallBadParams.488 - Making a function call with incorrect arguments.
 ProcedureIncorrectArgs.488 - Procedure call with incorrect number of arguments.
 IndexingScalar.488 - Trying to subscript/index into a scalar variable as though it was an array.
-
-ForwardDeclarationsUndefined.488 - Forward Declared Functions are not actually ever defined.
-^^TODO: Should not pass.
-
 RedeclaringVariables.488 - Declaring a variable that has already been declared.
-
-IncompatibleReturns.488 - Returning an incompatable type from a function.
-^^TODO: Should not pass.
-
 BadArrayIndex.488 - Attempting to Index into an array using another array.
-
 ExitWhenNotBoolean.488 - Attempting to use an int as a condition for an exit when.
 GetAndPutBoolean.488 - Attempting to get and put boolean values.
-
 NonBooleanIfCond.488 - Attempting to use an array as the condition for an if statement.
 ArithExpnWithBools.488 - Using booleans in arithmatic expressions.
 BoolInComparison.488 - Using booleans in comparison expressions with <, >, <=, >=.
 ExitOutsideLoop.488 - Using exit outside a loop.
 ResultInProc.488 - Using result in a procedure.
 ResultOutsideFunctionScope.488 - Using result in main scope outside of function declaration.
-
 ReturnInFunction.488 - Attempting to return from a funciton.
-
 ReturnOutsideProcScope.488 - Attempting to return from the main program scope outside of procedure scope.
-
-
 UnaryFails.488 - Using Unary operators on incorrect types.
-
-
 UndeclaredIdents.488 - Using undeclared variables and functions.
 SameName.488 - Using the same identifier for variables and methods
-
-
 ArithExpn.488 - Testing illegal complex and simple arithmetic expressions (+, -, *, /)
 BoolExpn.488 - Testing illegal simple and complex boolean expressions (and, or)
 CompareExprn.488 - Testing illegal compare expressions (<, >, <=, >=)

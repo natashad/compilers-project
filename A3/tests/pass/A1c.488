@@ -21,7 +21,7 @@
 	player1 := 0
 
 	% While-do-end construct with exit construct
-	while player1 not = player2
+	while (player1 not = player2)
 	do
 		player1 := player1 + 1
 		if player1 = 3
@@ -29,7 +29,7 @@
 			exit
 		fi
 	end
-	
+
 	player1 := 0
 
 	% While-do-end construct with exit-when construct
