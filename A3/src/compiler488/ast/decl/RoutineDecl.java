@@ -8,8 +8,10 @@ import compiler488.ast.Indentable;
 import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
+import compiler488.semantics.Semantics.ScopeType;
 import compiler488.symbol.Entry;
 import compiler488.symbol.Entry.Kind;
+import compiler488.symbol.SymbolTable;
 
 /**
  * Represents the declaration of a function or procedure.
@@ -21,15 +23,20 @@ public class RoutineDecl extends Declaration {
 	 */
 	private RoutineBody routineBody;
 	private boolean isForward = false;
-	
-	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody, int lineNum ) {
-		this(declPart, type, routineBody, false, lineNum);
+	private DeclarationHead head;
+	public RoutineDecl(DeclarationHead head, DeclarationPart declPart, Type type, RoutineBody routineBody, int lineNum ) {
+		this(head, declPart, type, routineBody, false, lineNum);
 	}
 	
-	public RoutineDecl( DeclarationPart declPart, Type type, RoutineBody routineBody, boolean isForward, int lineNum ) {
+	public RoutineDecl(DeclarationHead head, DeclarationPart declPart, Type type, RoutineBody routineBody, boolean isForward, int lineNum ) {
 		super(declPart.getName(), type, lineNum);
+		this.head = head;
 		this.routineBody = routineBody;
-		this.isForward = isForward;
+		if (type == null) {
+			this.routineBody.getBody().setScopeType(ScopeType.Procedure);
+		}else {
+			this.routineBody.getBody().setScopeType(ScopeType.Function);
+		}
 	}
 
 	public boolean isForward() {
@@ -85,14 +92,33 @@ public class RoutineDecl extends Declaration {
 		this.routineBody = routineBody;
 	}
 	
+	public DeclarationHead getDeclarationHead() {
+		return this.head;
+	}
+
+	public void setDeclarationHead(DeclarationHead head) {
+		this.head = head;
+	}
+	
 	/** 
 	 * Do semantic analysis
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics) {
+		Entry paramEntry;
+		ListIterator<ScalarDecl> listParams = this.getDeclarationHead().getParameters().listIterator();
+		ScalarDecl param;
+		SymbolTable symTable = new SymbolTable();
+		while (listParams.hasNext()) {
+			param = listParams.next();
+			paramEntry = new Entry(Kind.Variable, param.getName(), param);
+			paramEntry.setType(param.type);
+			symTable.put(param.getName(), paramEntry);
+		}
+		this.routineBody.getBody().setSymtable(symTable);
+		this.routineBody.semanticCheck(semantics);
 		Entry entry;
 		Kind kind;
-		
 		if (isForward) {
 			if (this.type == null) {
 				kind = Kind.ForwardProcedure;	
@@ -107,8 +133,7 @@ public class RoutineDecl extends Declaration {
 				kind = Kind.Function;
 			}
 		}
-		entry = new Entry(kind, this.name, this);
-				
+		entry = new Entry(kind, this.name, this);	
 		Entry prevDecl = semantics.curScopeLookup(this.name);
 		if (prevDecl == null) {
 			semantics.addToCurrScope(this.name, entry, getLineNumber());

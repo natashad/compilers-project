@@ -60,7 +60,6 @@ public class FunctionCallExpn extends Expn {
 			}else {
 					ListIterator<ScalarDecl> params = routine.getRoutineBody().getParameters().listIterator();
 					ListIterator<Expn> args = this.arguments.listIterator();
-					Entry argEntry;
 					while (params.hasNext()) {
 						Expn arg = args.next();
 						ScalarDecl param = params.next();

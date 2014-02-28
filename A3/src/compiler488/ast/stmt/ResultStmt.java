@@ -1,11 +1,14 @@
 package compiler488.ast.stmt;
 
 import java.io.PrintStream;
+import java.util.Iterator;
 
 import compiler488.ast.Indentable;
+import compiler488.ast.decl.RoutineDecl;
 import compiler488.ast.expn.Expn;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
+import compiler488.symbol.SymbolTable;
 
 /**
  * The command to return from a function or procedure.
@@ -42,9 +45,12 @@ public class ResultStmt extends Stmt {
 	}
 	
 	public void semanticCheck(Semantics semantic) {
+		this.value.semanticCheck(semantic);
+		
 		if (semantic.getCurrMajorScope() != Semantics.ScopeType.Function) {
 			SemanticError error = new SemanticError("Cannot return result from outside a function body", getLineNumber());
 			semantic.errorList.add(error);
 		}
+		
 	}
 }
