@@ -19,6 +19,6 @@ g0faizan - Worked on designing and implementing AST. Design and implemented symb
 g0alimuh - Added semantic checking for declarations, statements and expressions.
          - Wrote test cases for legal and illegal semantics.
 
-g0getter -
+g0getter - Wrote test cases for legal and illegal semantics.
 
 g3ksingh -
