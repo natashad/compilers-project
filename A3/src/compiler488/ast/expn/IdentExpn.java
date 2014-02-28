@@ -12,7 +12,6 @@ import compiler488.symbol.Entry.Kind;
 public class IdentExpn extends Expn implements Readable
     {
     private String ident;  	// name of the identifier
-    private Type type;
     
     public IdentExpn(String ident, int lineNum) {
     	super(lineNum);
@@ -42,14 +41,7 @@ public class IdentExpn extends Expn implements Readable
 		//S26
 		//Set type to the the type of variable in the entry table.
 		Entry entry = semantics.allScopeLookup(this.ident);
-		this.type = entry.getType();
+		this.setType(entry.getType());
 	}
-	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
-	}
+
 }

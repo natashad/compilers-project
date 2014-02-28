@@ -1,6 +1,8 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.Readable;
+import compiler488.semantics.Semantics;
+import compiler488.symbol.Entry;
 
 /**
  * References to an array element variable
@@ -49,5 +51,11 @@ public class SubsExpn extends Expn implements Readable {
 
 	public void setSubscript2(Expn subscript2) {
 		this.subscript2 = subscript2;
+	}
+	
+	@Override
+	public void semanticCheck(Semantics semantics) {
+		Entry entry = semantics.allScopeLookup(this.variable);
+		this.setType(entry.getType());
 	}
 }

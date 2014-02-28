@@ -8,6 +8,8 @@ import compiler488.ast.type.Type;
  * A placeholder for all expressions.
  */
 public class Expn extends AST implements Printable {
+
+    private Type type = null;
 	
 	public enum OpSymbols {
 		And("and"),
@@ -18,7 +20,11 @@ public class Expn extends AST implements Printable {
 		GreaterThan(">"),
 		GreaterEqual(">="),
 		LessEqual("<="),
-		Not("not");
+		Not("not"),
+		Plus("+"),
+		Minus("-"),
+		Times("*"),
+		Divide("/");
 		
 	    private final String name;       
 
@@ -41,7 +47,11 @@ public class Expn extends AST implements Printable {
 	
 	//Return the type of variable.
 	public Type getType() {
-		return null;
+		return type;
+	}
+	
+	public void setType(Type type) {
+		this.type = type;
 	}
 	
 	

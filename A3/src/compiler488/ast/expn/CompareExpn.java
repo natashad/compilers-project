@@ -11,8 +11,6 @@ import compiler488.semantics.Semantics;
  */
 public class CompareExpn extends BinaryExpn {
 	
-	private Type type;
-	
 	public CompareExpn(String opSymbol, Expn left, Expn right, int lineNum) {
 		super(opSymbol, left, right, lineNum);
 	}
@@ -34,17 +32,10 @@ public class CompareExpn extends BinaryExpn {
 			//TODO: Add error 
 		}
 		//Set type to Boolean.
-		this.type = new BooleanType();
+		this.setType(new BooleanType());
 
 		
 		//TODO: Error checking if both expr type are same.
 	}
-	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
-	}
+
 }

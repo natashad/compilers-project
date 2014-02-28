@@ -11,7 +11,6 @@ import compiler488.symbol.Entry;
 public class IntConstExpn extends ConstExpn
     {
     private Integer value;	// The value of this literal.
-    private Type type;
     
     public IntConstExpn(Integer value, int lineNum) {
     	super(lineNum);
@@ -38,14 +37,7 @@ public class IntConstExpn extends ConstExpn
 		
 		//S21
 		//Set type to Integer.
-		this.type = new IntegerType();
+		this.setType(new IntegerType());
 	}
 	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
-	}
 }

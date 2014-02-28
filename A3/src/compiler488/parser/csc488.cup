@@ -430,10 +430,10 @@ arithExpn	::=
 			{: RESULT = (Expn)t; :}
 
 		|	arithExpn:aExp  PLUS  term:t
-			{: RESULT = new ArithExpn("+", (Expn)aExp, (Expn)t, aExpleft); :} 
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Plus, (Expn)aExp, (Expn)t, aExpleft); :} 
 			
 		|	arithExpn:aExp  MINUS term:t
-			{: RESULT = new ArithExpn("-", (Expn)aExp, (Expn)t, aExpleft); :} 
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Minus, (Expn)aExp, (Expn)t, aExpleft); :} 
 		;
 
 term		::=	
@@ -441,10 +441,10 @@ term		::=
 			{: RESULT = (Expn)f; :}
 			
 		|	term:t TIMES factor:f
-			{: RESULT = new ArithExpn("*", (Expn)t, (Expn)f, tleft); :}
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Times, (Expn)t, (Expn)f, tleft); :}
 			
 		|	term:t DIVIDE factor:f
-			{: RESULT = new ArithExpn("/", (Expn)t, (Expn)f, tleft); :}
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Divide, (Expn)t, (Expn)f, tleft); :}
 		;
 
 factor		::=	

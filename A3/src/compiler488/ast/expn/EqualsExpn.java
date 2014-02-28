@@ -11,8 +11,6 @@ import compiler488.semantics.Semantics;
  */
 public class EqualsExpn extends BinaryExpn {
 	
-	private Type type;
-	
 	public EqualsExpn(String opSymbols, Expn left, Expn right, int lineNum) {
 		super(opSymbols, left, right, lineNum);
 	}
@@ -27,15 +25,8 @@ public class EqualsExpn extends BinaryExpn {
 		if (left.getType().toString() != right.getType().toString()) {
 			//TODO: Add error
 		}
-		this.type = new BooleanType();
+		this.setType(new BooleanType());
 		
 	}
 	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
-	}
 }

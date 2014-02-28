@@ -9,7 +9,6 @@ import compiler488.semantics.Semantics;
  */
 public class UnaryMinusExpn extends UnaryExpn {
 	
-	private Type type;
 	public UnaryMinusExpn(Expn factor, int lineNum) {
 		super(factor, "-", lineNum);
 	}
@@ -20,18 +19,10 @@ public class UnaryMinusExpn extends UnaryExpn {
 	@Override
 	public void semanticCheck(Semantics semantics){
 		
+		//S21
 		//Set type to Integer.
-		this.type = new IntegerType();
+		this.setType(new IntegerType());
 		
 		//TODO: Error checking if both expr type are Integer.
 	}
-	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
-	}
-	
 }
