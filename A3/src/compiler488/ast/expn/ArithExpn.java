@@ -2,6 +2,7 @@ package compiler488.ast.expn;
 
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
 /**
@@ -22,10 +23,25 @@ public class ArithExpn extends BinaryExpn {
 	@Override
 	public void semanticCheck(Semantics semantics){
 		
+		
+		left.semanticCheck(semantics);
+		right.semanticCheck(semantics);
+		
 		//Set type to Integer.
+		//S21
 		this.type = new IntegerType();
 		
-		//TODO: Error checking if both expr type are Integer.
+		//S31
+		//Check that type of expression or variable is integar.
+		if (!this.left.getType().toString().equals(type.toString())) {
+			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " is not Integer", getLineNumber());
+			semantics.errorList.add(error);
+		}
+		
+		if (!this.right.getType().toString().equals(type.toString())) {
+			SemanticError error = new SemanticError("Type of expression " + this.right.toString() + " is not Integer", getLineNumber());
+			semantics.errorList.add(error);
+		}
 	}
 	
 	/** 
