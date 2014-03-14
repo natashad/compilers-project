@@ -1,0 +1,620 @@
+% NOTE: PC starts at START:
+
+% 1-7 func f(i : integer, j : integer) : integer
+FUNC_LABEL1:
+
+% 1-8 if i > 0
+PUSH 0
+ADDR 1 -1 %i
+LOAD
+LT
+PUSH falseLabel1
+BF
+% 1-9 then result f(i -1, j + 1)
+
+% evaluate f(i - 1, j + 1)
+PUSH UNDEFINED %% for return value of function
+% j + 1
+ADDR 1 -2
+LOAD
+PUSH 1
+ADD
+% i - 1
+ADDR 1 -1
+LOAD
+PUSH 1
+SUB
+
+PUSHMT %% push current sp
+ADDR 2 0 %% Push the address of the previous frame.
+SWAP
+SETD 2
+
+PUSH RETURN_LABEL1 %% push the return label
+PUSH FUNC_LABEL1 %% branch to the function
+BR
+
+RETURN_LABEL1:
+SETD 2 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+%% store the result of the function and go to end of if statement.
+ADDR 1 -3
+SWAP
+STORE
+PUSH endIfLabel1
+BR
+
+falseLabel1:
+% 1-10 else if i < 0 then
+%evaluate i < 0
+ADDR 1 -1 %i
+LOAD
+PUSH 0
+LT
+
+PUSH falseLabel2
+BF
+
+%1 -11 result f(i + 1, j -1)
+PUSH UNDEFINED %% for return value of function
+%j - 1
+ADDR 1 -2
+LOAD
+PUSH 1
+SUB
+%i + 1
+ADDR 1 -1
+LOAD
+PUSH 1
+ADD
+
+PUSHMT %% push current sp
+ADDR 2 0 %%Push the address of the previous frame.
+SWAP
+SETD 2
+
+PUSH RETURN_LABEL2 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL2:
+SETD 2 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+%% store the result of the function and go to end of if statement.
+ADDR 1 -3
+SWAP
+STORE
+push endIfLabel1
+BR
+
+
+falseLabel2:
+% 1-13 result j
+%% store the result of the function and go to end of if statement.
+ADDR 1 -2
+LOAD
+SWAP
+STORE
+
+
+endIfLabel1:
+<return from function call>
+PUSH 0 %%number of local variables
+POPN
+BR
+
+%1-1
+%1-2
+START:
+%1-3
+PUSH undefined %i
+PUSH undefined %j
+PUSH undefined %k
+PUSH undefined %n
+PUSH undefined %m
+%1-4
+PUSH undefined %p
+PUSH undefined %q
+PUSH undefined %r
+PUSH undefined %s
+PUSH undefined %t
+%1-5
+PUSH undefined      %A[7]
+PUSH 7                     %Have the size stored in the symbol table
+DUPN
+
+PUSH undefined % B[-100 .. 50]
+PUSH 150  %size of the array which is stored in the symbol table
+DUPN	
+
+
+%1-6
+PUSH undefined % C[-7 .. -3]
+PUSH 4
+DUPN 
+
+PUSH undefined % D[400]
+PUSH 400
+DUPN
+
+%1-25
+PUSH undefined % E[ 10 , -4 .. 5 ]
+PUSH 90
+DUPN
+
+%1-26
+PUSH undefined % B[-2 .. 4, 7]
+PUSH 42
+DUPN
+
+% 1 - 16 n := j * (k-1) / ( n + 2 )
+%address of n
+ADDR 0 3
+%calculate  j * (k-1) / ( n + 2 )
+ADDR 0 1 %% j
+ADDR 0 2 %% k - 1
+PUSH 1
+SUB
+ADDR 0 3 %% n + 2
+PUSH 2
+ADD
+DIV
+MUL
+%store result in n
+SWAP
+STORE
+
+% 1-17
+
+r := not q and p or q and not p
+%address of r
+ADDR 0 7
+%calculate not q and p or q and not p
+%%not q and p
+PUSH 1
+ADDR 0 6
+LOAD
+SUB
+PUSH firstFalse1
+BF
+ADDR 0 5
+LOAD
+push endAND1
+BR
+firstFalse1
+push MACHINE_FALSE
+endAND1
+%%(not q and p) or q
+DUP
+push firstFalse2
+BF
+push endOR1
+BR
+firstFalse2
+POP
+ADDR 0 6
+LOAD
+endOR1
+%% ((not q and p) or q) and not p
+push firstFalse3
+BF
+PUSH 1
+ADDR 0 5
+LOAD
+SUB
+push endAND2
+BR
+firstFalse3
+push MACHINE_FALSE
+endAND2
+%% store the result into r
+SWAP
+STORE
+
+%1-18 p := i < j or  k <= n
+
+ADDR 0 5
+
+<evaluate i < j or k < = n>
+<evaluate i < j>
+ADDR 0 0
+LOAD
+ADDR 0 1
+LOAD
+LT
+DUP
+PUSH firstFalse4
+BF
+PUSH endOR2
+BR
+firstFalse4
+POP
+%evaluate k < = n
+ADDR 0 3
+LOAD
+ADDR 0 2
+LOAD
+LT
+PUSH 1
+SWAP
+SUB
+endOR2
+%%assign the result to p
+SWAP
+STORE
+% 1-19 r := j = n and k not = m
+% address of r
+ADDR 0 7 
+% j = n check
+ADDR 0 1
+LOAD
+ADDR 0 3
+LOAD
+EQ
+
+push firstFalse5
+BF
+% k not = m check
+ADDR 0 2
+LOAD
+ADDR 0 4
+LOAD
+EQ
+PUSH 1
+SWAP
+SUB
+push endAND3
+firstFalse5
+push MACHINE_FALSE
+endAND3
+%store result in r.
+SWAP
+STORE
+
+%1-20  t := ( j > k	 ? r = s : i not= j )
+%address of t
+ADDR 0 9
+
+%eval j > k
+ADDR 0 2
+LOAD
+ADDR 0 1
+LOAD
+LT
+
+PUSH falseValue1
+BF
+
+% r = s
+ADDR 0 7
+LOAD
+ADDR 0 8
+EQ
+push endConditional1
+BR
+falseValue1:
+% evaluate i not = j
+ADDR 0 0
+LOAD
+ADDR 0 1
+LOAD
+EQ
+PUSH 1
+SWAP
+SUB
+endConditional1
+
+%1 - 21 A[ i+ f(-4,A[n+3]) ] := 5
+%evaluate i + f(-4,  A[n+3])
+%evaluate i
+ADDR 0 0
+LOAD
+%evaluate f(-4, A[n + 3])
+PUSH UNDEFINED %% for return value of function
+%A[n + 3]
+%n + 3
+ADDR 0 3
+LOAD
+PUSH 3
+ADD
+%A[n + 3]
+ADDR 0 10
+ADD
+LOAD
+%-4
+PUSH - 4
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL3 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL3:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+ADDR 0 10
+ADD
+PUSH 5
+SWAP 
+STORE
+
+%1-22 B[B[B[i+1]]] := A[f( 17 , 5 )]
+%get address of B[B[B[i + 1]]]
+%calculate i + 1 + offset
+ADDR 0 0
+LOAD
+PUSH 1
+ADD
+PUSH 100
+ADD
+%calculate B[i + 1] + offset
+ADDR 0 17
+ADD
+LOAD
+
+PUSH 100
+ADD
+ADDR 0 17
+ADD
+LOAD
+%calculate B[B[i + 1]] + offset
+PUSH 100
+ADD
+ADDR 0 17
+ADD
+LOAD
+
+%evaluate f(17, 5)
+PUSH UNDEFINED %% for return value of function
+%5
+PUSH 5
+%17
+PUSH 17
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL4 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL4:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+%get A[f(17, 5)] and store it in the address of B we calculated before
+ADDR 0 10
+ADD
+LOAD
+SWAP
+STORE
+
+%1- 23 C[-4] := p or q or j >= f(k,7)	
+%get address of C[-4]
+
+ADDR 0 167
+ADD 7
+LOAD
+
+%evaluate p or q or j >= f(k, 7)
+
+ADDR 0 5
+LOAD
+DUP
+PUSH firstFalse6
+BF
+PUSH endOR3
+BR
+firstFalse6
+POP
+ADDR 0 6
+LOAD
+endOR3
+DUP
+push firstFalse7
+BF
+PUSH endOR4
+BR
+firstFalse7
+POP
+ADDR 0 1
+LOAD
+
+%eval f(k, 7)
+PUSH UNDEFINED %% for return value of function
+%7
+PUSH 7
+%k
+ADDR 0 2
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL5 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL5:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+LT
+PUSH 1
+SWAP
+SUB
+SWAP
+STORE
+
+%1 - 28 to 1-30 C[ j - 3 ] := B[f(n,m) , n + m ] or f(i,j+1) <= f(j,i+1) and f(A[i],E[i-1,k+1]) >= 7
+
+%get the address of C[j - 3]
+
+ADDR 0 1
+LOAD
+PUSH 3
+SUB
+PUSH 7
+ADD
+ADDR 0 167
+ADD
+%evaluate f(j,i+1) and f(A[i],E[i-1,k+1]) >= 7
+%evaluate f(j, i + 1)
+PUSH UNDEFINED %% for return value of function
+%i + 1
+ADDR 0 0
+PUSH 1
+ADD
+LOAD
+%j
+ADDR 0 1
+LOAD
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL6 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL6:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+push firstFalse8
+BF
+%evaluate f(A[i],E[i-1,k+1]) >= 7
+%evaluate f(A[i],E[i-1,k+1])
+PUSH UNDEFINED %% for return value of function
+%E[i -1, k + 1]
+%address of E
+ADDR 0 577
+ADDR 0 0
+LOAD
+PUSH 1
+SUB
+PUSH 9
+MUL
+ADDR 0 2
+LOAD
+PUSH 1
+ADD
+ADD %add (i - 1) * max(y) + k + 1
+ADD %add previous to base address of E
+LOAD
+%A[i]
+ADDR 0 4
+LOAD
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL7 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL7:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+%result >= 7
+PUSH 7
+LT
+PUSH 1
+SWAP
+SUB
+push endAND4
+firstFalse8:
+push MACHINE_FALSE
+endAND4
+
+%evaluate B[f(n,m) , n + m ]
+%address of B
+ADDR 0 17
+%evaluate f(n, m)
+PUSH UNDEFINED %% for return value of function
+%n
+ADDR 0 3
+LOAD
+%m
+ADDR 0 4
+LOAD
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL8 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL8:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+PUSH 7
+MUL
+% n + m
+ADDR 0 3
+LOAD
+ADDR 0 4
+LOAD
+ADD
+ADD %add f(n, m) * max(y) of B + n + m
+ADD %add previous to base address of B
+LOAD
+%B[f(n,m) , n + m ] or f(i,j+1)
+DUP
+push firstFalse9
+BF
+push endOR5
+BR
+firstFalse9
+POP
+%eval f(i,j+1)
+PUSH UNDEFINED %% for return value of function
+%j + 1
+ADDR 0 1
+PUSH 1
+ADD
+LOAD
+%i
+ADDR 0 0
+LOAD
+
+PUSHMT %% push current sp
+ADDR 1 0 %%Push the address of the previous frame.
+SWAP
+SETD 1
+
+PUSH RETURN_LABEL9 %% push the return label
+PUSH FUNC_LABEL1 %%branch to the function
+BR
+
+RETURN_LABEL9:
+SETD 1 %%the display address we need to restore should be on top of the stack and LL
+PUSH 2
+POPN
+%a <= b
+endOR5:
+LT
+PUSH 1
+SWAP
+SUB
+% 1-32 } (end of main)
+HALT

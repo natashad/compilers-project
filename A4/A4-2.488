@@ -1,0 +1,494 @@
+% Start PC at MAIN
+
+%2-3
+MAIN:
+    PUSH UNDEFINED %%var a
+    PUSH UNDEFINED %%var b
+    PUSH UNDEFINED %%var c
+    PUSH UNDEFINED %%var d
+    PUSH UNDEFINED %%var p
+    PUSH UNDEFINED %%var q
+    PUSH UNDEFINED %%var r
+
+    %2-5
+    ADDR 0 1
+    LOAD	 %%load b
+    ADDR 0 2
+    LOAD 	%% load c
+    ADD
+    ADDR 0 3
+    LOAD 	%%load d
+    ADDR 0 2
+    LOAD	 %%load c
+    MUL	 %%d*c
+    SUB 	%% c - d*c
+    ADDR 0 1
+    LOAD 	%% load b
+    ADDR 0 2
+    LOAD 	%%load c
+    DIV 		%%b/c
+    ADD
+
+    ADDR 0 0
+    SWAP
+    STORE
+
+    %2-6
+    PUSH MACHINE_FALSE
+    PUSH 1
+    SWAP
+    SUB
+    PUSH OR_FALSE_0
+    BF
+    PUSH CONTINUE_EVAL_P_1
+    BR
+
+OR_FALSE_0:
+    ADDR 0 5
+    LOAD %%load q
+    PUSH 1
+    SWAP
+    SUB %%not q
+    PUSH AND_FALSE_2
+    BF
+    ADDR 0 6
+    LOAD %%load r
+    PUSH CONTINUE_EVAL_P_1
+    BR
+
+AND_FALSE_2:
+    PUSH MACHINE_FALSE
+
+CONTINUE_EVAL_P_1:
+    ADDR 0 4
+    LOAD %%load p
+    SWAP
+    STORE
+
+
+    %2-7
+    ADDR 0 4
+    LOAD %%load p
+    PUSH IF_END_3
+    BF
+    PUSH 3
+    ADDR 0 0
+    SWAP 
+    STORE %% a:=3
+
+
+IF_END_3:
+    ADDR 0 4
+    LOAD %%load p
+    PUSH OR_FALSE_4
+    BF
+    PUSH MACHINE_TRUE
+    PUSH IF_TRUE_5
+    BR
+
+OR_FALSE_4:
+    ADDR 0 4
+    LOAD %%load p
+    PUSH 1
+    SWAP
+    SUB
+
+IF_TRUE_5:
+    PUSH IF_ELSE_6
+    BF
+    PUSH 2
+    ADDR 0 1 %%adress of b
+    SWAP
+    STORE
+    PUSH END_IF_7
+    BR
+
+IF_ELSE_6:
+    PUSH 0
+    ADDR 0 1 %%address of b
+    SWAP 
+    STORE
+
+END_IF_7:
+
+WHILE_8:
+    ADDR 0 2
+    LOAD %% load c
+    PUSH 7
+    LT
+    PUSH END_WHILE_9
+    BF
+    PUSH 6
+    ADDR 0 2 %%load address of c
+    SWAP
+    STORE
+    PUSH WHILE_8
+    BR
+
+END_WHILE_9:
+
+WHILE_10:
+    PUSH MACHINE_TRUE
+    PUSH END_WHILE_11
+    BF
+    ADDR 0 1
+    LOAD %%load b
+    PUSH 1
+    ADD
+    ADDR 0 1
+    SWAP
+    STORE
+    PUSH WHILE_10
+    BR
+
+END_WHILE_11:
+
+REPEAT_12:
+    PUSH 3
+    ADDR 0 0 %%address of a
+    SWAP
+    STORE
+    PUSH EXIT_13
+    BR
+    PUSH 7
+    ADDR 0 1 %%address of b
+    SWAP
+    STORE
+    PUSH MACHINE_FALSE
+    PUSH REPEAT_12
+    BF
+
+EXIT_13:
+
+WHILE_14:
+    ADDR 0 5
+    LOAD %%load q
+    BF
+    PUSH MACHINE_TRUE
+    PUSH END_OR_16
+    BR
+
+OR_FALSE_15:
+    ADDR 0 6
+    LOAD %%load R
+    PUSH AND_FALSE_17
+    BF
+    ADDR 0 4
+    LOAD %%load p
+    PUSH 1
+    SWAP
+    SUB %%not p
+    PUSH END_OR_16
+    BR
+
+AND_FALSE_17:
+    PUSH MACHINE_FALSE
+
+END_OR_16:
+    PUSH END_WHILE_18
+    BF
+    ADDR 0 1
+    LOAD %%load b
+    PUSH 10
+    EQ
+    PUSH 1
+    SWAP
+    SUB
+    PUSH WHILE_14
+    BF
+    PUSH END_WHILE
+    BR
+
+
+END_WHILE_18:
+    ADDR 0 memSize-1
+ %%text Constants will be stored at the top of the stack and the offset should be saved in the symbol table. Since it is the first text constant, I Will assume it is at memsize-1.
+
+    LOAD  %% "v"
+    PRINTC
+    ADDR 0 memSize-2
+    LOAD %% "a"
+    PRINTC
+    ADDR 0 memSize-3
+    LOAD %% "l"
+    PRINTC
+    ADDR 0 memSize-4
+    LOAD %% "u"
+    PRINTC
+    ADDR 0 memSize-5
+    LOAD  %% "e"
+    PRINTC
+    ADDR 0 memSize-6
+    LOAD %% " "
+    PRINTC
+    ADDR 0 memSize-7
+    LOAD %% "i"
+    PRINTC
+    ADDR 0 memSize-8
+    LOAD  %% "s"
+    PRINTC
+    ADDR 0 memSize-9
+    LOAD  %% " "
+    PRINTC
+
+    ADDR 0 0 
+    LOAD %%load a
+    ADDR 0 1
+    LOAD %%load b
+    DIV
+    PRINTI
+
+    ADDR 0 memSize-10
+    LOAD %% " "
+    PRINTC
+    ADDR 0 memSize-11
+    LOAD  %% "o"
+    PRINTC
+    ADDR 0 memSize-12
+    LOAD %% "r"
+    PRINTC
+    ADDR 0 memSize-13
+    LOAD %% " "
+    PRINTC
+    ADDR 0 memSize-14
+    LOAD  %% "n"
+    PRINTC
+    ADDR 0 memSize-15
+    LOAD  %% "o"
+    PRINTC
+    ADDR 0 memSize-16
+    LOAD  %% "t"
+    PRINTC
+    ADDR 0 memSize-17
+    LOAD  %% " "
+    PRINTC
+
+    PUSH 10
+    PRINTC
+
+WHILE_19:
+    PUSH TRUE
+    PUSH FALSE
+    EQ
+    PUSH 1
+    SWAP
+    SUB
+    PUSH END_WHILE_20
+    BF
+    PUSH UNDEFINED %% var b1
+    PUSH UNDEFINED %% var b2
+    ADDR 0 0
+    READI
+    STORE
+    ADDR 0 2
+    READI
+    STORE
+    ADDR 0 1
+    READI
+    STORE
+
+    ADDR 0 4
+    LOAD
+    PUSH OR_FALSE_21
+    BF
+    PUSH MACHINE_TRUE
+    PUSH CONTINUE_OR_22
+    BR
+
+OR_FALSE_21:
+    ADDR 0 6
+    LOAD
+    PUSH 1
+    SWAP
+    SUB %%not r
+
+CONTINUE_OR_22:
+    PUSH CONT_WHILE_23
+    BF
+    PUSH END_WHILE_20
+    BR
+
+CONT_WHILE_23:
+    ADDR 0 4
+    LOAD %%LOAD P
+    PUSH 1
+    SWAP
+    SUB
+    PUSH OR_FALSE_24
+    BF
+    PUSH MACHINE_TRUE
+    PUSH CONT_OR_25
+    BR
+
+OR_FALSE_24:
+    ADDR 0 5
+    LOAD %%LOAD Q
+
+CONT_OR_25:
+    ADDR 0 7
+    SWAP 
+    STORE
+
+    %2-20
+REPEAT_26
+    PUSH UNDEFINED %%var w
+    PUSH UNDEFINED %%var x
+    PUSH UNDEFINED %%var A
+    PUSH 100
+    DUPN %%space for A[100]
+
+    ADDR 0 8
+    LOAD %%load b2
+    PUSH INLINE_FALSE_27
+    BF
+    ADDR 0 5
+    LOAD %%load q
+    PUSH END_INLINE_28
+    BR
+
+INLINE_FALSE_27:
+    PUSH 7
+    ADDR 0 3 
+    LOAD %%d
+    LT
+    PUSH 1
+    SWAP
+    SUB %% not 7 < d
+
+END_INLINE_28:
+    ADDR 0 4
+    SWAP
+    STORE
+
+    %2-23
+    ADDR 0 0
+    LOAD %%load a
+    ADDR 0 9
+    LOAD %%load w
+    LT
+    PUSH 1
+    SWAP
+    SUB
+    PUSH END_REPEAT_29
+    BF
+
+WHILE_30:
+    ADDR 0 4
+    LOAD %%load p
+    PUSH OR_FALSE_31
+    BF
+    PUSH MACHINE_TRUE
+    PUSH OR_CONTINUE_32
+    BR
+
+OR_FALSE_31:
+    ADDR 0 5
+    LOAD %%load q
+    PUSH 1
+    SWAP 
+    SUB
+    PUSH OR_FALSE_32
+    BF
+    PUSH MACHINE_TRUE
+    PUSH OR_CONTINUE_32
+    BR
+
+OR_FALSE_32:
+    ADDR 0 6
+    LOAD %%load r
+
+OR_CONTINUE_32:
+    PUSH END_WHILE_33
+    BF
+    PUSH UNDEFINED %% var t
+    PUSH UNDEFINED %% var u
+
+    %2-26 p:= not q
+    ADDR 0 5
+    LOAD %%load q
+    PUSH 1
+    SWAP
+    SUB
+    ADDR 0 4
+    SWAP
+    STORE
+
+    ADDR 0 4
+    LOAD %%load p
+    PUSH INLINE_FALSE_34
+    BF
+    PUSH MACHINE_TRUE
+    PUSH INLINE_CONTINUE_35
+    BR
+
+INLINE_FALSE_34:
+    ADDR 0 5 
+    LOAD %%load q
+
+INLINE_CONTINUE_35:
+    PUSH INLINE_FALSE_COND_36:
+    BF
+    ADDR 0 111
+    LOAD %%load t
+    PUSH 1
+    ADD
+    PUSH INLINE_EVAL_37
+    BR
+
+PUSH INLINE_FALSE_COND_36:
+    ADDR 0 111
+    LOAD %%load t
+    PUSH 1
+    SUB
+
+INLINE_EVAL_37:
+    ADDR 0 111
+    SWAP
+    STORE
+
+    PUSH 12
+    ADDR 0 111
+    LOAD %%load t
+    LT
+    PUSH WHILE_30
+    BF
+    PUSH END_WHILE_33
+    BR
+
+END_WHILE_33:
+    %2-31
+    ADDR 0 11
+    ADDR 0 9
+    LOAD %%load w
+    PUSH 1 %%lower bound of A
+    SUB
+    ADD
+    LOAD %%load A[w]
+    ADDR 0 3
+    LOAD %%load d
+    LT
+    PUSH REPEAT_26
+    BF
+
+END_ REPEAT_29:
+    %2-32
+    ADDR 0 4
+    LOAD %%load p
+    PUSH AND_FALSE_34
+    BF
+    ADDR 0 6
+    LOAD %%load r
+    PUSH AND_CONTINUE_35
+
+AND_FALSE_34:
+    PUSH MACHINE_FALSE
+
+AND_CONTINUE_35:
+    PUSH REPEAT_26
+    BF
+
+%2-34
+END_WHILE_20:
+    PUSH 2 %% 2 local vairables
+    POPN
+    HALT
