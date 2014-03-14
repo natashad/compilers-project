@@ -1,5 +1,8 @@
-Storage - Describing our strategy for allocating storage for and addressing variables and constants
-Expressions - Describing how all forms of expressions are implemented
-Functions_Procedures - Describing how we implemented activation record for functions and procedures and other implementations related to them
-Statements - Describing the general case of code we generate for each of the statements in the language
-Everything_Else - Describing main program initialization and implementation and working of labels
+Storage.pdf - Describing our strategy for allocating storage for and addressing variables and constants
+Expressions.pdf - Describing how all forms of expressions are implemented
+Functions_Procedures.pdf - Describing how we implemented activation record for functions and procedures and other implementations related to them
+Statements.pdf - Describing the general case of code we generate for each of the statements in the language
+Everything_Else.pdf - Describing main program initialization and implementation and working of labels
+A4-1.488 - Code generation program for A4-1
+A4-2.488 - Code generation program for A4-2
+A4-3.488 - Code generation program for A4-3
