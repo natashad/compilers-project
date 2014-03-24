@@ -1,0 +1,357 @@
+%%Note: Start pc at MAIN
+
+%3-6
+PROC_P: %%procedure P
+    %3-7
+    PUSH UNDEFINED %%push space for e
+    %3-8
+WHILE_START_1:
+    ADDR 0 5
+    LOAD %%load q
+    PUSH END_WHILE_2
+    BF
+    %3-9
+    % c <= d i.e. not d < c
+    ADDR 0 3
+    LOAD %%Load d
+    ADDR 0 2
+    LOAD %%Load c
+    LT
+    PUSH 1
+    SWAP
+    SUB 
+
+    % e + a - 1
+    ADDR 1 2 
+    LOAD %%Load e
+    ADDR 0 0
+    LOAD %%Load a
+    ADD
+    PUSH 1
+    SUB
+
+    ADDR 0 4
+    LOAD %%Load p
+
+    PUSHMT
+    ADDR 1 0
+    SWAP
+    SETD 1
+
+    PUSH PROC_RETURN_3
+
+    PUSH PROC_Q 
+    BR
+
+PROC_RETURN_3:
+    SETD 1
+    PUSH 3
+    POPN
+
+    %3-10 return
+    PUSH 1 %%number of local variables
+    POPN
+    BR %% return address will now be on top of the stack
+
+    PUSH WHILE_START_1
+    BR
+
+END_WHILE_2:
+    % 3-12 nothing to do here.
+
+
+%3-13
+FUNC_F:
+    %3-14 no local variables
+    ADDR 1 -2
+    LOAD %%load n
+    PUSH IF_ELSE_4
+    BF
+    ADDR 1 -1
+    LOAD %%load m
+    ADDR 0 1
+    LOAD %%load b
+    ADD
+    PUSH END_IF_5
+    BR
+
+IF_ELSE_4:
+    PUSH UNDEFINED %%push space for return value
+    ADDR 1 -2
+    LOAD %%load n
+    PUSH AND_FALSE_6
+    BF
+    ADDR 0 7
+    LOAD %%load n
+    PUSH 1
+    SWAP
+    SUB
+    PUSH AND_FALSE_6
+    BF
+    PUSH AND_TRUE_7
+    BR
+
+AND_FALSE_6:
+    PUSH MACHINE_FALSE
+    PUSH AND_END_8
+    BR
+
+AND_TRUE_7:
+    PUSH MACHINE_TRUE
+    PUSH AND_END_8
+    BR
+
+AND_END_8:
+    ADDR 1 -1
+    LOAD %%load m
+    ADD 0 1
+    LOAD %%load b
+    SUB %%Both arguments to F will now be loaded
+
+    PUSHMT
+    ADDR 1 0
+    SWAP
+    SETD 1 %% store and update display pointer
+
+    PUSH END_FUNC_F_9
+    PUSH FUNC_F
+    BR
+
+END_FUNC_F_9:
+    SETD 1
+    PUSH 2
+    POPN
+
+END_IF_5:
+    ADDR 1 -3 %%load address for return value
+    SWAP
+    STORE
+    BR
+    PUSH 0 %%no local variables
+    POPN
+    BR  %% This will take us to the return address in the caller.
+
+
+FUNC_G:
+    PUSH UNDEFINED %%var w
+    PUSH UNDEFINED %%var x
+
+    % 3-23 p or s
+    ADDR 0 4
+    LOAD %% load p
+    PUSH OR_10
+    BF
+    PUSH MACHINE_TRUE
+    PUSH END_OR_11
+
+OR_10:
+    ADDR 0 7
+    LOAD %%load s
+    PUSH 1
+    SWAP
+    SUB
+
+END_OR_11:
+    % 3-23 : a + u - x
+    ADDR 0 0 
+    LOAD %%load a
+    ADDR 1 3
+    LOAD %%load u
+    ADD
+    ADDR 2 3
+    LOAD %%load x
+    SUB
+
+    %3-23 not m
+    ADDR 1 -1
+    LOAD %%load m
+    PUSH 1
+    SWAP
+    SUB %%not m
+
+    PUSHMT
+    ADDR 1 0
+    SWAP
+    SETD 1
+
+    PUSH Q_END_12
+    PUSH PROC_Q
+    BR
+
+Q_END_12:
+    SETD 1
+    PUSH 3
+    POPN
+    %3-24: m or p
+    ADDR 1 -1 
+    LOAD %% load m
+    PUSH OR_FALSE_13
+    BF
+    PUSH OR_TRUE_15
+    BR
+
+OR_FALSE_13:
+    ADDR 1 -3
+    LOAD %%load p
+    PUSH OR_FALSE_14
+    BF
+    PUSH OR_TRUE_15
+    BR
+
+OR_FALSE_14:
+    ADDR 1 3
+    LOAD %%load u
+    ADDR 0 1
+    LOAD %%load b
+    SUB
+    PUSH IF_RETURN
+    BR
+
+OR_TRUE_15:
+    ADDR 1 4
+    LOAD %% load v
+    ADDR 1 -2
+    LOAD %% load n
+    ADD
+
+IF_RETURN_16:
+    ADDR 2 -1 %%return value for G
+    SWAP
+    STORE
+    PUSH 2 %% 2 local variables
+    POPN
+    BR
+
+%3-17
+PROC_Q:  %%procedure Q
+    PUSH UNDEFINED %% var t
+    PUSH UNDEFINED %% var u
+    PUSH UNDEFINED %% var v
+    
+    %3-26 if G() < 7
+    PUSH UNDEFINED %%for return of G
+    PUSHMT
+    ADDR 2 0
+    SWAP
+    SETD 2
+    PUSH RET_FROM_G_17
+    PUSH FUNC_G
+    BR
+
+RET_FROM_G_17:
+    SETD 2
+    PUSH 0 %%0 arguments
+    POPN
+    PUSH CONTINUE_IN_Q_18
+    BF
+    PUSH 3 %%3 local vars in Q
+    POPN
+    BR
+
+CONTINUE_IN_Q_18:
+    %3-27: if F(t, not r) = 17
+    PUSH UNDEFINED %%Return value of F
+    ADDR 0 6
+    LOAD %%load r
+    PUSH 1
+    SWAP
+    SUB %%not r
+
+    ADDR 1 2
+    LOAD %%load t
+
+    PUSHMT
+    ADDR 1 0
+    SWAP
+    SETD 1
+
+    PUSH RET_FROM_F_19
+    PUSH FUNC_F
+    BR
+
+RET_FROM_F_19:
+    SETD 2
+    PUSH 2 %%2 arguments to F
+    POPN
+    PUSH CONTINUE_IN_Q_20
+    BF
+    PUSH 3 %%3 local vars in Q
+    POPN
+    BR
+
+CONTINUE_IN_Q_20:
+    %3-28 P() with no ret value, no args
+    PUSHMT
+    ADDR 1 0
+    SWAP
+    SETD 1
+
+    PUSH RET_FROM_P_21
+    PUSH PROC_P
+    BR
+
+RET_FROM_P_21:
+    SETD 1
+    PUSH 0 %% no arguments
+    POPN
+
+    %%return from q
+    PUSH 3 %%3 local variables in Q
+    POPN
+    BR
+
+MAIN:
+    PUSH UNDEFINED %%var a
+    PUSH UNDEFINED %%var b
+    PUSH UNDEFINED %%var c
+    PUSH UNDEFINED %%var d
+    PUSH UNDEFINED %%var p
+    PUSH UNDEFINED %%var q
+    PUSH UNDEFINED %%var r
+    PUSH UNDEFINED %%var s
+
+    %3-30
+    ADDR 0 4
+    LOAD %%load p
+    ADDR 0 5
+    LOAD %%load q
+    EQ
+    PUSH 1
+    SWAP 
+    SUB %%p not= q
+
+    ADDR 0 1
+    LOAD %%load b
+    ADDR 0 2
+    LOAD %%load c
+    MUL
+
+    ADDR 0 4
+    LOAD %%load p
+    PUSH 1
+    SWAP
+    SUB %% not p
+    PUSH OR_FALSE_22
+    BF
+    PUSH MACHINE_TRUE
+    PUSH CONTINUE_ARG_EVAL_23
+    BR
+
+OR_FALSE_22:
+    ADDR 0 5
+    LOAD %%load q
+
+CONTINUE_ARG_EVAL_23:
+    PUSHMT
+    ADDR 1 0
+    SWAP
+    SETD
+    PUSH CONTINUE_IN_MAIN_24
+    PUSH PROC_Q
+    BR
+
+CONTINUE_IN_MAIN_24:
+    SETD
+    PUSH 3 %%3 args to Q
+    POPN
+    HALT
