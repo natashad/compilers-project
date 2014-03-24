@@ -1,9 +1,12 @@
 package compiler488.ast.stmt;
 
+import java.util.ListIterator;
+
 import compiler488.ast.AST;
 import compiler488.ast.ASTList;
 import compiler488.ast.expn.Expn;
 import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.SymbolTable;
@@ -40,23 +43,25 @@ public abstract class LoopingStmt extends Stmt
 	}
 	
 	@Override
-	public void semanticCheck(Semantics semantic) {
-		
-		if (! (expn.getType() instanceof BooleanType) ) {
-			SemanticError error = new SemanticError("Looping Condition must evaluate to a boolean.", getLineNumber());
-			semantic.errorList.add(error);
+	public void semanticCheck(Semantics semantics) {
+		semantics.scopeStack.push(Semantics.ScopeType.Loop);
+		this.expn.semanticCheck(semantics);
+		ListIterator<Stmt> body = this.body.listIterator();
+
+		while (body.hasNext()) {
+			Stmt statement = body.next();
+			statement.semanticCheck(semantics);
 		}
 		
-		expn.semanticCheck(semantic);
-		
-		SymbolTable symTable = new SymbolTable();
-		semantic.openScope(symTable, Semantics.ScopeType.Loop);
-		
-		for(AST a : body) {
-			a.semanticCheck(semantic);
+		Type type = new BooleanType(this.getLineNumber());
+		if (!this.expn.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Loop condition is not of type Boolean", this.getLineNumber());
+			semantics.errorList.add(error);
 		}
 		
-		semantic.closeScope();
+		
+		semantics.scopeStack.pop();
+
 	}
 
 }

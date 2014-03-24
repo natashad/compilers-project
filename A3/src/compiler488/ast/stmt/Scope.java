@@ -1,11 +1,14 @@
 package compiler488.ast.stmt;
 
 import java.io.PrintStream;
+import java.util.LinkedList;
 import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.decl.Declaration;
+import compiler488.ast.type.Type;
+import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
 import compiler488.symbol.SymbolTable;
@@ -15,23 +18,51 @@ import compiler488.symbol.SymbolTable;
  */
 public class Scope extends Stmt {
 	private ASTList<Declaration> declarations; // The declarations at the top.
-
-	private ASTList<Stmt> statements; // The statements to execute.
-	
+    public LinkedList<String> forwardDeclarations;
+	private ASTList<Stmt> statements; // The statements to execute.	
 	private SymbolTable symtable = new SymbolTable();
-	
-	
-
-	private boolean isMajor = true;
-
+	private boolean isMajor = false;
 	private ScopeType scopeType = ScopeType.Stmt;
+	private Type functionScopeType = null;
 	
+	
+	
+
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts, int lineNumber) {
 		super(lineNumber);
 		this.declarations = declarations;
 		this.statements = stmts;
+		this.forwardDeclarations = new LinkedList<String>();
 	}
 	
+	public LinkedList<String> getForwardDeclarations() {
+		return forwardDeclarations;
+	}
+
+	public void setForwardDeclarations(LinkedList<String> forwardDeclarations) {
+		this.forwardDeclarations = forwardDeclarations;
+	}
+
+	
+	public Type getFunctionScopeType() {
+		return functionScopeType;
+	}
+
+	public void setFunctionScopeType(Type functionScopeType) {
+		this.functionScopeType = functionScopeType;
+	}
+	
+	
+	public ScopeType getScopeType() {
+		return scopeType;
+	}
+
+	
+	
+	public void setMajor(boolean isMajor) {
+		this.isMajor = isMajor;
+	}
+
 	public Scope(int lineNumber) {
 		this(new ASTList<Declaration>(), new ASTList<Stmt>(), lineNumber);
 	}
@@ -44,8 +75,8 @@ public class Scope extends Stmt {
 	
 	public void setScopeType(ScopeType type) {
 		this.scopeType = type;
-	}
 	
+	}
 	
 	public SymbolTable getSymtable() {
 		return symtable;
@@ -103,13 +134,10 @@ public class Scope extends Stmt {
 	/* Run semantic analysis */
 	@Override
 	public void semanticCheck(Semantics semantics) {
-		//Add semantic analysis code here
-		
-		semantics.openScope(symtable, this.scopeType);
+		semantics.openScope(symtable, this.scopeType, this);
 		symtable = semantics.symbolTableList.getLast(); //make sure we are editing the master symbol table list! (pass by reference/value)
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		ListIterator<Stmt> statements = this.statements.listIterator();
-		
 		
 		while (declarations.hasNext()) {
 			Declaration decl = declarations.next();
@@ -119,8 +147,14 @@ public class Scope extends Stmt {
 			Stmt statement = statements.next();
 			statement.semanticCheck(semantics);
 		}
+
 		
 		// add code for forward declarations!
+		if (this.forwardDeclarations.size() != 0) {
+			SemanticError error = new SemanticError("Forward declared function/procedure never actually declared.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		
 		semantics.closeScope();
 	}
 

@@ -32,11 +32,14 @@ public class RoutineDecl extends Declaration {
 		super(declPart.getName(), type, lineNum);
 		this.head = head;
 		this.routineBody = routineBody;
+		this.isForward = isForward;
 		if (type == null) {
 			this.routineBody.getBody().setScopeType(ScopeType.Procedure);
 		}else {
 			this.routineBody.getBody().setScopeType(ScopeType.Function);
+			this.routineBody.getBody().setFunctionScopeType(this.head.getType());
 		}
+		
 	}
 
 	public boolean isForward() {
@@ -105,27 +108,19 @@ public class RoutineDecl extends Declaration {
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics) {
-		Entry paramEntry;
-		ListIterator<ScalarDecl> listParams = this.getDeclarationHead().getParameters().listIterator();
-		ScalarDecl param;
-		SymbolTable symTable = new SymbolTable();
-		while (listParams.hasNext()) {
-			param = listParams.next();
-			paramEntry = new Entry(Kind.Variable, param.getName(), param);
-			paramEntry.setType(param.type);
-			symTable.put(param.getName(), paramEntry);
-		}
-		this.routineBody.getBody().setSymtable(symTable);
-		this.routineBody.semanticCheck(semantics);
+		
+		
+		//If forward function change the kind
 		Entry entry;
 		Kind kind;
 		if (isForward) {
+			semantics.getCurrMajorScopeObj().getForwardDeclarations().addLast(this.name);
 			if (this.type == null) {
 				kind = Kind.ForwardProcedure;	
 			} else {
-				kind = Kind.ForwardFunction;
+				kind = Kind.ForwardFunction;	
 			}
-			
+
 		} else {
 			if (this.type == null) {
 				kind = Kind.Procedure;
@@ -133,18 +128,19 @@ public class RoutineDecl extends Declaration {
 				kind = Kind.Function;
 			}
 		}
-		entry = new Entry(kind, this.name, this);	
-		Entry prevDecl = semantics.curScopeLookup(this.name);
+		entry = new Entry(kind, this.getName(), this);
+		entry.setType(this.getType());
+		Entry prevDecl = semantics.curMajorScopeLookup(this.name);
 		if (prevDecl == null) {
 			semantics.addToCurrScope(this.name, entry, getLineNumber());
-		}else if ( ( prevDecl.getKind() == Kind.ForwardFunction
-						&& kind == Kind.Function) 
-					|| (prevDecl.getKind() == Kind.ForwardProcedure
-						&& kind == Kind.Procedure) ) {
 			
+		}else if ((prevDecl.getKind()  != Kind.ForwardFunction && prevDecl.getKind() != Kind.ForwardProcedure) ||
+				( prevDecl.getKind() == Kind.ForwardFunction && kind == Kind.Procedure) || (prevDecl.getKind() == Kind.ForwardProcedure && kind == Kind.Function) ) {
+			SemanticError error = new SemanticError("Previously declared of a different type", this.getLineNumber());
+			semantics.errorList.add(error);
+		}else {
 			ASTList<ScalarDecl> forwardDeclParams = ((RoutineDecl) prevDecl.getNode()).getRoutineBody().getParameters();
 			ASTList<ScalarDecl> currDeclParams = this.getRoutineBody().getParameters();
-			
 			if (forwardDeclParams.size() != currDeclParams.size()) {
 				SemanticError error = new SemanticError("Forward Declaration of function " + 
 														this.getName() + " specifies " + forwardDeclParams.size()
@@ -154,17 +150,19 @@ public class RoutineDecl extends Declaration {
 			}
 			ListIterator<ScalarDecl> listPrevParams = forwardDeclParams.listIterator();
 			ListIterator<ScalarDecl> listCurrParams = currDeclParams.listIterator();
-			
+
 			while (listPrevParams.hasNext()) {
 				Type forwardType = listPrevParams.next().getType();
 				Type currType = listCurrParams.next().getType();
-				if (forwardType != currType){
+				
+				if (!forwardType.toString().equals(currType.toString())){
 					SemanticError error = new SemanticError("Expected Parameter Type: " + forwardType + 
 															", Given Parameter Type: " + currType + ".", getLineNumber());
 					semantics.errorList.add(error);
 				}	
 			}
-			if (this.getType() != ((RoutineDecl) prevDecl.getNode()).getType()) {
+			Type prevDeclType = prevDecl.getType();
+			if (this.getType() != null && !this.getType().toString().equals(prevDeclType)) {
 				SemanticError error = new SemanticError("Forward Declaration specifies return type of function " + this.getName() 
 														+ " to be " + ((RoutineDecl) prevDecl.getNode()).getType() + 
 														" (Given: " + this.getType() + ").", getLineNumber());
@@ -172,13 +170,13 @@ public class RoutineDecl extends Declaration {
 			}
 			semantics.remove(name); //remove forward decl
 			semantics.addToCurrScope(this.name, entry, getLineNumber());  //add new declaration
-		}else {
-			SemanticError error = new SemanticError("Cannot declare function " + this.getName() + 
-													". Variable name already used.", getLineNumber());
-			semantics.errorList.add(error);
+			semantics.getCurrMajorScopeObj().forwardDeclarations.remove(this.name);
 		}
-		
+		if (!this.isForward()) {
+			this.getRoutineBody().getBody().semanticCheck(semantics);
+		}
 	}
+	
 	
 	
 }

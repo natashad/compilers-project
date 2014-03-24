@@ -1,11 +1,13 @@
 package compiler488.ast.stmt;
 
 import java.io.PrintStream;
+import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
 import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -79,16 +81,28 @@ public class IfStmt extends Stmt {
 	}
 	
 	public void semanticCheck(Semantics semantics)  {
-		if (!(condition.getType() instanceof BooleanType)) {
-			SemanticError error = new SemanticError("If condition must evaluate to a boolean.", getLineNumber());
-			semantics.errorList.add(error);
+		semantics.scopeStack.push(Semantics.ScopeType.If);
+		this.condition.semanticCheck(semantics);
+		
+		ListIterator<Stmt> trueStatements = this.whenTrue.listIterator();
+		ListIterator<Stmt> falseStatements = this.whenFalse.listIterator();
+
+		while (trueStatements.hasNext()) {
+			Stmt statement = trueStatements.next();
+			statement.semanticCheck(semantics);
 		}
-		condition.semanticCheck(semantics);
-		whenTrue.semanticCheck(semantics);
-		if (whenFalse != null) {
-			whenFalse.semanticCheck(semantics);
+
+		while (falseStatements.hasNext()) {
+			Stmt statement = falseStatements.next();
+			statement.semanticCheck(semantics);
 		}
 		
+		Type type = new BooleanType(this.getLineNumber());
+		if (this.condition.getType() == null || !this.condition.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("If condition is not of type Boolean", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		semantics.scopeStack.pop();
 	}
 	
 }

@@ -10,9 +10,11 @@ import compiler488.symbol.Entry.Kind;
  * 
  */
 public class ScalarDeclPart extends DeclarationPart {
-
+    private int lineNum;
 	public ScalarDeclPart(String name, int lineNum) {
 		super(name, lineNum);
+		this.lineNum = lineNum;
+
 	}
 	
 	/**
@@ -29,9 +31,7 @@ public class ScalarDeclPart extends DeclarationPart {
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics) {
-		
-		//S10
-		Entry entry = new Entry(Kind.Variable, this.name, this);
-		semantics.addToCurrScope(this.name, entry, getLineNumber());
+		Entry entry = new Entry(Entry.Kind.Scalar, this.getName(), this);
+		semantics.addToCurrScope(this.getName(), entry, this.lineNum);
 	}
 }

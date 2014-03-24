@@ -50,33 +50,38 @@ public class FunctionCallExpn extends Expn {
 	}
 	
 	public void semanticCheck(Semantics semantic) {
-		
-		Entry entry = semantic.curScopeLookup(this.ident);
-		if (entry != null &&  entry.getKind() == Entry.Kind.Function) {
-			RoutineDecl routine = (RoutineDecl)entry.getNode();
-			if (this.getArguments().size() != routine.getRoutineBody().getParameters().size()) {
-				SemanticError error = new SemanticError("Invalid number of arguments to Function " + this.ident, getLineNumber());
+		Entry entry = semantic.allScopeLookup(ident);
+		if (entry == null) {
+			SemanticError error = new SemanticError("Function called but not previously declared.", this.getLineNumber());
+			semantic.errorList.add(error);
+		}else {
+			RoutineDecl function = (RoutineDecl) entry.getNode();
+			if (function.getType() == null) {
+				SemanticError error = new SemanticError("Function call expression made with procedure.", this.getLineNumber());
 				semantic.errorList.add(error);
+			
 			}else {
-					ListIterator<ScalarDecl> params = routine.getRoutineBody().getParameters().listIterator();
-					ListIterator<Expn> args = this.arguments.listIterator();
-					while (params.hasNext()) {
-						Expn arg = args.next();
-						ScalarDecl param = params.next();
+				this.setType(function.getType());
+				ListIterator<ScalarDecl> params = function.getRoutineBody().getParameters().listIterator();
+				ListIterator<Expn> args = this.arguments.listIterator();
+				if (function.getRoutineBody().getParameters().size() != this.arguments.size()) {
+					SemanticError error = new SemanticError("Different number of parameters and arguments.", this.getLineNumber());
+					semantic.errorList.add(error);
+				}else {
+					while (args.hasNext()) {
+						Expn arg = args.next();	
 						arg.semanticCheck(semantic);
-						if (!arg.getType().toString().equals(param.getType().toString())) {
-							SemanticError error = new SemanticError("Invalid argument type ", getLineNumber());
+						ScalarDecl param = params.next();
+						if (!arg.getType().getClass().equals(param.getType().getClass())) {
+							SemanticError error = new SemanticError("Argument does not match parameter type.", this.getLineNumber());
 							semantic.errorList.add(error);
 						}
 					}
+					
+				}	
 			}
-			
-	
-			this.setType(entry.getType());
-		}else {
-			SemanticError error = new SemanticError("Function does not exist", getLineNumber());
-			semantic.errorList.add(error);
 		}
+		
 	}
 
 }

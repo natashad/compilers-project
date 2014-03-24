@@ -14,6 +14,7 @@ public class Program extends Scope {
 		super(scope.getDeclarations(), scope.getStatements(), lineNum);
 		this.setSymtable(new SymbolTable());
 		this.setScopeType(ScopeType.Program);
+		this.setIsMajor(true);
 	}
 	
 	@Override

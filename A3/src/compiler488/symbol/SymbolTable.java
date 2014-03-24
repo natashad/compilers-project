@@ -16,18 +16,28 @@ public class SymbolTable extends HashMap<String, Entry> {
 	/** Symbol Table  constructor
          *  Create and initialize a symbol table 
 	 */
-	public Integer orderNumber;
-	public SymbolTable  (){
+	private Integer orderNumber;
+	private Integer lexicLevel;
+	public SymbolTable (){
 		super();
 		this.orderNumber = 0;
-		
 	}
 
 	@Override
 	public Entry put(String key, Entry value) {
 		value.setOrderNumber(this.orderNumber);
+		value.setLexicLevel(this.lexicLevel);
 		this.orderNumber += 1;
 		return super.put(key, value);
+	}
+
+	
+	public Integer getLexicLevel() {
+		return lexicLevel;
+	}
+
+	public void setLexicLevel(Integer lexicLevel) {
+		this.lexicLevel = lexicLevel;
 	}
 
 	/**  Initialize - called once by semantic analysis  

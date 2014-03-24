@@ -18,33 +18,7 @@ public class ArithExpn extends BinaryExpn {
 		this.setType(new IntegerType());
 	}
 	
-	/** 
-	 * Do semantic analysis
-	 * */
-	@Override
-	public void semanticCheck(Semantics semantics){
-		
-		
-		left.semanticCheck(semantics);
-		right.semanticCheck(semantics);
-		
-		//Set type to Integer.
-		//S21
-		this.type = new IntegerType();
-		
-		//S31
-		//Check that type of expression or variable is integar.
-		if (left.getType() == null || left.getType().toString() != "integer") {
-			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " is not Integer", getLineNumber());
-			semantics.errorList.add(error);
-		}
-		
-		if (right.getType() == null || right.getType().toString() != "integer") {
-			SemanticError error = new SemanticError("Type of expression " + this.right.toString() + " is not Integer", getLineNumber());
-			semantics.errorList.add(error);
-		}
-	}
-	
+
 	/** 
 	 * Set the type to the variable in the symbol table.
 	 * */
@@ -52,4 +26,28 @@ public class ArithExpn extends BinaryExpn {
 	public Type getType() {
 		return this.type;
 	}
+	
+	@Override
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
+	@Override
+	public void semanticCheck(Semantics semantics){
+		IntegerType type = new IntegerType();
+		this.left.semanticCheck(semantics);
+		this.right.semanticCheck(semantics);
+
+
+		if (this.left.getType() == null || !this.left.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Left side of arithmetic expression not of type integer.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		if (this.right.getType() == null || !this.right.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Right side of arithmetic expression not of type integer.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		this.setType(type);
+		
+	} 
 }

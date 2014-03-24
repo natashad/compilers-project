@@ -19,14 +19,14 @@ do
 done
 
 # Executing invalid test cases
-# echo "-------------------------------------"
-# echo "    Executing invalid test cases       "
-# echo "-------------------------------------"
-# for i in `ls $FAIL`
-# do
-#   echo "Running $i"
-#   java -jar $WHERE/dist/compiler488.jar  $FAIL'/'$i
-#   echo
-# done
+echo "-------------------------------------"
+ echo "    Executing invalid test cases       "
+ echo "-------------------------------------"
+for i in `ls $FAIL`
+ do
+   echo "Running $i"
+   java -jar $WHERE/dist/compiler488.jar  $FAIL'/'$i
+   echo
+ done
 
 exit 0

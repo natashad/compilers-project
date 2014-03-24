@@ -26,6 +26,6 @@ public class AST {
 	//TODO: THIS SHOULD BE AN ABSTRACT METHOD IN AN ABSTRACT CLASS.
 	// override this for child classes 
 	public void semanticCheck(Semantics semantics) {
-		
+		; // Do nothing
 	}
  }

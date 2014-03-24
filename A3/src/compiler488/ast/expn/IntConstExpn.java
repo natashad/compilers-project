@@ -1,5 +1,6 @@
 package compiler488.ast.expn;
 
+import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
 import compiler488.semantics.Semantics;
@@ -35,10 +36,8 @@ public class IntConstExpn extends ConstExpn
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics){
+		this.setType((new IntegerType()));
 		
-		//S21
-		//Set type to Integer.
-		this.setType(new IntegerType());
 	}
 	
 }

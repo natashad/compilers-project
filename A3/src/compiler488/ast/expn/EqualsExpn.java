@@ -2,6 +2,7 @@ package compiler488.ast.expn;
 
 
 import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
@@ -17,27 +18,31 @@ public class EqualsExpn extends BinaryExpn {
 		super(opSymbols, left, right, lineNum);
 		this.setType(new BooleanType());
 	}
+	
+	
 	/**
 	 * Do semantic analysis
 	 */
-	public void semanticCheck(Semantics semantic) {
+	public void semanticCheck(Semantics semantics) {
+		this.left.semanticCheck(semantics);
+		this.right.semanticCheck(semantics);
 		
-		left.semanticCheck(semantic);
-		right.semanticCheck(semantic);
-		
-		//S32
-		//Check that left and right expressions are the same type.
-		if (left.getType() == null ||
-				right.getType() == null ||
-				left.getType().toString() != right.getType().toString()) {
-			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " does not match"
-					+ " the type of expression " + this.right.toString(), getLineNumber());
-			semantic.errorList.add(error);
+		if (this.left.getType() == null) {
+			SemanticError error = new SemanticError("Left side of equals expression of invalid type.", this.getLineNumber());
+			semantics.errorList.add(error);
 		}
-		
-		//S20
-		//Setting the result type to boolean
-		this.setType( new BooleanType() );
+		if (this.right.getType() == null) {
+			SemanticError error = new SemanticError("Right side of equals expression of invalid type.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		if (!this.left.getType().getClass().equals(this.right.getType().getClass())) {
+			SemanticError error = new SemanticError("Left side expression not of same type as right side expression.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		this.setType((new BooleanType()));
+	
 		
 	}
+	
+	
 }

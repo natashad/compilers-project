@@ -21,17 +21,14 @@ public class NotExpn extends UnaryExpn {
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics){
-		
-		//Set type to Boolean.
-		//S20
-		this.setType(new BooleanType());
-		
-		//S30
-		//Check type of expression is boolean
-		if (!(operand.getType() instanceof BooleanType)) {
-			SemanticError error = new SemanticError("Expression " + this.getOperand() + " must be boolean type", getLineNumber());
+		BooleanType type = new BooleanType();
+		this.operand.semanticCheck(semantics);
+		if (this.operand.getType() == null || !this.operand.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Not expression type not boolean.", this.getLineNumber());
 			semantics.errorList.add(error);
 		}
+		this.setType(type);
+		
 	}
 
 }

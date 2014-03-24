@@ -1,11 +1,15 @@
 package compiler488.ast.decl;
 
 import java.io.PrintStream;
+import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.stmt.Scope;
 import compiler488.semantics.Semantics;
+import compiler488.symbol.Entry;
+import compiler488.symbol.Entry.Kind;
+import compiler488.symbol.SymbolTable;
 
 /**
  * Represents the parameters and instructions associated with a
@@ -20,6 +24,16 @@ public class RoutineBody extends Indentable {
 		super(lineNum);
 		this.parameters = parameters;
 		this.body = body;
+		SymbolTable symTable = new SymbolTable();
+		ListIterator<ScalarDecl> declarations = this.parameters.listIterator();
+		Entry entry;
+		while (declarations.hasNext()) {
+			ScalarDecl decl = declarations.next();
+			entry = new Entry(Kind.Parameter, decl.name, decl);
+			entry.setType(decl.getType());
+			symTable.put(decl.name, entry);
+		}
+		this.body.setSymtable(symTable);
 		
 	}
 	
@@ -56,7 +70,5 @@ public class RoutineBody extends Indentable {
 	public void setParameters(ASTList<ScalarDecl> parameters) {
 		this.parameters = parameters;
 	}
-	public void semanticCheck(Semantics semantics) {
-		this.getBody().semanticCheck(semantics);
-	}
+	
 }

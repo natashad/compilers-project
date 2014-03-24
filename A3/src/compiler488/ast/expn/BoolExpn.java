@@ -1,6 +1,7 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.IntegerType;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -15,16 +16,21 @@ public class BoolExpn extends BinaryExpn {
 		this.setType(new BooleanType());
 	}
 	
-	public void semanticCheck(Semantics semantic) {
+	public void semanticCheck(Semantics semantics) {
+		this.left.semanticCheck(semantics);
+		this.right.semanticCheck(semantics);
 		
-		left.semanticCheck(semantic);
-		right.semanticCheck(semantic);
-		if (	!(left.getType() instanceof BooleanType) 
-			||  !(right.getType() instanceof BooleanType)) {
-			SemanticError error = new SemanticError("Comparison must be between boolean types", getLineNumber());
-			semantic.errorList.add(error);
+		BooleanType type = new BooleanType();
+		if (this.left.getType() == null || !this.left.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Left side of boolean expression not of type boolean.", this.getLineNumber());
+			semantics.errorList.add(error);
 		}
-		this.setType(new BooleanType());
+
+		if (this.right.getType() == null || !this.right.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Right side of boolean expression not of type boolean.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
+		this.setType((new BooleanType()));
 	}
 
 }

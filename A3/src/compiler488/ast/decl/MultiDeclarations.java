@@ -1,6 +1,7 @@
 package compiler488.ast.decl;
 
 import java.io.PrintStream;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
@@ -61,20 +62,14 @@ public class MultiDeclarations extends Declaration {
 	 * Do semantic analysis
 	 * */
 	@Override
-	public void semanticCheck(Semantics semantics){
-		
-		//S47 - Associating type with variables.
-		ListIterator<DeclarationPart> declarations = elements.listIterator();
-		while (declarations.hasNext()) {
-			DeclarationPart decl = declarations.next();
-			decl.semanticCheck(semantics);
-			Entry entry = semantics.allScopeLookup(decl.getName());
-			if (entry != null) {
-				entry.setType(this.type);
-			} else {
-				SemanticError error = new SemanticError(decl.getName() + " has not been declared.", getLineNumber());
-				semantics.errorList.add(error);
-			}
+	public void semanticCheck(Semantics semantic){
+		DeclarationPart declPart;
+		Iterator<DeclarationPart> iter = elements.iterator();
+		while (iter.hasNext()) {
+			declPart = iter.next();
+			declPart.semanticCheck(semantic);
+			semantic.symbolTableList.getLast().get(declPart.name).setType(this.type);
 		}
+		
 	}
 }

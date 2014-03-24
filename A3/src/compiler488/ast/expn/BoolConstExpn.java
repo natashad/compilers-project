@@ -37,9 +37,6 @@ public class BoolConstExpn extends ConstExpn
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics){
-		
-		//S20
-		//Set type to Integer.
-		this.setType(new BooleanType());
+		this.setType((new BooleanType()));
 	}
 }

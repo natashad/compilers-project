@@ -14,9 +14,7 @@ public class ConditionalExpn extends Expn {
 	private Expn trueValue; // The value is this when the condition is true.
 
 	private Expn falseValue; // Otherwise, the value is this.
-	
-	private Type type;
-	
+		
 	public ConditionalExpn(Expn cond, Expn trueVal, Expn falseVal, int lineNum) {
 		super(lineNum);
 		this.condition = cond;
@@ -53,44 +51,27 @@ public class ConditionalExpn extends Expn {
 	public void setTrueValue(Expn trueValue) {
 		this.trueValue = trueValue;
 	}
-	public void semanticCheck(Semantics semantic) {
-		
-		condition.semanticCheck(semantic);
-		trueValue.semanticCheck(semantic);
-		falseValue.semanticCheck(semantic);
-		
-		//S24
-		//Setting result type to type of conditional expression.
-		this.type = trueValue.getType();
-		
-		//S30
-		//Checking the type of condition expression is boolean
-		if (!(condition.getType() instanceof BooleanType)) {
-			SemanticError error = new SemanticError("Type of expression " + this.condition.toString() + " is not Boolean", getLineNumber());
-			semantic.errorList.add(error);
-		}
-		
-		//S33
-		//Check both expression in condition are same type.
-		if (trueValue.getType() == null || 
-				falseValue.getType() == null || 
-				trueValue.getType().toString() != falseValue.getType().toString()) {
-			SemanticError error = new SemanticError("Type of expression " + this.trueValue.toString() + " does not match"
-					+ " the type of expression " + this.falseValue.toString(), getLineNumber());
-			semantic.errorList.add(error);
-			
-			//Setting it to type of Integer even if the type doesn't match because it can be null too
-			this.type = new IntegerType();
-		}
-		
-	}
 	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
+	
+	
+	public void semanticCheck(Semantics semantic) {
+		this.condition.semanticCheck(semantic);
+		BooleanType type = new BooleanType();
+		if (this.condition.getType() == null || !this.condition.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Conditional expression condition not of type Boolean", this.getLineNumber());
+			semantic.errorList.add(error);
+		}
+		this.trueValue.semanticCheck(semantic);
+		this.falseValue.semanticCheck(semantic);
+		if (this.trueValue.getType() == null || this.falseValue.getType() == null) {
+			return;
+		}
+		if (!this.trueValue.getType().getClass().equals(this.falseValue.getType().getClass())) {
+			SemanticError error = new SemanticError("Expressions in conditional expression not of the same type", this.getLineNumber());
+			semantic.errorList.add(error);
+		}else {
+			this.setType(this.trueValue.getType());
+		}
 	}
 	
 }

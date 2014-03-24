@@ -22,6 +22,7 @@ public class ASTList<E> extends AST implements Iterable<E> {
 		//Line numbers *shouldn't* matter here.
 		super(-1);
 		ll = new LinkedList<E>();
+	
 	}
 	 
 	/**

@@ -38,16 +38,14 @@ public class IdentExpn extends Expn implements Readable
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics){
-		
-		//S26
-		//Set type to the the type of variable in the entry table.
 		Entry entry = semantics.allScopeLookup(this.ident);
 		if (entry != null ) {
 			this.setType(entry.getType());
 		} else {
-			SemanticError error = new SemanticError(this.ident + " has not been declared.", getLineNumber());
+			SemanticError error = new SemanticError("Variable not previously declared", this.getLineNumber());
 			semantics.errorList.add(error);
 		}
+		
 	}
 
 }

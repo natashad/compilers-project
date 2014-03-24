@@ -8,11 +8,11 @@ public class Entry {
 //	String kind {};
 	public enum Kind {
 		Scalar, 
-		Variable,
 		Array,
 		Function,
 		Procedure,
-		ForwardFunction, 
+		ForwardFunction,
+		Parameter,
 		ForwardProcedure
 	}
 	
@@ -20,8 +20,9 @@ public class Entry {
 	private String name;
 	private AST node;
 	private Integer orderNumber;
+	private Integer lexicLevel;
 	//Associate type with entry if possible.
-	private Type type;
+	private Type type; //Integer Boolean 
 	
 	
 	public void setType(Type type) {
@@ -68,5 +69,13 @@ public class Entry {
 	
 	public void setOrderNumber(Integer orderNumber) {
 		this.orderNumber = orderNumber;
+	}
+
+	public Integer getLexicLevel() {
+		return lexicLevel;
+	}
+
+	public void setLexicLevel(Integer lexicLevel) {
+		this.lexicLevel = lexicLevel;
 	}
 }

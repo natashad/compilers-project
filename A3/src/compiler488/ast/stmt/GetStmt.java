@@ -1,10 +1,15 @@
 package compiler488.ast.stmt;
 
+import java.util.ListIterator;
+
 import compiler488.ast.ASTList;
 import compiler488.ast.Readable;
+import compiler488.ast.expn.Expn;
 import compiler488.ast.expn.IdentExpn;
 import compiler488.ast.expn.SubsExpn;
+import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
+import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -13,9 +18,9 @@ import compiler488.semantics.Semantics;
  */
 public class GetStmt extends Stmt {
 	
-	private ASTList<Readable> inputs; // A list of locations to put the values read.
+	private ASTList<IdentExpn> inputs; // A list of locations to put the values read.
 
-	public GetStmt (ASTList<Readable> inputs, int lineNum) {
+	public GetStmt (ASTList<IdentExpn> inputs, int lineNum) {
 		super(lineNum);
 		this.inputs = inputs;
 	}
@@ -26,28 +31,24 @@ public class GetStmt extends Stmt {
 		return "get " + inputs;
 	}
 
-	public ASTList<Readable> getInputs() {
+	public ASTList<IdentExpn> getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(ASTList<Readable> inputs) {
+	public void setInputs(ASTList<IdentExpn> inputs) {
 		this.inputs = inputs;
 	}
 	
 	@Override
 	public void semanticCheck(Semantics semantics) {
-		SemanticError error = new SemanticError("Input to Get must evaluate to integer", getLineNumber());
-		for (Readable r: inputs) {
-			if (r instanceof IdentExpn) {
-				((IdentExpn)r).semanticCheck(semantics);
-				if ( ! (((IdentExpn)r).getType() instanceof IntegerType) ) {
-					semantics.errorList.add(error);
-				}
-			} else if (r instanceof SubsExpn) {
-				((SubsExpn)r).semanticCheck(semantics);
-				if ( ! (((SubsExpn)r).getType() instanceof IntegerType) ) {
-					semantics.errorList.add(error);
-				}
+		ListIterator<IdentExpn> inputs = this.inputs.listIterator();
+		while (inputs.hasNext()) {
+			IdentExpn input = inputs.next();
+			input.semanticCheck(semantics);
+			Type type = new IntegerType(this.getLineNumber());
+			if (!input.getType().getClass().equals(type.getClass())) {
+				SemanticError error = new SemanticError("Get Statement variable not of type Integer.", this.getLineNumber());
+				semantics.errorList.add(error);
 			}
 		}
 	}

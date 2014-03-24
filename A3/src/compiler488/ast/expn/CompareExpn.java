@@ -19,39 +19,40 @@ public class CompareExpn extends BinaryExpn {
 		super(opSymbol, left, right, lineNum);
 		this.setType(new BooleanType());
 	}
+
+	
+	
+	@Override
+	public Type getType() {
+		return this.type;
+	}
+	/** 
+	 * Set the type 
+	 * */
+	@Override
+	public void setType(Type type) {
+		this.type = type;
+	}
 	
 	/** 
 	 * Do semantic analysis
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics){
+		this.left.semanticCheck(semantics);
+		this.right.semanticCheck(semantics);
 		
+		IntegerType type = new IntegerType();
+		if (this.left.getType() == null || !this.left.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Left side of compare expression not of type integer.", this.getLineNumber());
+			semantics.errorList.add(error);
+		}
 
-		right.semanticCheck(semantics);
-		left.semanticCheck(semantics);
-		//Set type to Boolean.
-		//S20
-		this.type = new BooleanType();
-	
-		//S31
-		//Check that type of expression or variable is integar.
-		if (left.getType() == null || left.getType() instanceof IntegerType) {
-			SemanticError error = new SemanticError("Type of expression " + this.left.toString() + " is not Integer", getLineNumber());
+		if (this.right.getType() == null || !this.right.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Right side of compare expression not of type integer.", this.getLineNumber());
 			semantics.errorList.add(error);
 		}
-		
-		if (right.getType() == null || right.getType() instanceof IntegerType) {
-			SemanticError error = new SemanticError("Type of expression " + this.right.toString() + " is not Integer", getLineNumber());
-			semantics.errorList.add(error);
-		}
-	}
-	
-	/** 
-	 * Set the type to the variable in the symbol table.
-	 * */
-	@Override
-	public Type getType() {
-		return this.type;
+		this.setType((new BooleanType()));
 	}
 
 }

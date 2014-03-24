@@ -22,18 +22,14 @@ public class UnaryMinusExpn extends UnaryExpn {
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics){
-		
-		this.factor.semanticCheck(semantics);
-		
-		//S31
-		//Check the type of expression is Integer
-		if (this.getOperand().getType() == null || !(this.getOperand().getType() instanceof IntegerType)) {
-			SemanticError error = new SemanticError("Expression " + this.getOperand() + " is not Integer type", getLineNumber());
+		IntegerType type = new IntegerType();
+		factor.semanticCheck(semantics);
+		if (this.factor.getType() == null || !this.factor.getType().getClass().equals(type.getClass())) {
+			SemanticError error = new SemanticError("Unary minus expression type not integer.", this.getLineNumber());
 			semantics.errorList.add(error);
 		}
-		//S21
-		//Set type to Integer.
-		this.setType(new IntegerType());
+		this.setType(type);
+		
 	}
 
 }

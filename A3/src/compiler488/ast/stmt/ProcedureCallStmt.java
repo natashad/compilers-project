@@ -51,31 +51,37 @@ public class ProcedureCallStmt extends Stmt {
 	}
 	
 	public void semanticCheck(Semantics semantic) {
-		
-		Entry entry = semantic.curScopeLookup(this.name);
-		if (entry != null &&  entry.getKind() == Entry.Kind.Procedure) {
-			RoutineDecl routine = (RoutineDecl)entry.getNode();
-			if (this.getArguments().size() != routine.getRoutineBody().getParameters().size()) {
-				SemanticError error = new SemanticError("Invalid number of arguments to Procedure " + this.name, getLineNumber());
-				semantic.errorList.add(error);
-			}else {
-				ListIterator<ScalarDecl> params = routine.getRoutineBody().getParameters().listIterator();
-				ListIterator<Expn> args = this.arguments.listIterator();
-				Entry argEntry;
-				while (params.hasNext()) {
-					Expn arg = args.next();
-					ScalarDecl param = params.next();
-					arg.semanticCheck(semantic);
-					if (!arg.getType().toString().equals(param.getType().toString())) {
-						SemanticError error = new SemanticError("Invalid argument type ", getLineNumber());
-						semantic.errorList.add(error);
-					}
-				}
-			}
-		}else {
-			SemanticError error = new SemanticError("Procedure does not exist", getLineNumber());
+		Entry entry = semantic.allScopeLookup(this.getName());
+		if (entry == null) {
+			SemanticError error = new SemanticError("Procedure called but not previously declared.", this.getLineNumber());
 			semantic.errorList.add(error);
+		}else {
+			RoutineDecl proc = (RoutineDecl) entry.getNode();
+			if (proc.getType() != null) {
+				SemanticError error = new SemanticError("Procedure call statement made with function name.", this.getLineNumber());
+				semantic.errorList.add(error);
+			
+			}else {
+				ListIterator<ScalarDecl> params = proc.getRoutineBody().getParameters().listIterator();
+				ListIterator<Expn> args = this.arguments.listIterator();
+				if (proc.getRoutineBody().getParameters().size() != this.arguments.size()) {
+					SemanticError error = new SemanticError("Different number of parameters and arguments.", this.getLineNumber());
+					semantic.errorList.add(error);
+				}else {
+					while (args.hasNext()) {
+						Expn arg = args.next();	
+						arg.semanticCheck(semantic);
+						ScalarDecl param = params.next();
+						if (arg.getType()==null || !arg.getType().getClass().equals(param.getType().getClass())) {
+							SemanticError error = new SemanticError("Argument does not match parameter type.", this.getLineNumber());
+							semantic.errorList.add(error);
+						}
+						
+					}
+				}	
+			}
 		}
+		
 	}
 
 }

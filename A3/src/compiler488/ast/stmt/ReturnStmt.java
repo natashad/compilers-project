@@ -31,7 +31,7 @@ public class ReturnStmt extends Stmt {
 
 	public void semanticCheck(Semantics semantic) {
 		if (semantic.getCurrMajorScope() != Semantics.ScopeType.Procedure) {
-			SemanticError error = new SemanticError("Cannot return from outside a procedure.", getLineNumber());
+			SemanticError error = new SemanticError("Return statement not in Procedure", this.getLineNumber());
 			semantic.errorList.add(error);
 		}
 	}

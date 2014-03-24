@@ -2,6 +2,7 @@ package compiler488.ast.stmt;
 
 import compiler488.ast.expn.*;
 import compiler488.ast.type.BooleanType;
+import compiler488.ast.type.Type;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
@@ -40,28 +41,17 @@ public class ExitStmt extends Stmt {
 		this.expn = expn;
 	}
 	public void semanticCheck(Semantics semantic) {
-
-		if (expn != null) {
-			expn.semanticCheck(semantic);
-			if (!(expn.getType() instanceof BooleanType)) {
-				SemanticError error = new SemanticError("When condition must evaluate to a boolean.", getLineNumber());
-				semantic.errorList.add(error);
-				return;
-			}
+		if (!semantic.inLoop()) {
+			SemanticError error = new SemanticError("Exit statement outside of loop", this.getLineNumber());
+			semantic.errorList.add(error);
 		}
-
-		Integer count = semantic.scopeStack.size() - 1;
-		while (count >= 0) {
-			ScopeType scope = semantic.scopeStack.get(count);
-			if (scope == Semantics.ScopeType.Function || scope == Semantics.ScopeType.Procedure ||
-																	scope == Semantics.ScopeType.Program) {
-				SemanticError error = new SemanticError("Exit statement is being used outside of a loop.", getLineNumber());
+		if (this.expn != null) {
+			Type type = new BooleanType(this.getLineNumber());
+			expn.semanticCheck(semantic);
+			if (!this.expn.getType().getClass().equals(type.getClass())) {
+				SemanticError error = new SemanticError("Exit condition is not of type Boolean", this.getLineNumber());
 				semantic.errorList.add(error);
-				break;
-			}else if (scope == Semantics.ScopeType.Loop) {
-				break;
 			}
-			count -= 1;
 		}
 		
 	}

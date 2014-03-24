@@ -215,10 +215,10 @@ statement	::=
 			{: RESULT = new ReturnStmt(rleft); :}
 		 	
 		|	PUT outputs:oList				// output statment
-			{: RESULT = new PutStmt((ASTList<Printable>)oList, oListleft); :}
+			{: RESULT = new PutStmt((ASTList<Expn>)oList, oListleft); :}
 		 	
 		|	GET  inputs:iList				// input statement
-			{: RESULT = new GetStmt((ASTList<compiler488.ast.Readable>)iList, iListleft); :}
+			{: RESULT = new GetStmt((ASTList<IdentExpn>)iList, iListleft); :}
 		 	
 		|	IDENT:i L_PAREN  argumentList:args  R_PAREN 	// call procedure
 		 	{: RESULT = new ProcedureCallStmt(i.toString(), (ASTList<Expn>)args, ileft); :}
@@ -316,15 +316,15 @@ procedureHead	::=	PROCEDURE  IDENT:name L_PAREN parameterList:pList  R_PAREN		//
 
 outputs		::=	
 			output:o			// list of output expressions
-			{: RESULT = new ASTList<Printable>((Printable)o); :}
+			{: RESULT = new ASTList<Expn>((Expn)o); :}
 			
 		|	outputs:oList COMMA output:o
-			{: RESULT = ((ASTList<Printable>)oList).addLast((Printable)o); :}
+			{: RESULT = ((ASTList<Expn>)oList).addLast((Expn)o); :}
 		;
 
 output		::=	
 			expression:e		// integer expression
-			{: RESULT = (Expn)e; :}
+			{: RESULT = new OutputExpn((Expn)e, eleft); :}
 			
 		|	TEXTCONST:t		// text constant
 			{: RESULT = new TextConstExpn(t.toString(), tleft); :}
@@ -335,10 +335,10 @@ output		::=
 
 inputs		::=	
 			variable:v		// list of variables being read into
-			{: RESULT = new ASTList<compiler488.ast.Readable>((compiler488.ast.Readable)v); :}
+			{: RESULT = new ASTList<IdentExpn>((IdentExpn)v); :}
 				
 		|	inputs:iList COMMA variable:v
-			{: RESULT = ((ASTList<compiler488.ast.Readable>)iList).addLast((compiler488.ast.Readable)v); :}
+			{: RESULT = ((ASTList<IdentExpn>)iList).addLast((IdentExpn)v); :}
 		;
 
 argumentList	::=	
