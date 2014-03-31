@@ -1,9 +1,8 @@
 package compiler488.ast.decl;
 
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
 import compiler488.semantics.Semantics;
-import compiler488.symbol.Entry;
-import compiler488.symbol.Entry.Kind;
 
 /**
  * Represents the declaration of a variable when passed as parameter to function or procedure
@@ -29,6 +28,10 @@ public class ScalarDecl extends Declaration {
 	 * */
 	@Override
 	public void semanticCheck(Semantics semantics) {
+	
+	}
+	
+	public void codeGen(CodeGen codeGen) {
 	
 	}
 }

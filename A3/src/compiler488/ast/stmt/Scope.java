@@ -7,7 +7,9 @@ import java.util.ListIterator;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.decl.Declaration;
+import compiler488.ast.decl.RoutineDecl;
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
@@ -23,9 +25,7 @@ public class Scope extends Stmt {
 	private SymbolTable symtable = new SymbolTable();
 	private boolean isMajor = false;
 	private ScopeType scopeType = ScopeType.Stmt;
-	private Type functionScopeType = null;
-	
-	
+	private Type functionScopeType = null;	
 	
 
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts, int lineNumber) {
@@ -158,4 +158,33 @@ public class Scope extends Stmt {
 		semantics.closeScope();
 	}
 
+	public void codeGen(CodeGen codeGen) {
+		
+		//TODO: EMIT CODE FOR CREATING ACTIVATION STACK IN CALLEE
+		
+		ListIterator<Declaration> declarations = this.declarations.listIterator();
+		while (declarations.hasNext()) {
+			Declaration decl = declarations.next();
+			if (decl instanceof RoutineDecl) {
+				decl.codeGen(codeGen);
+			}
+		}
+		// Do this to reset the "next" pointer
+		declarations = this.declarations.listIterator();
+		while (declarations.hasNext()) {
+			Declaration decl = declarations.next();
+			if ( !(decl instanceof RoutineDecl) ) {
+				decl.codeGen(codeGen);
+			}
+		}
+		
+		ListIterator<Stmt> statements = this.statements.listIterator();
+		while (statements.hasNext()) {
+			Stmt statement = statements.next();
+			statement.codeGen(codeGen);
+		}
+		
+		// TODO: EMIT CLEAN UP CODE.
+		
+	}
 }

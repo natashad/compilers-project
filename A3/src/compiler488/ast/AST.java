@@ -1,5 +1,6 @@
 package compiler488.ast;
 
+import compiler488.codegen.CodeGen;
 import compiler488.semantics.Semantics;
 
 /**
@@ -28,4 +29,9 @@ public class AST {
 	public void semanticCheck(Semantics semantics) {
 		; // Do nothing
 	}
+	
+	public void codeGen(CodeGen codeGen) {
+		; //Do nothing
+	}
+	
  }

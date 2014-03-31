@@ -1,7 +1,7 @@
 package compiler488.codegen;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+
 import compiler488.compiler.Main;
 import compiler488.runtime.Machine;
 import compiler488.runtime.MemoryAddressException;
@@ -40,6 +40,7 @@ import compiler488.runtime.MemoryAddressException;
  * @author  <B> PUT YOUR NAMES HERE </B>
  */
 
+
 public class CodeGen
     {
 
@@ -52,7 +53,9 @@ public class CodeGen
 
     /** flag for tracing code generation */
     private boolean traceCodeGen = Main.traceCodeGen ;
-
+    
+    private ArrayList<Short> codeArray;
+    
     /**  
      *  Constructor to initialize code generation
      */
@@ -111,25 +114,24 @@ public class CodeGen
 
     /** Procedure to implement code generation based on code generation
      *  action number
-     * @param actionNumber  code generation action to perform
+     * @param opCode  code generation action to perform
      */
-    void generateCode( int actionNumber )
+    void generateCode( Instruction instruction )
 	{
-	if( traceCodeGen )
+    	short opCode = instruction.getOpCode();
+    	
+    	if( traceCodeGen )
 	    {
-		//output the standard trace stream
-		Main.traceStream.println("CodeGen: C" +  actionNumber );
+			//output the standard trace stream
+			Main.traceStream.println("CodeGen: C " +  instruction );
 	    }
 
-	/****************************************************************/
-	/*  Code to implement the code generation actions GOES HERE     */
-	/*  This dummy code generator just prints the actionNumber      */
-	/*  In Assignment 5, you'll implement something more interesting */
-        /*                                                               */
-        /*  FEEL FREE TO ignore or replace this procedure                */
-	/****************************************************************/
+    	codeArray.add(opCode);
+    	for (int i = 0; i < instruction.getArgs().size(); i++) {
+    		codeArray.add(instruction.getArgs().get(i));
+    	}
 
-        System.out.println("Codegen: C" + actionNumber ); 
+//        System.out.println("Codegen: C" + opCode ); 
 	return;
 	}
 

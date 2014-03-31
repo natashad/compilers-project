@@ -459,6 +459,11 @@ public class Main {
 
 		}
 		
+		CodeGen codegen = new CodeGen();
+		if (semantic.errorList.isEmpty()) {
+//			programAST.codeGen(codegen);
+		}
+		
 	}
         catch( Exception e) 
 	    {
