@@ -1,8 +1,11 @@
 package compiler488.ast.stmt;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Set;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
@@ -10,10 +13,13 @@ import compiler488.ast.decl.Declaration;
 import compiler488.ast.decl.RoutineDecl;
 import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
+import compiler488.symbol.Entry;
+import compiler488.symbol.Entry.Kind;
 import compiler488.symbol.SymbolTable;
 
 /**
@@ -27,7 +33,7 @@ public class Scope extends Stmt {
 	private boolean isMajor = false;
 	private ScopeType scopeType = ScopeType.Stmt;
 	private Type functionScopeType = null;	
-	
+	private boolean isProgramScope = false;
 
 	public Scope(ASTList<Declaration> declarations, ASTList<Stmt> stmts, int lineNumber) {
 		super(lineNumber);
@@ -62,6 +68,14 @@ public class Scope extends Stmt {
 	
 	public void setMajor(boolean isMajor) {
 		this.isMajor = isMajor;
+	}
+
+	public boolean isProgramScope() {
+		return isProgramScope;
+	}
+
+	public void setProgramScope(boolean isProgramScope) {
+		this.isProgramScope = isProgramScope;
 	}
 
 	public Scope(int lineNumber) {
@@ -168,12 +182,15 @@ public class Scope extends Stmt {
 		while (declarations.hasNext()) {
 			Declaration decl = declarations.next();
 			if (decl instanceof RoutineDecl) {
-				decl.codeGen(codeGen);
+				((RoutineDecl) decl).getRoutineBody().getBody().codeGen(codeGen);
 			}
 		}
 		
+		if (isProgramScope()) {
+			//Set MSP
+			label.setName("Start");
+		}
 		codeGen.generateCode(label);
-		//TODO: EVALUATE AND ADD ARGUMENTS HERE
 		
 		// Do this to reset the "next" pointer
 		declarations = this.declarations.listIterator();
@@ -190,7 +207,27 @@ public class Scope extends Stmt {
 			statement.codeGen(codeGen);
 		}
 		
-		// TODO: EMIT CLEAN UP CODE.
+		if (!isProgramScope()) {
+			Set<Entry> allEntries = (Set<Entry>) symtable.values();
+			Iterator<Entry> entryIterator = allEntries.iterator();
+			int countOfEntries = 0;
+			while(entryIterator.hasNext()) {
+				Entry e = entryIterator.next();
+				if (e.getKind() == Kind.Scalar ||
+					e.getKind() == Kind.Array) {
+					countOfEntries++;
+				}
+			}
+			ArrayList<Short> args = new ArrayList<Short>();
+			args.add((short)countOfEntries);
+			Instruction pushNInstruction = new Instruction(4, "PUSH", -1, -1);
+			Instruction popNInstruction = new Instruction(8, "POPN", -1, -1);
+			codeGen.generateCode(pushNInstruction);
+			codeGen.generateCode(popNInstruction);
+		}
+		
 		
 	}
+	
+	
 }

@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.stmt.Scope;
+import compiler488.codegen.CodeGen;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
 import compiler488.symbol.Entry.Kind;
@@ -19,7 +20,7 @@ public class RoutineBody extends Indentable {
 	private ASTList<ScalarDecl> parameters; // The formal parameters of the routine.
 
 	private Scope body; // Execute this scope when routine is called.
-
+	
 	public RoutineBody(ASTList<ScalarDecl> parameters, Scope body, int lineNum) {
 		super(lineNum);
 		this.parameters = parameters;
@@ -70,5 +71,6 @@ public class RoutineBody extends Indentable {
 	public void setParameters(ASTList<ScalarDecl> parameters) {
 		this.parameters = parameters;
 	}
+
 	
 }

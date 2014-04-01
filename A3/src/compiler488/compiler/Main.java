@@ -1,16 +1,23 @@
 package compiler488.compiler;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ListIterator;
 
-import compiler488.parser.*;
-import compiler488.ast.AST ;
 import compiler488.ast.stmt.Program;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.parser.Lexer;
+import compiler488.parser.Parser;
+import compiler488.parser.SyntaxErrorException;
+import compiler488.runtime.ExecutionException;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
-import compiler488.symbol.SymbolTable;
-import compiler488.codegen.CodeGen;
-import compiler488.runtime.*;
 
 /** This class serves as the main driver for the CSC488S compiler.<BR>
  *  It accepts user options and coordinates overall control flow.
@@ -456,27 +463,23 @@ public class Main {
 		while (errorList.hasNext()) {
 			SemanticError error = errorList.next();
 			System.err.println("Error at line " + (error.getLineNum()+1) + ": "+ error.getMessage());
+			errorOccurred = true;
+		}
 
-		}
-		
-		CodeGen codegen = new CodeGen();
-		if (semantic.errorList.isEmpty()) {
-//			programAST.codeGen(codegen);
-		}
 		
 	}
-        catch( Exception e) 
-	    {
+    catch( Exception e) 
+    {
 	    System.err.println("Exception during Semantic Analysis");
 	    System.err.println(e.getClass().getName() + ": " + e.getMessage());
 	    e.printStackTrace ();
 	    errorOccurred = true ;
-	    }
-	
-        if( errorOccurred ){
+    }
+
+    if( errorOccurred ){
 	    System.out.println("Processing Termilnated due to errors");
 	    return ;
-        }
+    }
 
 	// Dump AST after semantic analysis  if requested
 	if( dumpAST2 )
@@ -517,6 +520,10 @@ public class Main {
 	   // programAST.doCodeGen() ;
 	   // or
 	   // codeGen.doIt( programAST );
+		CodeGen codegen = new CodeGen();
+		programAST.setProgramScope(true);
+		programAST.codeGen(codegen);
+		codegen.generateCode(new Instruction(0, "HALT", -1, -1)); //C01
 	}
         catch( Exception e) 
 	    {

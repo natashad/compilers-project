@@ -8,7 +8,7 @@ public class LabelInstruction extends Instruction {
 
 	
 	public LabelInstruction(String name) {
-		super((short)-1, name, null);
+		super(-1, name, -1, -1);
 		this.labelName = name;
 		this.labelName += count++;
 	}

@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Instruction {
 
-	private short opCode;
+	private int opCode;
 	private String name;
-	private ArrayList<Short> args = new ArrayList<Short> ();
+	private int arg1 = -1;
+	private int arg2 = -1;
 	
-	public Instruction(short opCode, String name, ArrayList<Short> args) {
+	public Instruction(int opCode, String name, int arg1, int arg2) {
 		this.opCode = opCode;
 		this.name = name;
-		if (args != null) {
-			this.args = args;
-		}
+		this.arg1 = arg1;
+		this.arg2 = arg2;
 	}
 	
-	public short getOpCode() {
+	public int getOpCode() {
 		return opCode;
 	}
 
-	public void setOpCode(short opCode) {
+	public void setOpCode(int opCode) {
 		this.opCode = opCode;
 	}
 
@@ -32,19 +32,32 @@ public class Instruction {
 		this.name = name;
 	}
 
-	public ArrayList<Short> getArgs() {
-		return args;
+	public int getArg1() {
+		return arg1;
+	}
+	
+	public void setArg1(int arg1) {
+		this.arg1 = arg1;
 	}
 
-	public void setArgs(ArrayList<Short> args) {
-		this.args = args;
+	public void setArg2(int arg2) {
+		this.arg2 = arg2;
 	}
+	
+	public int getArg2() {
+		return arg2;
+	}
+	
+	
 	
 	@Override
 	public String toString() {
 		String argStr = "";
-		for (int i = 0; i < args.size(); i++) {
-			argStr += args.get(i);
+		if (arg1 > -1) {
+			argStr += arg1;
+		}
+		if (arg2 > -1) {
+			argStr += arg2;
 		}
 		return name + argStr;
 	}

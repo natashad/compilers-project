@@ -118,7 +118,7 @@ public class CodeGen
      */
     public void generateCode( Instruction instruction )
 	{
-    	short opCode = instruction.getOpCode();
+    	short opCode = (short)instruction.getOpCode();
     	
     	if( traceCodeGen )
 	    {
@@ -127,8 +127,11 @@ public class CodeGen
 	    }
 
     	codeArray.add(opCode);
-    	for (int i = 0; i < instruction.getArgs().size(); i++) {
-    		codeArray.add(instruction.getArgs().get(i));
+    	if (instruction.getArg1() > -1) {
+    		codeArray.add((short)instruction.getArg1());
+    	}
+    	if (instruction.getArg2() > -1) {
+    		codeArray.add((short) instruction.getArg2());
     	}
 
 //        System.out.println("Codegen: C" + opCode ); 
