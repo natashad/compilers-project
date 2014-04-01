@@ -116,7 +116,7 @@ public class CodeGen
      *  action number
      * @param opCode  code generation action to perform
      */
-    void generateCode( Instruction instruction )
+    public void generateCode( Instruction instruction )
 	{
     	short opCode = instruction.getOpCode();
     	

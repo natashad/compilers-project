@@ -10,6 +10,7 @@ import compiler488.ast.decl.Declaration;
 import compiler488.ast.decl.RoutineDecl;
 import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
+import compiler488.codegen.LabelInstruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
@@ -160,7 +161,8 @@ public class Scope extends Stmt {
 
 	public void codeGen(CodeGen codeGen) {
 		
-		//TODO: EMIT CODE FOR CREATING ACTIVATION STACK IN CALLEE
+		
+		LabelInstruction label = new LabelInstruction("Scope");
 		
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
 		while (declarations.hasNext()) {
@@ -169,6 +171,10 @@ public class Scope extends Stmt {
 				decl.codeGen(codeGen);
 			}
 		}
+		
+		codeGen.generateCode(label);
+		//TODO: EVALUATE AND ADD ARGUMENTS HERE
+		
 		// Do this to reset the "next" pointer
 		declarations = this.declarations.listIterator();
 		while (declarations.hasNext()) {
