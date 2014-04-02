@@ -1,0 +1,13 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Using booleans in <, >, <=, >=
+
+    var x: boolean
+    var y: boolean
+    y := x < 9 and x <= 9
+    y := x > 5 and x >= 5
+
+}

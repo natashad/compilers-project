@@ -1,0 +1,26 @@
+{
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+	% a program that test all Arithmetic Expressions
+	
+	var rect_width : integer
+	var rect_height : integer
+	var rect_area : integer
+	var tri_base : integer
+	var tri_height : integer
+	var tri_area : integer
+	
+	
+	func test():integer {
+        result 5
+    }
+    
+    rect_width := 5
+	rect_height := 10
+	rect_area := rect_width * rect_height
+	tri_base := (rect_width * rect_height) - rect_height
+	tri_base := (rect_width * (test() + rect_area)) - rect_height
+	tri_height := test() / (rect_width + rect_height)
+}

@@ -1,0 +1,499 @@
+// CSC488S Winter 2013/2014  
+//
+// File:  csc488.cup
+//
+// Package and import specifications section.
+
+package compiler488.parser;
+
+import java_cup.runtime.*;		// Must always import this.
+import compiler488.ast.*;
+import compiler488.ast.decl.*;
+import compiler488.ast.expn.*;
+import compiler488.ast.stmt.*;
+import compiler488.ast.type.*;
+import compiler488.semantics.*;
+
+
+/* User code components 1: action code components.
+ * Code to be used inside the actions triggered when productions are matched.
+ * If any common code is needed for more than one action , put it here.
+ */
+// action code {:
+// your code goes HERE
+//:};
+
+/* User code components 2: parser code components. 
+ * Modifications to the default generated parser
+ */
+parser code {:
+
+	String lastError;
+	
+    /** Override the report_error method so it will display the line and
+     * column of where the error occurred in the input as well as the
+     * reason for the error which is passed into the method in the
+     * String 'message'.
+     * @param message  error message to print
+     * @param info     symbol containing line/column numbers
+     */
+    public void report_error(String message, Object info)
+	{
+	String st =  "Error";
+   
+        if (info instanceof java_cup.runtime.Symbol)
+	    {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+	    /* s.left is supposed to hold the line number of the error.
+	     * s.right is supposed to hold the column number.
+             * If either is < 0 the parser may have run off the end of the program
+             * and a Syntax Error message without line number may be printed.
+	     */
+   
+            if (s.left >= 0)				// Check line number.
+		{
+                st += " in line " + (s.left + 1);
+                if (s.right >= 0)			// Check column number.
+                    st += ", column " + (s.right + 1);
+		}
+            else
+               st += " at end of input " ;
+           }
+	    st += ": " + message;
+        System.err.println (st);
+        lastError = st;
+	}
+   
+    /** Override the report_fatal_error method to use the report_error method. */
+    /** @throws SyntaxErrorException						*/
+    public void report_fatal_error (String message, Object info) throws SyntaxErrorException
+	{
+        report_error (message, info);
+        throw new SyntaxErrorException (lastError); 
+	}
+   
+:};
+
+/* User code components 3: initialization code.
+ * If you want some code to be executed before the parser asks for the first
+ * token, add it here.
+ */
+init with {:
+:};
+
+/* User code components 4: scanner specification code.
+ * If you need to override the way the parser asks the scanner for the
+ * next token, put your preferred method here.  Uncomment the line following
+ * this comment, replace the line after that with your code, and uncomment
+ * the line after that.
+ */
+// scan with {:
+// your code goes here
+// :};
+
+/* Symbol lists section.
+ * The names of terminals and non-terminals are not allowed to be CUP
+ * reserved words.  These include "code", "action", "parser", "terminal",
+ * "non", "nonterminal", "init", "scan", "with", "start", "precedence",
+ * "left", "right", "nonassoc", "import", and "package".
+ */
+
+// DEFINITIONS for CSC488S Source Language  Winter  2013/2014 
+
+// Terminals returned by the scanner with no value attached.  
+terminal 	BOOLEAN,	INTEGER,	DO	;
+terminal	ELSE,	END,	EXIT,   FI,	FORWARD, FUNC	;
+terminal	IF,	GET, 	PROCEDURE,	PUT	;
+terminal	WHILE,	REPEAT,	UNTIL,	VAR,	NEWLINE	;
+terminal	RESULT,	RETURN,	THEN,	WHEN	;
+
+// Special-character terminals, no value attached
+terminal	AND,	OR,	NOT,	TRUE,	FALSE	;
+terminal	L_PAREN	,R_PAREN,L_SQUARE, R_SQUARE, L_CURLEY, R_CURLEY  	;
+terminal	EQUAL,	GREATER,LESS,	COMMA,  DOT, COLON	;
+terminal	PLUS,	MINUS,	TIMES,  DIVIDE, QUESTION	;
+
+// Terminals returned by the scanner with a value.
+terminal String  IDENT	;
+terminal Integer INTCONST	;
+terminal String  TEXTCONST	;
+
+// Non-terminals that have no value.
+// nonterminal xxx
+
+// Non-terminals that have no value.
+// nonterminal xxx
+
+nonterminal	program,	statement,	statements,	scope	;
+nonterminal	declarations,	declaration,	type,	bound, generalBound 	;
+nonterminal	variablenames,	variablename,	functionHead,	procedureHead	;
+nonterminal	parameterList,  argumentList			;
+nonterminal	arguments,	parameter,	parameters	;
+nonterminal	inputs,		output,		outputs ;
+nonterminal 	expression,	conjunction,	negation,	compareExpn ;
+nonterminal	arithExpn,	term,    	factor		;
+nonterminal	primary,	constant,	variable	;
+
+
+// Non-terminals that have a value.
+// nonterminal type  nameList ;
+
+// CSC488S PLEASE NOTE: your grammar CAN NOT use the 'precedence'
+// feature of java-cup. The lines below should remain
+// commented.
+//
+//precedence left PLUS, MINUS;
+//precedence left TIMES, DIVIDE;		// Higher precedence.
+
+// The grammar section.
+
+// This specifies the initial symbol of the grammar.
+start with program;
+
+/* Notice that sometimes the action must be inside the production rule,
+ * not after it.  This is a subtle yet significant difference from YACC.
+ * This is because the CUP parser is looking ahead one token.  It ALWAYS
+ * reads one more token before it will act on the production.
+ */
+
+program		::=	scope:s				// the main program
+				{: RESULT = new Program((Scope)s, sleft); :}; 
+				
+scope		::=	L_CURLEY declarations:dList statements:sList R_CURLEY  // scope with declarations and statements
+				{: RESULT = new Scope((ASTList<Declaration>)dList, (ASTList<Stmt>)sList, dListleft); :}	
+						
+			|	L_CURLEY statements:sList  R_CURLEY 		// scope with statements only
+				{: RESULT = new Scope((ASTList<Stmt>)sList, sListleft); :}
+			
+			|	L_CURLEY:l  R_CURLEY			// empty scope
+				{: RESULT = new Scope(lleft); :}
+		;
+
+statements	::=	statement:s				// sequence of statements
+				{: RESULT = new ASTList<Stmt>((Stmt)s); :}
+				
+			|	statements:sList statement:s
+				{: RESULT = ((ASTList<Stmt>)sList).addLast((Stmt)s); :}
+			
+		;
+
+declarations	::=	declaration:d				// sequence of declarations
+					{: RESULT = new ASTList<Declaration>((Declaration)d); :}
+					
+				|	declarations:dList declaration:d
+					{: RESULT = ((ASTList<Declaration>)dList).addLast((Declaration)d); :}
+		;
+
+
+statement	::=	
+			variable:v COLON EQUAL expression:e		// assignment statement
+			{: RESULT = new AssignStmt((Expn)v, (Expn)e, vleft); :}
+
+		|	IF expression:e THEN statements:sList FI 	// if statements
+			{: RESULT = new IfStmt((Expn)e, (ASTList<Stmt>)sList, eleft); :}
+		 	
+		|	IF expression:e THEN statements:sList1 ELSE statements:sList2 FI
+			{: RESULT = new IfStmt((Expn)e, (ASTList<Stmt>)sList1, (ASTList<Stmt>) sList2, eleft); :}
+		 	
+		|	WHILE expression:e DO statements:sList END	// while statement
+		 	{: RESULT = new WhileDoStmt((Expn)e, (ASTList<Stmt>) sList, eleft); :}
+		 	
+		|   REPEAT statements:sList UNTIL expression:e	// repeat statement
+			{: RESULT = new RepeatUntilStmt((Expn)e, (ASTList<Stmt>)sList, sListleft); :}
+		 	
+		|	EXIT:exit					// exit statements
+			{: RESULT = new ExitStmt(null, exitleft); :}
+		 	
+		|	EXIT WHEN expression:e
+			{: RESULT = new ExitStmt((Expn)e, eleft); :}
+		 	
+		|	RESULT expression:e		// return from function
+			{: RESULT = new ResultStmt((Expn)e, eleft); :}
+		 	
+		|	RETURN:r					// return from procedure
+			{: RESULT = new ReturnStmt(rleft); :}
+		 	
+		|	PUT outputs:oList				// output statment
+			{: RESULT = new PutStmt((ASTList<Expn>)oList, oListleft); :}
+		 	
+		|	GET  inputs:iList				// input statement
+			{: RESULT = new GetStmt((ASTList<IdentExpn>)iList, iListleft); :}
+		 	
+		|	IDENT:i L_PAREN  argumentList:args  R_PAREN 	// call procedure
+		 	{: RESULT = new ProcedureCallStmt(i.toString(), (ASTList<Expn>)args, ileft); :}
+		 	
+		|	scope:s					// embedded scope
+			{: ((Scope)s).setIsMajor(false); RESULT = (Scope)s; :}
+		;
+
+declaration	::=	
+			VAR variablenames:v COLON type:t		// declare scalar/array variables
+			{: RESULT = new MultiDeclarations((ASTList<DeclarationPart>)v, (Type)t, vleft); :}
+				
+		|	functionHead:fHead  scope:s			// function declaration
+			{: RESULT = new RoutineDecl((DeclarationHead) fHead,((DeclarationHead)fHead).getDeclarationPart(), 
+										((DeclarationHead)fHead).getType(), 
+										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
+														(Scope)s, sleft),
+										fHeadleft); :}
+			
+		|	procedureHead:pHead  scope:s			// procedure declaration
+			{: RESULT = new RoutineDecl((DeclarationHead) pHead,((DeclarationHead)pHead).getDeclarationPart(), 
+											null, 
+											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
+															(Scope)s, sleft),
+											pHeadleft); :}
+		
+		|   FORWARD  functionHead:fHead			// forward function declaration
+			{: RESULT = new RoutineDecl((DeclarationHead) fHead,((DeclarationHead)fHead).getDeclarationPart(), 
+										((DeclarationHead)fHead).getType(), 
+										new RoutineBody(((DeclarationHead)fHead).getParameters(), 
+														new Scope(fHeadleft), fHeadleft),
+										true,
+										fHeadleft); :}
+			
+		|	FORWARD  procedureHead:pHead			// forward procedure declaration
+			{: RESULT = new RoutineDecl((DeclarationHead) pHead,((DeclarationHead)pHead).getDeclarationPart(), 
+											null, 
+											new RoutineBody(((DeclarationHead)pHead).getParameters(), 
+															new Scope(pHeadleft), pHeadleft),
+											true,
+											pHeadleft); :}
+		;
+
+variablenames	::=	
+			variablename:v  				// list of variables being declared
+			{: RESULT = new	ASTList<DeclarationPart>((DeclarationPart)v); :}
+			
+		|	variablenames:vList COMMA variablename:v
+			{: RESULT = ((ASTList<DeclarationPart>)vList).addLast((DeclarationPart)v); :}
+		 
+		;
+
+variablename	::=	
+			IDENT:i 					// scalar variable
+			{: RESULT = new ScalarDeclPart(i.toString(), ileft); :}
+			
+		|	IDENT:name L_SQUARE bound:b R_SQUARE		// 1 dimensional array
+			{: RESULT = new ArrayDeclPart(name.toString(), (IntConstExpn[])b, new IntConstExpn[]{}, nameleft ); :}
+		
+		|	IDENT:name L_SQUARE bound:b1 COMMA bound:b2  R_SQUARE // 2 dimensional array
+			{: RESULT = new ArrayDeclPart(name.toString(), (IntConstExpn[])b1, (IntConstExpn[])b2, nameleft ); :}
+		;
+
+bound		::=     
+				INTCONST:i				// integer array bound
+				{: RESULT = new IntConstExpn[]{new IntConstExpn(i.intValue(), ileft)}; :}
+					
+		|       generalBound:lb DOT DOT generalBound:ub	// explicit lower/upper bounds
+				{: RESULT = new IntConstExpn[]{(IntConstExpn)lb, (IntConstExpn)ub}; :}
+		;
+
+generalBound	::=	
+			INTCONST:i			// positive array bound
+			{: RESULT = new IntConstExpn(i.intValue(), ileft); :}
+					
+		|	MINUS INTCONST:i			// negative array bound
+			{: RESULT = new IntConstExpn(-(i.intValue()), ileft); :}
+		;
+
+type		::=	
+			INTEGER:i				// integer type
+			{: RESULT = new IntegerType(ileft); :}
+			
+		|	BOOLEAN:b				// boolean type
+			{: RESULT = new BooleanType(bleft); :}
+		;
+
+functionHead	::=	FUNC IDENT:name L_PAREN parameterList:pList R_PAREN COLON type:t	// function head
+					{: RESULT = new DeclarationHead(new DeclarationPart((String)name,  nameleft), (ASTList<ScalarDecl>)pList, (Type)t); :}
+		;
+
+procedureHead	::=	PROCEDURE  IDENT:name L_PAREN parameterList:pList  R_PAREN		// procedure head
+					{: RESULT = new DeclarationHead(new DeclarationPart((String)name, nameleft), (ASTList<ScalarDecl>)pList, null); :}
+		;
+
+outputs		::=	
+			output:o			// list of output expressions
+			{: RESULT = new ASTList<Expn>((Expn)o); :}
+			
+		|	outputs:oList COMMA output:o
+			{: RESULT = ((ASTList<Expn>)oList).addLast((Expn)o); :}
+		;
+
+output		::=	
+			expression:e		// integer expression
+			{: RESULT = new OutputExpn((Expn)e, eleft); :}
+			
+		|	TEXTCONST:t		// text constant
+			{: RESULT = new TextConstExpn(t.toString(), tleft); :}
+			
+		|	NEWLINE:n			// newline constant
+			{: RESULT = new NewlineConstExpn(nleft); :}
+		;
+
+inputs		::=	
+			variable:v		// list of variables being read into
+			{: RESULT = new ASTList<IdentExpn>((IdentExpn)v); :}
+				
+		|	inputs:iList COMMA variable:v
+			{: RESULT = ((ASTList<IdentExpn>)iList).addLast((IdentExpn)v); :}
+		;
+
+argumentList	::=	
+			arguments:aList		//  function/procedure arguments
+			{: RESULT = (ASTList<Expn>)aList; :}
+					
+		|	//  EMPTY
+			{: RESULT = new ASTList<Expn>(); :}
+		;
+
+arguments	::=	
+			expression:e		// list of function/procedure arguments
+			{: RESULT = new ASTList<Expn>((Expn)e); :}
+
+		|	arguments:aList COMMA expression:e
+			{: RESULT = ((ASTList<Expn>)aList).addLast((Expn)e); :}
+		
+		;
+
+parameterList	::=	
+				parameters:pList		//  function/procedure formal parameters
+				{: RESULT = (ASTList<ScalarDecl>)pList; :}
+					
+		|	//  EMPTY
+				{: RESULT = new ASTList<ScalarDecl>(); :}
+		;
+
+parameters	::=	
+			parameter:p			// list of function/procedure formal parameters
+			{: RESULT = new ASTList<ScalarDecl>((ScalarDecl)p); :}
+			
+		|	parameters:pList COMMA parameter:p
+			{: RESULT = ((ASTList<ScalarDecl>)pList).addLast((ScalarDecl)p); :}
+		;
+
+parameter	::=	IDENT:name COLON type:t		// declare one parameter
+				{: RESULT = new ScalarDecl(name.toString(), (Type)t, nameleft); :}
+		;
+
+expression	::=	
+			conjunction:con			// disjunctions, associate left-to-right
+			{: RESULT = (Expn)con; :}
+
+		|	expression:exp OR conjunction:con
+			{: RESULT = new BoolExpn(Expn.OpSymbols.Or.toString(), (Expn)exp, (Expn)con, expleft); :}
+		;
+
+conjunction	::=	
+			negation:neg			// conjunctions, associate left-to-right
+			{: RESULT = (Expn)neg; :}
+	
+		|	conjunction:con AND negation:neg
+			{: RESULT = new BoolExpn(Expn.OpSymbols.And.toString(), (Expn)con, (Expn)neg, conleft); :}
+		;
+
+negation	::=	
+			compareExpn:c 			// negations
+			{: RESULT = (Expn)c; :}
+				
+		|	NOT negation:neg
+			{: RESULT = new NotExpn(Expn.OpSymbols.Not.toString(), (Expn)neg, negleft); :} 
+		;
+
+compareExpn	::=	
+			arithExpn:a			// comparisons, do not associate
+			{: RESULT = (Expn)a; :}
+			 
+		|	arithExpn:a1 EQUAL arithExpn:a2
+			{: RESULT = new EqualsExpn(Expn.OpSymbols.Equals.toString(), (Expn)a1, (Expn)a2, a1left); :} 
+			
+		| 	arithExpn:a1 NOT EQUAL arithExpn:a2 
+			{: RESULT = new EqualsExpn(Expn.OpSymbols.NotEquals.toString(), (Expn)a1, (Expn)a2, a1left); :} 
+			
+		|	arithExpn:a1 LESS arithExpn:a2
+			{: RESULT = new CompareExpn(Expn.OpSymbols.LessThan.toString(), (Expn)a1, (Expn)a2, a1left); :}
+		
+		|	arithExpn:a1 LESS EQUAL arithExpn:a2
+			{: RESULT = new CompareExpn(Expn.OpSymbols.LessEqual.toString(), (Expn)a1, (Expn)a2, a1left); :}
+		
+		|	arithExpn:a1 GREATER arithExpn:a2
+			{: RESULT = new CompareExpn(Expn.OpSymbols.GreaterThan.toString(), (Expn)a1, (Expn)a2, a1left); :}
+		
+		|	arithExpn:a1 GREATER EQUAL arithExpn:a2
+			{: RESULT = new CompareExpn(Expn.OpSymbols.GreaterEqual.toString(), (Expn)a1, (Expn)a2, a1left); :}
+		;
+
+arithExpn	::=	
+			term:t				// expressions, associate + , - left-to-right
+			{: RESULT = (Expn)t; :}
+
+		|	arithExpn:aExp  PLUS  term:t
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Plus.toString(), (Expn)aExp, (Expn)t, aExpleft); :} 
+			
+		|	arithExpn:aExp  MINUS term:t
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Minus.toString(), (Expn)aExp, (Expn)t, aExpleft); :} 
+		;
+
+term		::=	
+			factor:f				// terms, associate * , /   left-to-right
+			{: RESULT = (Expn)f; :}
+			
+		|	term:t TIMES factor:f
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Times.toString(), (Expn)t, (Expn)f, tleft); :}
+			
+		|	term:t DIVIDE factor:f
+			{: RESULT = new ArithExpn(Expn.OpSymbols.Divide.toString(), (Expn)t, (Expn)f, tleft); :}
+		;
+
+factor		::=	
+			primary:p
+			{: RESULT = (Expn)p; :}
+							
+		|	MINUS factor:f			// unary minus
+			{: RESULT = new UnaryMinusExpn((Expn)f, fleft); :}
+		;
+
+primary		::=	
+			constant:con				// integer or boolean constant
+			{: RESULT = (Expn)con; :}
+				
+		|	variable:var				// scalar, array element
+			{: RESULT = (Expn)var; :}
+			
+		| 	L_PAREN  expression:exp  R_PAREN		// parenthesized expression
+			{: RESULT = (Expn)exp; :}
+			
+		|	L_PAREN  expression:cond QUESTION expression:tExp COLON expression:fExp R_PAREN
+								// conditional expression
+			{: RESULT = new ConditionalExpn((Expn)cond, (Expn)tExp, (Expn)fExp, condleft); :}
+					
+		|	IDENT:ident L_PAREN argumentList:args R_PAREN 	// function call
+			{: RESULT = new FunctionCallExpn(ident.toString(), (ASTList<Expn>)args, identleft); :}
+		;
+
+constant	::=	
+			INTCONST:val	// integer constant
+			{: RESULT = new IntConstExpn(val, valleft); :}
+			
+		|	TRUE:t		// constant true
+			{: RESULT = new BoolConstExpn(true, tleft); :}
+		
+		|	FALSE:f		// constant false
+			{: RESULT = new BoolConstExpn(false, fleft); :}
+		
+		;
+
+variable	::=
+			IDENT:ident					// scalar variable or parameter
+			{: RESULT = new IdentExpn(ident.toString(), identleft); :}
+
+		|	IDENT:ident L_SQUARE expression:e R_SQUARE	// element of 1 dimensional array
+			{: RESULT = new SubsExpn(ident.toString(), (Expn)e, null, identleft); :}
+			
+		|   IDENT:ident L_SQUARE expression:e1 COMMA expression:e2 R_SQUARE // element of 2 dimensional array
+			{: RESULT = new SubsExpn(ident.toString(), (Expn)e1, (Expn)e2, identleft); :}
+		;
+
+

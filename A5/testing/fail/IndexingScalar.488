@@ -1,0 +1,14 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Trying to index an integer.
+
+    var y:integer
+    var x:integer
+    y := 1
+    x := 2
+    x := y[1]
+
+}

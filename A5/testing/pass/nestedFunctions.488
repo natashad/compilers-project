@@ -1,0 +1,22 @@
+{
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0faizan
+
+
+	%Testing nested functions
+
+	func test_nested_functions () : integer
+	{
+
+		func nested_functions () : boolean
+		{
+			result true
+		}
+		result 5
+
+	}
+
+	put 5 % need one statement	
+}

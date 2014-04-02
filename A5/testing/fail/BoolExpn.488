@@ -1,0 +1,25 @@
+{
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+	% a program that test all boolean expressions
+	
+	var rect_width : boolean
+	var rect_height : boolean
+	var rect_area : boolean
+	var tri_base : integer
+	var tri_height : integer
+	
+	func test():integer {
+        result 5
+    }
+    
+    rect_width := true
+	rect_height := false
+	tri_base := 5
+	tri_height := 2
+	rect_area := rect_width and tri_base
+	rect_area := tri_height or rect_height
+	rect_area := (rect_width or ( tri_height and ( rect_width or test() )))
+}

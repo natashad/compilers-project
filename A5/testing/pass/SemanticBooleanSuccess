@@ -1,0 +1,29 @@
+ {
+
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % AUTHOR: g0dalaln
+
+    % Successful test of boolean comparisons
+
+    var i1: integer
+    var i2: integer
+    var b1: boolean
+    var b2: boolean
+
+    i1 := 2
+    i2 := 5
+
+    b1 := true
+    b2 := false
+
+    put (i1<i2)
+    put (i1>i2)=b1
+    put (b1 and b2)
+    put (b1 or b2)
+    put (i1 not = i2)
+
+
+}

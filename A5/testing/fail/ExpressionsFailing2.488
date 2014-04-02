@@ -1,0 +1,36 @@
+{
+	% CSC488 -- WINTER 2014:
+	% Group 2.
+	% members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+	% a program that should fail to compile, however pass the syntax parse
+    
+    var rect_width : integer
+    var rect_height : boolean
+    
+    rect_width := 5
+    rect_width2 := 0
+    rect_height := true
+    % Integer arithmetic overflow 
+    rect_width := rect_width + 32768
+    rect_width2 := rect_width2 -32768
+    
+    % Your source file contains a divide or remainder in a expression with a zero divisor. 
+    rect_width := rect_width / rect_width2 
+    
+    % Value out of range 
+    rect_width := 32768
+    rect_width := -32768
+    
+    % Value out of range 
+    put "is used to generate query plan for the queries run withis used to generate query plan for the queries run withis used to generate query plan for the queries run withis used to generate query plan for the queries run withis used to generate query plan for the queries run withis used to generate query plan for the queries run with"
+
+    % Array size too large 
+    var x[32768] : integer
+    % Array size illegal
+    var x[-1] : integer
+    
+    
+    
+    
+}

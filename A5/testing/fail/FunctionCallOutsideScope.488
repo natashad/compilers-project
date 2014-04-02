@@ -1,0 +1,15 @@
+{
+    % CSC488 -- WINTER 2014:
+    % Group 2.
+    % members: g0dalaln, g0faizan, g0alimuh, g0getter, g3ksingh.
+
+    % Function call to function declared in a scope that is ended.
+
+    func foo(): integer {
+        func bar(): boolean {
+            result true
+        }
+        result 1
+    }
+    bar()
+}
