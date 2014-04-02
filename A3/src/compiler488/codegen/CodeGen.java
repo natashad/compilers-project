@@ -54,7 +54,7 @@ public class CodeGen
     /** flag for tracing code generation */
     private boolean traceCodeGen = Main.traceCodeGen ;
     
-    private ArrayList<Short> codeArray;
+    private ArrayList<Instruction> codeArray;
     
     /**  
      *  Constructor to initialize code generation
@@ -62,6 +62,7 @@ public class CodeGen
     public CodeGen()
 	{
 	// YOUR CONSTRUCTOR GOES HERE.
+    	this.codeArray = new ArrayList<Instruction>();
 	}
 
     // Utility procedures used for code generation GO HERE.
@@ -118,7 +119,8 @@ public class CodeGen
      */
     public void generateCode( Instruction instruction )
 	{
-    	short opCode = (short)instruction.getOpCode();
+    	codeArray.add(instruction);
+/*    	short opCode = (short)instruction.getOpCode();
     	
     	if( traceCodeGen )
 	    {
@@ -126,16 +128,17 @@ public class CodeGen
 			Main.traceStream.println("CodeGen: C " +  instruction );
 	    }
 
-    	codeArray.add(opCode);
+    	codeArray(opCode);
     	if (instruction.getArg1() > -1) {
     		codeArray.add((short)instruction.getArg1());
-    	}
+      	}
     	if (instruction.getArg2() > -1) {
     		codeArray.add((short) instruction.getArg2());
     	}
 
-//        System.out.println("Codegen: C" + opCode ); 
-	return;
+        System.out.println("Codegen: C" + opCode ); 
+		return;
+**/
 	}
 
      //  ADDITIONAL FUNCTIONS TO IMPLEMENT CODE GENERATION GO HERE
