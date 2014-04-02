@@ -186,11 +186,13 @@ public class Scope extends Stmt {
 			}
 		}
 		
-		if (isProgramScope()) {
-			//Set MSP
-			label.setName("Start");
+		if (isMajor) {
+			if (isProgramScope()) {
+				//Set MSP
+				label.setName("Start");
+			}
+			codeGen.generateCode(label);
 		}
-		codeGen.generateCode(label);
 		
 		// Do this to reset the "next" pointer
 		declarations = this.declarations.listIterator();
@@ -207,7 +209,7 @@ public class Scope extends Stmt {
 			statement.codeGen(codeGen);
 		}
 		
-		if (!isProgramScope()) {
+		if (!isProgramScope() && isMajor) {
 			Set<Entry> allEntries = (Set<Entry>) symtable.values();
 			Iterator<Entry> entryIterator = allEntries.iterator();
 			int countOfEntries = 0;
