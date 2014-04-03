@@ -175,7 +175,9 @@ public class Scope extends Stmt {
 
 	public void codeGen(CodeGen codeGen) {
 		
-		
+		LinkedList<SymbolTable> tables = codeGen.getScopeSymbolTables();  //Get the current list of scopes
+		tables.addLast(this.symtable);  		// Add the current scope to the list of scopes
+		codeGen.setScopeSymbolTables(tables); // Set the codeGen scope array to this new array
 		LabelInstruction label = new LabelInstruction("Scope");
 		
 		ListIterator<Declaration> declarations = this.declarations.listIterator();
@@ -227,6 +229,9 @@ public class Scope extends Stmt {
 			codeGen.generateCode(pushNInstruction);
 			codeGen.generateCode(popNInstruction);
 		}
+		tables = codeGen.getScopeSymbolTables();
+		tables.removeLast();
+		codeGen.setScopeSymbolTables(tables);
 		
 		
 	}

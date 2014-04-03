@@ -1,10 +1,15 @@
 package compiler488.codegen;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import compiler488.ast.stmt.Scope;
 import compiler488.compiler.Main;
 import compiler488.runtime.Machine;
 import compiler488.runtime.MemoryAddressException;
+import compiler488.semantics.Semantics.ScopeType;
+import compiler488.symbol.Entry;
+import compiler488.symbol.SymbolTable;
 
 /**      CodeGenerator.java 
  *<pre>
@@ -56,12 +61,14 @@ public class CodeGen
     
     private ArrayList<Instruction> codeArray;
     
+    private LinkedList<SymbolTable> scopeSymbolTables;
     /**  
      *  Constructor to initialize code generation
      */
     public CodeGen()
 	{
 	// YOUR CONSTRUCTOR GOES HERE.
+    	this.scopeSymbolTables = new LinkedList<SymbolTable>();
     	this.codeArray = new ArrayList<Instruction>();
 	}
 
@@ -141,6 +148,31 @@ public class CodeGen
 **/
 	}
 
+	public LinkedList<SymbolTable> getScopeSymbolTables() {
+		return scopeSymbolTables;
+	}
+
+	public void setScopeSymbolTables(LinkedList<SymbolTable> scopeSymbolTables) {
+		this.scopeSymbolTables = scopeSymbolTables;
+	}
+
+	
+	
+	/** Iterate through all the scopes to find Entry. If no entry return null. */
+	public Entry allScopeLookup(String name) {
+		Integer count = this.scopeSymbolTables.size() - 1;
+		SymbolTable symtable;
+		Entry entry;
+		while (count >= 0) {
+			symtable = this.scopeSymbolTables.get(count);
+			entry = symtable.get(name);
+			if (entry != null) {
+				return entry;
+			}
+			count -= 1;
+		}
+		return null;
+	}
      //  ADDITIONAL FUNCTIONS TO IMPLEMENT CODE GENERATION GO HERE
 
 }

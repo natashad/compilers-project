@@ -28,7 +28,7 @@ public class Semantics {
 	//Stack that holds the scope objects
 	public Stack<Scope> scopeObjStack;
 	private Integer lexicLevel;
-    
+   
     public enum ScopeType {
 		Function, 
 		If,

@@ -3,6 +3,7 @@ package compiler488.ast.stmt;
 import compiler488.ast.expn.*;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
@@ -55,4 +56,5 @@ public class ExitStmt extends Stmt {
 		}
 		
 	}
+	
 }

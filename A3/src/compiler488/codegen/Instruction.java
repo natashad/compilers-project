@@ -16,6 +16,16 @@ public class Instruction {
 		this.arg2 = arg2;
 	}
 	
+	public Instruction(int opCode, String name, int arg1) {
+		this.opCode = opCode;
+		this.name = name;
+		this.arg1 = arg1;
+	}
+	public Instruction(int opCode, String name) {
+		this.opCode = opCode;
+		this.name = name;
+	}
+	
 	public int getOpCode() {
 		return opCode;
 	}
