@@ -2,6 +2,8 @@ package compiler488.ast.expn;
 
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -50,4 +52,24 @@ public class ArithExpn extends BinaryExpn {
 		this.setType(type);
 		
 	} 
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		this.left.codeGen(codeGen);
+		this.right.codeGen(codeGen);
+		Instruction i;
+		if ("+".equals(this.opSymbol)) {
+			i = new Instruction(14, "ADD");
+		} else if ("-".equals(this.opSymbol)) {
+			i = new Instruction(15, "SUB");
+		} else if ("*".equals(this.opSymbol)) {
+			i = new Instruction(16, "MUL");
+		} else if ("/".equals(this.opSymbol))  {
+			i = new Instruction(17, "DIV");
+		} else {
+			i = new Instruction(-1, "");
+			System.err.println("Trying to generate code for a non existant operation: " + this.opSymbol);
+		}
+		codeGen.generateCode(i);
+	}
 }

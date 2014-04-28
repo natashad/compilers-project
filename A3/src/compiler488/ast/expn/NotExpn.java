@@ -3,6 +3,8 @@ package compiler488.ast.expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -28,6 +30,18 @@ public class NotExpn extends UnaryExpn {
 			semantics.errorList.add(error);
 		}
 		this.setType(type);
+		
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		Instruction pushInstr = new Instruction(4, "PUSH", 1);
+		codeGen.generateCode(pushInstr);
+		
+		this.operand.codeGen(codeGen);
+		
+		Instruction subInstr = new Instruction(15, "SUB");
+		codeGen.generateCode(subInstr);
 		
 	}
 

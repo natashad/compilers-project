@@ -86,7 +86,7 @@ public class AssignStmt extends Stmt {
 			codeGen.generateCode(swap);
 			codeGen.generateCode(store);
 			
-		}else if (lvarEntry.getKind().equals(Kind.Array)) {
+		} else if (lvarEntry.getKind().equals(Kind.Array)) {
 			int lexLeval = lvarEntry.getLexicLevel();
 			int orderNum = lvarEntry.getOrderNumber();
 			//TODO: Add code for arrays!

@@ -1,7 +1,9 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.type.BooleanType;
-import compiler488.ast.type.IntegerType;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.codegen.LabelInstruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -31,6 +33,62 @@ public class BoolExpn extends BinaryExpn {
 			semantics.errorList.add(error);
 		}
 		this.setType((new BooleanType()));
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		if (Expn.OpSymbols.And.equals(this.opSymbol)) {
+			LabelInstruction label = new LabelInstruction("AND_BRANCHFALSE");
+			this.left.codeGen(codeGen);
+			
+			Instruction dupInstr = new Instruction(9, "DUP");
+			codeGen.generateCode(dupInstr);
+			
+			Instruction pushInstr = new Instruction(4, "PUSH", label.getLabelId());
+			codeGen.generateCode(pushInstr);
+			
+			Instruction bfInstr = new Instruction(12, "BF");
+			codeGen.generateCode(bfInstr);
+			
+			Instruction popInstr = new Instruction(7, "POP");
+			codeGen.generateCode(popInstr);
+			
+			this.right.codeGen(codeGen);
+
+			codeGen.generateCode(label);
+						
+		} else if (Expn.OpSymbols.Or.equals(this.opSymbol)) {
+			
+			LabelInstruction firstFalseLabel = new LabelInstruction("OR_FIRSTFALSE");
+			LabelInstruction endOrLabel = new LabelInstruction("OR_END");
+			
+			this.left.codeGen(codeGen);
+			
+			Instruction dupInstr = new Instruction(9, "DUP");
+			codeGen.generateCode(dupInstr);
+			
+			Instruction pushInstr = new Instruction(4, "PUSH", firstFalseLabel.getLabelId());
+			codeGen.generateCode(pushInstr);
+			
+			Instruction bfInstr = new Instruction(12, "BF");
+			codeGen.generateCode(bfInstr);
+			
+			Instruction pushInstr2 = new Instruction(4, "PUSH", endOrLabel.getLabelId());
+			codeGen.generateCode(pushInstr2);
+			
+			Instruction brInstr = new Instruction(11, "BR");
+			codeGen.generateCode(brInstr);
+			
+			codeGen.generateCode(firstFalseLabel);
+			
+			Instruction popInstr = new Instruction(7, "POP");
+			codeGen.generateCode(popInstr);
+			
+			this.right.codeGen(codeGen);
+			
+			codeGen.generateCode(endOrLabel);
+			
+		}
 	}
 
 }

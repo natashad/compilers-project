@@ -13,5 +13,8 @@ public class LabelInstruction extends Instruction {
 		this.labelName += count++;
 	}
 	
+	public int getLabelId() {
+		return count;
+	}
 
 }
