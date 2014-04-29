@@ -1,12 +1,13 @@
 package compiler488.ast.stmt;
 
-import compiler488.ast.expn.*;
+import compiler488.ast.expn.Expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.codegen.LabelInstruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
-import compiler488.semantics.Semantics.ScopeType;
 
 /**
  * Represents the command to exit from a loop.
@@ -16,10 +17,19 @@ public class ExitStmt extends Stmt {
 
 	// condition for 'exit when'
     private Expn expn = null;
+    private LabelInstruction exitLabel;
     
     public ExitStmt(Expn expn, int lineNum) {
     	super(lineNum);
     	this.expn = expn;
+    }
+    
+    public void setExitLabel(LabelInstruction exitLabel) {
+    	this.exitLabel = exitLabel;
+    }
+    
+    public LabelInstruction getExitLabel() {
+    	return this.exitLabel;
     }
 
 	/** Returns the string <b>"exit"</b> or <b>"exit when e"</b>" 
@@ -55,6 +65,43 @@ public class ExitStmt extends Stmt {
 			}
 		}
 		
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		if (expn != null) {
+			expn.codeGen(codeGen);
+			
+			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			codeGen.generateCode(pushInstr);
+			
+			Instruction swapInstr = new Instruction(21, "SWAP");
+			codeGen.generateCode(swapInstr);
+			
+			Instruction subInstr = new Instruction(15, "SUB");
+			codeGen.generateCode(subInstr);
+			
+			if (exitLabel == null) {
+				System.err.println("NO EXIT LABEL ASSIGNMENT");
+			}
+			
+			Instruction pushLabelInstr = new Instruction(4, "PUSH", exitLabel.getLabelId());
+			codeGen.generateCode(pushLabelInstr);
+			
+			Instruction bfInstr = new Instruction(12, "BF");
+			codeGen.generateCode(bfInstr);
+			
+		} else {
+			if (exitLabel == null) {
+				System.err.println("NO EXIT LABEL ASSIGNMENT");
+			}
+			
+			Instruction pushLabelInstr = new Instruction(4, "PUSH", exitLabel.getLabelId());
+			codeGen.generateCode(pushLabelInstr);
+			
+			Instruction bfInstr = new Instruction(12, "BF");
+			codeGen.generateCode(bfInstr);
+		}
 	}
 	
 }

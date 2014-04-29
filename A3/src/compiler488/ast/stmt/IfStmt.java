@@ -8,6 +8,9 @@ import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.codegen.LabelInstruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -103,6 +106,45 @@ public class IfStmt extends Stmt {
 			semantics.errorList.add(error);
 		}
 		semantics.scopeStack.pop();
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		LabelInstruction falseLabel = new LabelInstruction("FalseBranchLabel");
+		LabelInstruction endLabel = new LabelInstruction("EndIfLabel");
+		
+		condition.codeGen(codeGen);
+		
+		Instruction pushInstr = new Instruction(4, "PUSH", falseLabel.getLabelId());
+		codeGen.generateCode(pushInstr);
+		
+		Instruction bfInstruction = new Instruction(12, "BF");
+		codeGen.generateCode(bfInstruction);
+		
+		ListIterator<Stmt> trueStatements = this.whenTrue.listIterator();
+		ListIterator<Stmt> falseStatements = this.whenFalse.listIterator();
+
+		while (trueStatements.hasNext()) {
+			Stmt statement = trueStatements.next();
+			statement.codeGen(codeGen);
+		}
+		
+		Instruction pushInstr2 = new Instruction(4, "PUSH", endLabel.getLabelId());
+		codeGen.generateCode(pushInstr2);
+		
+		Instruction brInstr = new Instruction(11, "BR");
+		codeGen.generateCode(brInstr);
+		
+		codeGen.generateCode(falseLabel);
+		
+		while (falseStatements.hasNext()) {
+			Stmt statement = falseStatements.next();
+			statement.codeGen(codeGen);
+		}
+		
+		codeGen.generateCode(endLabel);
+		
+		
 	}
 	
 }

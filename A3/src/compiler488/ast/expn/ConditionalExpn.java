@@ -1,8 +1,9 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.type.BooleanType;
-import compiler488.ast.type.IntegerType;
-import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.codegen.LabelInstruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -72,6 +73,34 @@ public class ConditionalExpn extends Expn {
 		}else {
 			this.setType(this.trueValue.getType());
 		}
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		this.condition.codeGen(codeGen);
+		
+		LabelInstruction falseLabel = new LabelInstruction("FALSEVALUE");
+		LabelInstruction endLabel = new LabelInstruction("ENDCONDITIONAL");
+		
+		Instruction pushInstr = new Instruction(4, "PUSH", falseLabel.getLabelId());
+		codeGen.generateCode(pushInstr);
+		
+		Instruction bfInstr = new Instruction(12, "BF");
+		codeGen.generateCode(bfInstr);
+		
+		this.trueValue.codeGen(codeGen);
+		
+		Instruction pushInstr2 = new Instruction(4, "PUSH", endLabel.getLabelId());
+		codeGen.generateCode(pushInstr2);
+		
+		Instruction brInstr = new Instruction(11, "BR");
+		codeGen.generateCode(brInstr);
+		
+		codeGen.generateCode(falseLabel);
+		falseValue.codeGen(codeGen);
+		
+		codeGen.generateCode(endLabel);
+		
 	}
 	
 }

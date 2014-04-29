@@ -3,6 +3,8 @@ package compiler488.ast.expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -53,6 +55,56 @@ public class CompareExpn extends BinaryExpn {
 			semantics.errorList.add(error);
 		}
 		this.setType((new BooleanType()));
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		this.left.codeGen(codeGen);
+		this.right.codeGen(codeGen);
+		
+		if (Expn.OpSymbols.LessThan.equals(this.opSymbol)) {
+			Instruction ltInstr = new Instruction(19, "LT");
+			codeGen.generateCode(ltInstr);
+			
+		} else if (Expn.OpSymbols.LessEqual.equals(this.opSymbol)) {
+			Instruction swapInstr = new Instruction(21, "SWAP");
+			codeGen.generateCode(swapInstr);
+			
+			Instruction ltInstr = new Instruction(19, "LT");
+			codeGen.generateCode(ltInstr);
+			
+			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			codeGen.generateCode(pushInstr);
+			
+			Instruction swapInstr2 = new Instruction(21, "SWAP");
+			codeGen.generateCode(swapInstr2);
+			
+			Instruction subInstr = new Instruction(15, "SUB");
+			codeGen.generateCode(subInstr);
+			
+		} else if (Expn.OpSymbols.GreaterThan.equals(this.opSymbol)) {
+			
+			Instruction swapInstr = new Instruction(21, "SWAP");
+			codeGen.generateCode(swapInstr);
+			
+			Instruction ltInstr = new Instruction(19, "LT");
+			codeGen.generateCode(ltInstr);
+			
+		} else if (Expn.OpSymbols.GreaterEqual.equals(this.opSymbol)) {
+			
+			Instruction ltInstr = new Instruction(19, "LT");
+			codeGen.generateCode(ltInstr);
+			
+			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			codeGen.generateCode(pushInstr);
+			
+			Instruction swapInstr = new Instruction(21, "SWAP");
+			codeGen.generateCode(swapInstr);
+			
+			Instruction subInstr = new Instruction(15, "SUB");
+			codeGen.generateCode(subInstr);
+		}
+		
 	}
 
 }

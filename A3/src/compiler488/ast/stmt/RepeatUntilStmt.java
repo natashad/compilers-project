@@ -1,10 +1,14 @@
 package compiler488.ast.stmt;
 
 import java.io.PrintStream;
+import java.util.ListIterator;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.Indentable;
 import compiler488.ast.expn.Expn;
+import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.codegen.LabelInstruction;
 
 /**
  * Represents a loop in which the exit condition is evaluated after each pass.
@@ -28,6 +32,34 @@ public class RepeatUntilStmt extends LoopingStmt {
 		Indentable.printIndentOnLn(out, depth, "repeat");
 		body.printOnSeperateLines(out, depth + 1);
 		Indentable.printIndentOnLn(out, depth, " until "  + expn );
+	}
+	
+	@Override
+	public void codeGen(CodeGen codeGen) {
+		LabelInstruction startLabel = new LabelInstruction("REPEAT_START");
+		LabelInstruction endLabel = new LabelInstruction("REPEAT_END");
+		
+		codeGen.generateCode(startLabel);
+		
+		ListIterator<Stmt> body = this.body.listIterator();
 
+		while (body.hasNext()) {
+			Stmt statement = body.next();
+			if (statement instanceof ExitStmt) {
+				((ExitStmt)statement).setExitLabel(endLabel);
+			}
+			statement.codeGen(codeGen);
+		}
+		
+		expn.codeGen(codeGen);
+		
+
+		Instruction pushStartInstr = new Instruction(4, "PUSH" , startLabel.getLabelId());
+		codeGen.generateCode(pushStartInstr);
+		
+		Instruction bfInstr = new Instruction(12, "BF");
+		codeGen.generateCode(bfInstr);
+		
+		codeGen.generateCode(endLabel);
 	}
 }
