@@ -6,6 +6,7 @@ import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -72,23 +73,23 @@ public class ExitStmt extends Stmt {
 		if (expn != null) {
 			expn.codeGen(codeGen);
 			
-			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", 1);
 			codeGen.generateCode(pushInstr);
 			
-			Instruction swapInstr = new Instruction(21, "SWAP");
+			Instruction swapInstr = new Instruction(Machine.SWAP, "SWAP");
 			codeGen.generateCode(swapInstr);
 			
-			Instruction subInstr = new Instruction(15, "SUB");
+			Instruction subInstr = new Instruction(Machine.SUB, "SUB");
 			codeGen.generateCode(subInstr);
 			
 			if (exitLabel == null) {
 				System.err.println("NO EXIT LABEL ASSIGNMENT");
 			}
 			
-			Instruction pushLabelInstr = new Instruction(4, "PUSH", exitLabel.getLabelId());
+			Instruction pushLabelInstr = new Instruction(Machine.PUSH, "PUSH", exitLabel.getLabelId());
 			codeGen.generateCode(pushLabelInstr);
 			
-			Instruction bfInstr = new Instruction(12, "BF");
+			Instruction bfInstr = new Instruction(Machine.BF, "BF");
 			codeGen.generateCode(bfInstr);
 			
 		} else {
@@ -96,10 +97,10 @@ public class ExitStmt extends Stmt {
 				System.err.println("NO EXIT LABEL ASSIGNMENT");
 			}
 			
-			Instruction pushLabelInstr = new Instruction(4, "PUSH", exitLabel.getLabelId());
+			Instruction pushLabelInstr = new Instruction(Machine.PUSH, "PUSH", exitLabel.getLabelId());
 			codeGen.generateCode(pushLabelInstr);
 			
-			Instruction bfInstr = new Instruction(12, "BF");
+			Instruction bfInstr = new Instruction(Machine.BF, "BF");
 			codeGen.generateCode(bfInstr);
 		}
 	}

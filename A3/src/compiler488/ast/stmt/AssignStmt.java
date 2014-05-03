@@ -1,14 +1,11 @@
 package compiler488.ast.stmt;
 
 
-import compiler488.codegen.Instruction;
-import compiler488.ast.decl.ArrayDeclPart;
-import compiler488.ast.decl.DeclarationPart;
-import compiler488.ast.decl.ScalarDeclPart;
 import compiler488.ast.expn.Expn;
 import compiler488.ast.expn.IdentExpn;
-import compiler488.ast.expn.SubsExpn;
 import compiler488.codegen.CodeGen;
+import compiler488.codegen.Instruction;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.symbol.Entry;
@@ -79,8 +76,8 @@ public class AssignStmt extends Stmt {
 		if (lvarEntry.getKind().equals(Kind.Scalar)) {
 			int lexLeval = lvarEntry.getLexicLevel();
 			int orderNum = lvarEntry.getOrderNumber();
-			Instruction addr = new Instruction(1, "ADDR", lexLeval, orderNum);
-			Instruction swap = new Instruction(21, "SWAP");
+			Instruction addr = new Instruction(Machine.ADDR, "ADDR", lexLeval, orderNum);
+			Instruction swap = new Instruction(Machine.SWAP, "SWAP");
 			Instruction store = new Instruction(3, "STORE");
 			codeGen.generateCode(addr);
 			codeGen.generateCode(swap);

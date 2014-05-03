@@ -9,6 +9,7 @@ import compiler488.ast.expn.Expn;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.runtime.Machine;
 
 /**
  * Represents a loop in which the exit condition is evaluated after each pass.
@@ -54,10 +55,10 @@ public class RepeatUntilStmt extends LoopingStmt {
 		expn.codeGen(codeGen);
 		
 
-		Instruction pushStartInstr = new Instruction(4, "PUSH" , startLabel.getLabelId());
+		Instruction pushStartInstr = new Instruction(Machine.PUSH, "PUSH" , startLabel.getLabelId());
 		codeGen.generateCode(pushStartInstr);
 		
-		Instruction bfInstr = new Instruction(12, "BF");
+		Instruction bfInstr = new Instruction(Machine.BF, "BF");
 		codeGen.generateCode(bfInstr);
 		
 		codeGen.generateCode(endLabel);

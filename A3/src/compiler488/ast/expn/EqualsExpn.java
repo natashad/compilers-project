@@ -4,6 +4,7 @@ package compiler488.ast.expn;
 import compiler488.ast.type.BooleanType;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -48,17 +49,17 @@ public class EqualsExpn extends BinaryExpn {
 		this.left.codeGen(codeGen);
 		this.right.codeGen(codeGen);
 		
-		Instruction equalsInstr = new Instruction(18, "EQ");
+		Instruction equalsInstr = new Instruction(Machine.EQ, "EQ");
 		codeGen.generateCode(equalsInstr);
 		
 		if (Expn.OpSymbols.NotEquals.equals(this.opSymbol)) {
-			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", 1);
 			codeGen.generateCode(pushInstr);
 			
-			Instruction swapInstr = new Instruction(21, "SWAP");
+			Instruction swapInstr = new Instruction(Machine.SWAP, "SWAP");
 			codeGen.generateCode(swapInstr);
 			
-			Instruction subInstr = new Instruction(15, "SUB");
+			Instruction subInstr = new Instruction(Machine.SUB, "SUB");
 			codeGen.generateCode(subInstr);
 		}
 		

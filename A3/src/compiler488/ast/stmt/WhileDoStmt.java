@@ -9,6 +9,7 @@ import compiler488.ast.expn.Expn;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.runtime.Machine;
 
 /**
  * Represents a loop in which the exit condition is evaluated before each pass.
@@ -44,10 +45,10 @@ public class WhileDoStmt extends LoopingStmt {
 		expn.codeGen(codeGen);
 		
 		LabelInstruction endLabel = new LabelInstruction("WHILE_END");
-		Instruction pushEndInstr = new Instruction(4, "PUSH", endLabel.getLabelId());
+		Instruction pushEndInstr = new Instruction(Machine.PUSH, "PUSH", endLabel.getLabelId());
 		codeGen.generateCode(pushEndInstr);
 		
-		Instruction bfInstr = new Instruction(12, "BF");
+		Instruction bfInstr = new Instruction(Machine.BF, "BF");
 		codeGen.generateCode(bfInstr);
 		
 		ListIterator<Stmt> body = this.body.listIterator();
@@ -60,10 +61,10 @@ public class WhileDoStmt extends LoopingStmt {
 			statement.codeGen(codeGen);
 		}
 		
-		Instruction pushStartInstr = new Instruction(4, "PUSH" , startLabel.getLabelId());
+		Instruction pushStartInstr = new Instruction(Machine.PUSH, "PUSH" , startLabel.getLabelId());
 		codeGen.generateCode(pushStartInstr);
 		
-		Instruction brInstr = new Instruction(11, "BR");
+		Instruction brInstr = new Instruction(Machine.BR, "BR");
 		codeGen.generateCode(brInstr);
 		
 		codeGen.generateCode(endLabel);

@@ -5,6 +5,7 @@ import compiler488.ast.type.IntegerType;
 import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -63,45 +64,45 @@ public class CompareExpn extends BinaryExpn {
 		this.right.codeGen(codeGen);
 		
 		if (Expn.OpSymbols.LessThan.equals(this.opSymbol)) {
-			Instruction ltInstr = new Instruction(19, "LT");
+			Instruction ltInstr = new Instruction(Machine.LT, "LT");
 			codeGen.generateCode(ltInstr);
 			
 		} else if (Expn.OpSymbols.LessEqual.equals(this.opSymbol)) {
-			Instruction swapInstr = new Instruction(21, "SWAP");
+			Instruction swapInstr = new Instruction(Machine.SWAP, "SWAP");
 			codeGen.generateCode(swapInstr);
 			
-			Instruction ltInstr = new Instruction(19, "LT");
+			Instruction ltInstr = new Instruction(Machine.LT, "LT");
 			codeGen.generateCode(ltInstr);
 			
-			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", 1);
 			codeGen.generateCode(pushInstr);
 			
-			Instruction swapInstr2 = new Instruction(21, "SWAP");
+			Instruction swapInstr2 = new Instruction(Machine.SWAP, "SWAP");
 			codeGen.generateCode(swapInstr2);
 			
-			Instruction subInstr = new Instruction(15, "SUB");
+			Instruction subInstr = new Instruction(Machine.SUB, "SUB");
 			codeGen.generateCode(subInstr);
 			
 		} else if (Expn.OpSymbols.GreaterThan.equals(this.opSymbol)) {
 			
-			Instruction swapInstr = new Instruction(21, "SWAP");
+			Instruction swapInstr = new Instruction(Machine.SWAP, "SWAP");
 			codeGen.generateCode(swapInstr);
 			
-			Instruction ltInstr = new Instruction(19, "LT");
+			Instruction ltInstr = new Instruction(Machine.LT, "LT");
 			codeGen.generateCode(ltInstr);
 			
 		} else if (Expn.OpSymbols.GreaterEqual.equals(this.opSymbol)) {
 			
-			Instruction ltInstr = new Instruction(19, "LT");
+			Instruction ltInstr = new Instruction(Machine.LT, "LT");
 			codeGen.generateCode(ltInstr);
 			
-			Instruction pushInstr = new Instruction(4, "PUSH", 1);
+			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", 1);
 			codeGen.generateCode(pushInstr);
 			
-			Instruction swapInstr = new Instruction(21, "SWAP");
+			Instruction swapInstr = new Instruction(Machine.SWAP, "SWAP");
 			codeGen.generateCode(swapInstr);
 			
-			Instruction subInstr = new Instruction(15, "SUB");
+			Instruction subInstr = new Instruction(Machine.SUB, "SUB");
 			codeGen.generateCode(subInstr);
 		}
 		

@@ -4,6 +4,7 @@ import compiler488.ast.type.BooleanType;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 
@@ -41,16 +42,16 @@ public class BoolExpn extends BinaryExpn {
 			LabelInstruction label = new LabelInstruction("AND_BRANCHFALSE");
 			this.left.codeGen(codeGen);
 			
-			Instruction dupInstr = new Instruction(9, "DUP");
+			Instruction dupInstr = new Instruction(Machine.DUP, "DUP");
 			codeGen.generateCode(dupInstr);
 			
-			Instruction pushInstr = new Instruction(4, "PUSH", label.getLabelId());
+			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", label.getLabelId());
 			codeGen.generateCode(pushInstr);
 			
-			Instruction bfInstr = new Instruction(12, "BF");
+			Instruction bfInstr = new Instruction(Machine.BF, "BF");
 			codeGen.generateCode(bfInstr);
 			
-			Instruction popInstr = new Instruction(7, "POP");
+			Instruction popInstr = new Instruction(Machine.POP, "POP");
 			codeGen.generateCode(popInstr);
 			
 			this.right.codeGen(codeGen);
@@ -64,24 +65,24 @@ public class BoolExpn extends BinaryExpn {
 			
 			this.left.codeGen(codeGen);
 			
-			Instruction dupInstr = new Instruction(9, "DUP");
+			Instruction dupInstr = new Instruction(Machine.DUP, "DUP");
 			codeGen.generateCode(dupInstr);
 			
-			Instruction pushInstr = new Instruction(4, "PUSH", firstFalseLabel.getLabelId());
+			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", firstFalseLabel.getLabelId());
 			codeGen.generateCode(pushInstr);
 			
-			Instruction bfInstr = new Instruction(12, "BF");
+			Instruction bfInstr = new Instruction(Machine.BF, "BF");
 			codeGen.generateCode(bfInstr);
 			
-			Instruction pushInstr2 = new Instruction(4, "PUSH", endOrLabel.getLabelId());
+			Instruction pushInstr2 = new Instruction(Machine.PUSH, "PUSH", endOrLabel.getLabelId());
 			codeGen.generateCode(pushInstr2);
 			
-			Instruction brInstr = new Instruction(11, "BR");
+			Instruction brInstr = new Instruction(Machine.BR, "BR");
 			codeGen.generateCode(brInstr);
 			
 			codeGen.generateCode(firstFalseLabel);
 			
-			Instruction popInstr = new Instruction(7, "POP");
+			Instruction popInstr = new Instruction(Machine.POP, "POP");
 			codeGen.generateCode(popInstr);
 			
 			this.right.codeGen(codeGen);

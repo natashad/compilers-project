@@ -15,6 +15,7 @@ import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
 import compiler488.semantics.Semantics.ScopeType;
@@ -224,8 +225,8 @@ public class Scope extends Stmt {
 			}
 			ArrayList<Short> args = new ArrayList<Short>();
 			args.add((short)countOfEntries);
-			Instruction pushNInstruction = new Instruction(4, "PUSH", -1, -1);
-			Instruction popNInstruction = new Instruction(8, "POPN", -1, -1);
+			Instruction pushNInstruction = new Instruction(Machine.PUSH, "PUSH", -1, -1);
+			Instruction popNInstruction = new Instruction(Machine.POPN, "POPN", -1, -1);
 			codeGen.generateCode(pushNInstruction);
 			codeGen.generateCode(popNInstruction);
 		}
