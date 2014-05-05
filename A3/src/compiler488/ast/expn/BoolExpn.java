@@ -4,6 +4,7 @@ import compiler488.ast.type.BooleanType;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.codegen.PushLabelInstruction;
 import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
@@ -45,7 +46,7 @@ public class BoolExpn extends BinaryExpn {
 			Instruction dupInstr = new Instruction(Machine.DUP, "DUP");
 			codeGen.generateCode(dupInstr);
 			
-			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", label.getLabelId());
+			Instruction pushInstr = new PushLabelInstruction(label.getName());
 			codeGen.generateCode(pushInstr);
 			
 			Instruction bfInstr = new Instruction(Machine.BF, "BF");
@@ -68,13 +69,13 @@ public class BoolExpn extends BinaryExpn {
 			Instruction dupInstr = new Instruction(Machine.DUP, "DUP");
 			codeGen.generateCode(dupInstr);
 			
-			Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", firstFalseLabel.getLabelId());
+			Instruction pushInstr = new PushLabelInstruction(firstFalseLabel.getName());
 			codeGen.generateCode(pushInstr);
 			
 			Instruction bfInstr = new Instruction(Machine.BF, "BF");
 			codeGen.generateCode(bfInstr);
 			
-			Instruction pushInstr2 = new Instruction(Machine.PUSH, "PUSH", endOrLabel.getLabelId());
+			Instruction pushInstr2 = new PushLabelInstruction(endOrLabel.getName());
 			codeGen.generateCode(pushInstr2);
 			
 			Instruction brInstr = new Instruction(Machine.BR, "BR");

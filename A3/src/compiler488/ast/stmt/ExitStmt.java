@@ -6,6 +6,7 @@ import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.codegen.PushLabelInstruction;
 import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
@@ -86,7 +87,7 @@ public class ExitStmt extends Stmt {
 				System.err.println("NO EXIT LABEL ASSIGNMENT");
 			}
 			
-			Instruction pushLabelInstr = new Instruction(Machine.PUSH, "PUSH", exitLabel.getLabelId());
+			Instruction pushLabelInstr = new PushLabelInstruction(exitLabel.getName());
 			codeGen.generateCode(pushLabelInstr);
 			
 			Instruction bfInstr = new Instruction(Machine.BF, "BF");
@@ -97,7 +98,7 @@ public class ExitStmt extends Stmt {
 				System.err.println("NO EXIT LABEL ASSIGNMENT");
 			}
 			
-			Instruction pushLabelInstr = new Instruction(Machine.PUSH, "PUSH", exitLabel.getLabelId());
+			Instruction pushLabelInstr = new PushLabelInstruction(exitLabel.getName());
 			codeGen.generateCode(pushLabelInstr);
 			
 			Instruction bfInstr = new Instruction(Machine.BF, "BF");

@@ -4,6 +4,7 @@ import compiler488.ast.type.BooleanType;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.codegen.PushLabelInstruction;
 import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
@@ -83,7 +84,7 @@ public class ConditionalExpn extends Expn {
 		LabelInstruction falseLabel = new LabelInstruction("FALSEVALUE");
 		LabelInstruction endLabel = new LabelInstruction("ENDCONDITIONAL");
 		
-		Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", falseLabel.getLabelId());
+		Instruction pushInstr = new PushLabelInstruction(falseLabel.getName());
 		codeGen.generateCode(pushInstr);
 		
 		Instruction bfInstr = new Instruction(Machine.BF, "BF");
@@ -91,7 +92,7 @@ public class ConditionalExpn extends Expn {
 		
 		this.trueValue.codeGen(codeGen);
 		
-		Instruction pushInstr2 = new Instruction(Machine.PUSH, "PUSH", endLabel.getLabelId());
+		Instruction pushInstr2 = new PushLabelInstruction(endLabel.getName());
 		codeGen.generateCode(pushInstr2);
 		
 		Instruction brInstr = new Instruction(Machine.BR, "BR");

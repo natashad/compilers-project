@@ -11,6 +11,7 @@ import compiler488.ast.type.Type;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.codegen.PushLabelInstruction;
 import compiler488.runtime.Machine;
 import compiler488.semantics.SemanticError;
 import compiler488.semantics.Semantics;
@@ -116,7 +117,7 @@ public class IfStmt extends Stmt {
 		
 		condition.codeGen(codeGen);
 		
-		Instruction pushInstr = new Instruction(Machine.PUSH, "PUSH", falseLabel.getLabelId());
+		Instruction pushInstr = new PushLabelInstruction(falseLabel.getName());
 		codeGen.generateCode(pushInstr);
 		
 		Instruction bfInstruction = new Instruction(Machine.BF, "BF");
@@ -130,7 +131,7 @@ public class IfStmt extends Stmt {
 			statement.codeGen(codeGen);
 		}
 		
-		Instruction pushInstr2 = new Instruction(Machine.PUSH, "PUSH", endLabel.getLabelId());
+		Instruction pushInstr2 = new PushLabelInstruction(endLabel.getName());
 		codeGen.generateCode(pushInstr2);
 		
 		Instruction brInstr = new Instruction(Machine.BR, "BR");

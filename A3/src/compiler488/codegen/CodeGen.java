@@ -1,13 +1,12 @@
 package compiler488.codegen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
-import compiler488.ast.stmt.Scope;
 import compiler488.compiler.Main;
 import compiler488.runtime.Machine;
 import compiler488.runtime.MemoryAddressException;
-import compiler488.semantics.Semantics.ScopeType;
 import compiler488.symbol.Entry;
 import compiler488.symbol.SymbolTable;
 
@@ -65,6 +64,9 @@ public class CodeGen
     /**  
      *  Constructor to initialize code generation
      */
+    
+    public HashMap<String, Short> labelMap;
+    
     public CodeGen()
 	{
 	// YOUR CONSTRUCTOR GOES HERE.
@@ -174,5 +176,26 @@ public class CodeGen
 		return null;
 	}
      //  ADDITIONAL FUNCTIONS TO IMPLEMENT CODE GENERATION GO HERE
+	
+	public void buildLabelMap() {
+		labelMap = new HashMap<String, Short>();
+		short count = 0;
+		for (int i = 0; i < codeArray.size(); i++) {
+			if (codeArray.get(i) instanceof LabelInstruction) {
+				labelMap.put(((LabelInstruction)codeArray.get(i)).getName(), (short) (count+1));
+			} else {
+				count++;
+			}
+		}
+	}
+	
+	public short getAddressForLabel(String labelName) {
+		if (labelMap == null ) {
+			System.err.println("Unitialized Label Map!!");
+			throw new RuntimeException("Unitialized Label Map");
+		} else {
+			return labelMap.get(labelName);
+		}	
+	}
 
 }

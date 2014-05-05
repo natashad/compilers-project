@@ -523,7 +523,11 @@ public class Main {
 		CodeGen codegen = new CodeGen();
 		programAST.setProgramScope(true);
 		programAST.codeGen(codegen);
-		codegen.generateCode(new Instruction(0, "HALT", -1, -1)); //C01
+		codegen.generateCode(new Instruction(Machine.HALT, "HALT", -1, -1)); //C01
+		
+		// Go through first pass and build label hashmap.
+		codegen.buildLabelMap();
+		
 	}
         catch( Exception e) 
 	    {

@@ -9,6 +9,7 @@ import compiler488.ast.expn.Expn;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.codegen.PushLabelInstruction;
 import compiler488.runtime.Machine;
 
 /**
@@ -55,7 +56,7 @@ public class RepeatUntilStmt extends LoopingStmt {
 		expn.codeGen(codeGen);
 		
 
-		Instruction pushStartInstr = new Instruction(Machine.PUSH, "PUSH" , startLabel.getLabelId());
+		Instruction pushStartInstr = new PushLabelInstruction(startLabel.getName());
 		codeGen.generateCode(pushStartInstr);
 		
 		Instruction bfInstr = new Instruction(Machine.BF, "BF");

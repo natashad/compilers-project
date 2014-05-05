@@ -9,6 +9,7 @@ import compiler488.ast.expn.Expn;
 import compiler488.codegen.CodeGen;
 import compiler488.codegen.Instruction;
 import compiler488.codegen.LabelInstruction;
+import compiler488.codegen.PushLabelInstruction;
 import compiler488.runtime.Machine;
 
 /**
@@ -45,7 +46,7 @@ public class WhileDoStmt extends LoopingStmt {
 		expn.codeGen(codeGen);
 		
 		LabelInstruction endLabel = new LabelInstruction("WHILE_END");
-		Instruction pushEndInstr = new Instruction(Machine.PUSH, "PUSH", endLabel.getLabelId());
+		Instruction pushEndInstr = new PushLabelInstruction(endLabel.getName());
 		codeGen.generateCode(pushEndInstr);
 		
 		Instruction bfInstr = new Instruction(Machine.BF, "BF");
@@ -61,7 +62,7 @@ public class WhileDoStmt extends LoopingStmt {
 			statement.codeGen(codeGen);
 		}
 		
-		Instruction pushStartInstr = new Instruction(Machine.PUSH, "PUSH" , startLabel.getLabelId());
+		Instruction pushStartInstr = new PushLabelInstruction(startLabel.getName());
 		codeGen.generateCode(pushStartInstr);
 		
 		Instruction brInstr = new Instruction(Machine.BR, "BR");
