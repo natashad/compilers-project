@@ -181,11 +181,12 @@ public class CodeGen
 		labelMap = new HashMap<String, Short>();
 		short count = 0;
 		for (int i = 0; i < codeArray.size(); i++) {
-			if (codeArray.get(i) instanceof LabelInstruction) {
-				labelMap.put(((LabelInstruction)codeArray.get(i)).getName(), (short) (count+1));
-			} else {
-				count++;
+			Instruction instruction = codeArray.get(i);
+			if (instruction instanceof LabelInstruction) {
+				// this will work assuming a zero-offset first instruction.
+				labelMap.put(((LabelInstruction)instruction).getName(), (short)count);
 			}
+			count += instruction.getLength();
 		}
 	}
 	

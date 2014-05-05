@@ -8,22 +8,26 @@ public class Instruction {
 	private String name;
 	private int arg1 = -1;
 	private int arg2 = -1;
+	protected int length;
 	
 	public Instruction(int opCode, String name, int arg1, int arg2) {
 		this.opCode = opCode;
 		this.name = name;
 		this.arg1 = arg1;
 		this.arg2 = arg2;
+		this.length = 3;
 	}
 	
 	public Instruction(int opCode, String name, int arg1) {
 		this.opCode = opCode;
 		this.name = name;
 		this.arg1 = arg1;
+		this.length = 2;
 	}
 	public Instruction(int opCode, String name) {
 		this.opCode = opCode;
 		this.name = name;
+		this.length = 1;
 	}
 	
 	public int getOpCode() {
@@ -56,6 +60,14 @@ public class Instruction {
 	
 	public int getArg2() {
 		return arg2;
+	}
+	
+	public int getLength() {
+		return this.length;
+	}
+	
+	public void setLength(int length) {
+		this.length = length;
 	}
 	
 	

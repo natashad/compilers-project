@@ -11,6 +11,7 @@ public class LabelInstruction extends Instruction {
 		super(-1, name, -1, -1);
 		this.labelName = name;
 		this.labelName += count++;
+		this.length = 0;
 	}
 	
 	public int getLabelId() {

@@ -9,6 +9,7 @@ public class PushLabelInstruction extends Instruction {
 	public PushLabelInstruction(String labelName) {
 		super(Machine.PUSH, "PUSH");
 		this.labelName = labelName;
+		this.length = 2;
 	}
 
 	public String getLabelName() {
